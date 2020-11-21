@@ -1,0 +1,40 @@
+{% extends 'base-ereceipt.html' %}
+{% block body %}
+<div class="WrapperArea">
+    <div class="WrapperBox">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-info" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <div class="Small-Wrapper">
+            <h4 class="Title">Category List</h4>
+            <div class="TableList">
+                <div class="dragscroll">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>S. No</th>
+                            <th>Category</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for object in object_list %}
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td>{{object.category_name}}</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}

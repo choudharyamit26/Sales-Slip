@@ -1,0 +1,61 @@
+{% extends 'base-ereceipt.html' %}
+{% block body %}
+<div class="WrapperArea">
+    <div class="WrapperBox">
+        <div class="content-wrapper">
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-warning alert-dismissible fade in" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+        <div class="Small-Wrapper">
+            <div class="PasswordArea">
+                <div class="row">
+                    <h4 class="Title">Receipt Management</h4>
+                    <div class="TableList">
+                        <div class="dragscroll">
+                            <table style="width: 150vw">
+                                <thead>
+                                <tr>
+                                    <th>S. No</th>
+                                    <th>Receipt ID</th>
+                                    <th>Merchant</th>
+                                    <th>Category</th>
+                                    <th>Email id</th>
+                                    <th>Date</th>
+                                    <th>action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for object in receipts %}
+                                <tr>
+                                    <td>{{forloop.counter}}</td>
+                                    <td>{{object.id}}</td>
+                                    <td>{{object.merchant.full_name}}</td>
+                                    <td>{{object.merchant.category.category_name}}</td>
+                                    <td>{{object.merchant.email}}</td>
+                                    <td>{{object.created_at}}</td>
+                                    <td>
+                                        <a class="Blue" href="{% url 'adminpanel:receipt-detail' object.id %}">
+                                            <i class="fa fa-eye"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblo
+{% endblock body%}

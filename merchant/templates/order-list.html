@@ -1,0 +1,58 @@
+{% extends 'base-merchant.html' %}
+{% block body %}
+<div class="WrapperArea">
+    <div class="WrapperBox">
+        <div class="Small-Wrapper">
+            <div class="enterKey">
+                <h4 class="Title">Receipt Management</h4>
+            </div>
+
+
+            <div class="TableList">
+                <div class="dragscroll">
+                    <table id="example" class="table table-striped table-bordered table-responsive" cellpadding="0"
+                           width="100%">
+                        <thead>
+                        <tr>
+                            <th>S.No</th>
+                            <th>User Id</th>
+                            <th>User Name</th>
+                            <th> Contact Details</th>
+                            <th>Order Id</th>
+                            <th>Date & time of purchasing</th>
+                            <th>QR Code</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for object in object_list %}
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td>{{object.user.id}}</td>
+                            <td>{{object.user.first_name}} {{object.user.last_name}}</td>
+                            <td>{{object.user.phone_number}}</td>
+                            <td>{{object.id}}</td>
+                            <td>{{object.created_at}}</td>
+                            <td><figure><img src="{{object.qr_code.url}}"></figure></td>
+                            <td><a href="{% url 'merchant:order-detail' object.id %}"><i class="fa fa-eye"></i></a></td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- <div class="Pagination">
+                <ul>
+                    <li><a href="#">Previous</a></li>
+                    <li class="active"><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">Next</a></li>
+                </ul>
+            </div> -->
+
+        </div>
+    </div>
+</div>
+{% endblock body %}

@@ -1,0 +1,57 @@
+{% extends 'base-merchant.html' %}
+{% block body %}
+<div class="WrapperArea" xmlns="http://www.w3.org/1999/html">
+    <div class="WrapperBox">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-info" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <div class="Small-Wrapper">
+            <h4 class="Title">My Profile</h4>
+
+            <div class="profileAll">
+                <div class="avatar-upload">
+                    <div class="avatar-edit">
+                        <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg"/>
+                        <label for="imageUpload" class="profLab"><i class=""></i></label>
+                    </div>
+                    <div class="avatar-preview">
+                        <div id="imagePreview" style="background-image: url({{profile_pic_url}});">
+                        </div>
+                    </div>
+                </div>
+                <div class="profileInner">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <p>Name: <strong>{{category.full_name}}</strong></p>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <p>Email Id: <strong>{{category.email}}</strong></p>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <p>Category: <strong>{{category.category.category_name}}</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="btns">
+                        <!--                        <button type="button">Save</button>-->
+                        <a class="btn btn-info" href="{% url 'merchant:update-profile' category.id %}">Update</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}
+

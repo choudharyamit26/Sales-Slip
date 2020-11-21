@@ -1,0 +1,40 @@
+{% extends 'base-ereceipt.html' %}
+{% block body %}
+
+<div class="WrapperArea">
+    <div class="WrapperBox">
+        <div class="Small-Wrapper">
+            <div class="PasswordArea">
+                <div class="row">
+                    <div class="col-sm-7">
+                        {% if form.errors %}
+                        {% for field in form %}
+                        {% for error in field.errors %}
+                        <div class="alert alert-danger">
+                            <strong>{{ error|escape }}</strong>
+                        </div>
+                        {% endfor %}
+                        {% endfor %}
+                        {% for error in form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            <strong>{{ error|escape }}</strong>
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                        <form method="post">
+                            {% csrf_token %}
+                            <h4 class="Title">Add Category</h4>
+                            <div class="form-group">
+                                <label>Category</label>
+                                <input type="text" name="category_name" class="form-control"
+                                       placeholder="Enter Category">
+                            </div>
+                            <button type="submit" class="Button apply_btn">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}

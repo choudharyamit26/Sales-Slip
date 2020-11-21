@@ -1,0 +1,48 @@
+{% extends 'base-ereceipt.html' %}
+{% block body %}
+<div class="WrapperArea">
+    <div class="WrapperBox">
+        <div class="Small-Wrapper">
+            <h4 class="Title">Merchant Details</h4>
+            <div class="DetailsArea">
+                {% if object.profile_pic %}
+                <div class="DetailsProfile">
+                    <figure><img width="200" src="{{object.profile_pic.url}}"></figure>
+                </div>
+                {% else %}
+                <div class="DetailsProfile">
+                    <figure><img src="https://snapic-bucket.s3.amazonaws.com/static/default_profile.png"
+                                 alt="Profile pic"></figure>
+                </div>
+                {% endif %}
+                <ul>
+                    <li>
+                        <span>Merchant id </span>{{object.id}}
+                    </li>
+
+                    <li>
+                        <span>Name </span>{{object.full_name}}
+                    </li>
+                    <li>
+                        <span>Category</span>{{object.category.category_name}}
+                    </li>
+
+                    <li>
+                        <span>Email id </span>{{object.email}}
+                    </li>
+
+                    <li>
+                        <span>Created at</span>{{object.created_at|date:'M. d, Y'}}
+                    </li>
+                    <li>
+                        <span>Total Number of Receipts</span>{{receipts_count}}
+                    </li>
+                    <li>
+                        <span>Total Number of Scanned QR Code</span>{{qr_count}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}

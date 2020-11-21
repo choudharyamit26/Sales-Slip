@@ -1,0 +1,66 @@
+{% extends 'base-ereceipt.html' %}
+{% block body %}
+    <div class="WrapperArea">
+        <div class="WrapperBox">
+            <div class="Small-Wrapper">
+                <div class="SearchBox">
+                    <form action="">
+                        <input type="text" placeholder="Enter Key">
+                        <button>Apply</button>
+                    </form>
+                </div>
+                <h4 class="Title">Report Management</h4>
+
+                <div class="Filter">
+
+                    <div class="form-group">
+                        <label>From Date</label>
+                        <input type="date" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>To Date</label>
+                        <input type="date" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>&nbsp;</label>
+                        <button class="Button">Apply</button>
+                    </div>
+                </div>
+                <div class="fltR">
+                    <a href="javascript:void(0);" class="Export">
+                        <i class="fa fa-file-pdf-o"></i> Export
+                    </a>
+                    <div class="clear"> </div>
+                </div>
+
+                <div class="ReportArea">
+                    <div class="row">
+                        <div class="col-sm-10 col-sm-offset-1">
+                            <canvas id="myChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+    <script>
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Users', 'Subscription Purchase', 'Transactions'],
+                datasets: [{
+                    label: 'My First dataset',
+                    backgroundColor: ["rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(255, 205, 86)", "rgb(16, 156, 198)", "rgb(16, 198, 129)", "rgb(198, 39, 16)", "rgb(198, 16, 142)", "rgb(64, 151, 18)"],
+                    borderColor: ["rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(255, 205, 86)"],
+                    data: [2500, 1150, 1500, ]
+                }]
+            },
+            options: {}
+        });
+    </script>
+{% endblock body %}

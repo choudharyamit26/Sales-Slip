@@ -1,0 +1,18 @@
+{% extends 'base-ereceipt.html' %}
+{% load crispy_forms_tags %}
+{% block body %}
+<div class="WrapperArea">
+    <div class="WrapperBox">
+        <div class="Small-Wrapper">
+            <h4 class="Title">Update Terms and Condition</h4>
+            <form class="form-group" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.media }}
+                {{form|crispy}}
+                <br>
+                <button class="btn btn-primary" type="submit">Update</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock body %}

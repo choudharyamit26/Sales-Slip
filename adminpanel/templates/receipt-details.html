@@ -1,0 +1,86 @@
+{% extends 'base-ereceipt.html' %}
+{% block body %}
+<div class="WrapperArea">
+    <div class="WrapperBox">
+        <div class="Small-Wrapper">
+            <h4 class="Title">Receipt Details</h4>
+            <div class="DetailsArea">
+                <div class="tableText">
+                    <ul>
+                        <li>
+                            <span>User id </span>{{object.user.id}}
+                        </li>
+                        <li>
+                            <span>User Name </span>{{object.user.first_name}} {{object.user.last_name}}
+                        </li>
+                        <li>
+                            <span>Contact Detail</span>{{object.user.phone_number}}
+                        </li>
+
+                        <li>
+                            <span>Merchant Email id </span>{{object.merchant.email}}
+                        </li>
+                        <li>
+                            <span>Merchant id </span>{{object.merchant.id}}
+                        </li>
+
+                        <li>
+                            <span>Merchant Name </span>{{object.merchant.full_name}}
+                        </li>
+                        <li>
+                            <span>Merchant Category</span>{{object.merchant.category.category_name}}
+                        </li>
+
+                        <li>
+                            <span>Merchant Email id </span>{{object.merchant.email}}
+                        </li>
+                        <li>
+                            <span>Order Id</span>{{object.id}}
+                        </li>
+                        <li>
+                            <span>Total Amount</span>{{total_amount}}
+                        </li>
+                        <li>
+                            <span>Created at</span>{{object.created_at}}
+                        </li>
+                    </ul>
+                    <div>
+                        <div class="DetailsProfile">
+                            <figure><img width="200" src="{{object.qr_code.url}}"></figure>
+                        </div>
+                        <div class="btnCommon">
+                            <a class="btn btn-info" href="{% url 'merchant:print-qr' object.id %}">Print QR Code</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="TableList">
+                    <div class="dragscroll">
+                        <table id="example" class="table table-striped table-bordered table-responsive" cellpadding="0"
+                               width="100%">
+                            <thead>
+                            <tr>
+                                <th>S.No</th>
+                                <th>Name of item</th>
+                                <th>Price of item</th>
+                                <th>Quantity of item</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for obj in object.order.all %}
+                            <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td>{{obj.product}}</td>
+                                <td>{{obj.price}}</td>
+                                <td>{{obj.quantity}}</td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}

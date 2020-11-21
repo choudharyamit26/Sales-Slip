@@ -1,0 +1,85 @@
+{% extends 'base-merchant.html' %}
+{% block body %}
+
+<div class="WrapperArea">
+    <div class="WrapperBox">
+        <div class="Small-Wrapper">
+            <h4 class="Title">User Details</h4>
+            <div class="DetailsArea">
+                <div class="tableText">
+
+                    <ul>
+                        <li>
+                            <span>User id </span>{{object.id}}
+                        </li>
+
+                        <li>
+                            <span>Name of the user</span>{{object.user.first_name}} {{object.user.last_name}}
+                        </li>
+
+                        <li>
+                            <span>Phone Number</span>{{object.user.phone_number}}
+                        </li>
+
+                        <li>
+                            <span>Email id </span>{{object.user.email}}
+                        </li>
+
+                        <li>
+                            <span>Created at</span>{{object.created_at|date:'M. d, Y'}}
+                        </li>
+                        <li>
+                            <span>Total Order Amount</span>{{total_amount}}
+                        </li>
+                    </ul>
+                    <div>
+                        <div class="DetailsProfile">
+                            <img width="200" src="{{object.qr_code.url}}">
+                        </div>
+                        <div class="btnCommon">
+                            <a class="btn btn-info" href="{% url 'merchant:print-qr' object.id %}">Print QR Code</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="TableList">
+                    <div class="dragscroll">
+                        <table id="example" class="table table-striped table-bordered table-responsive" cellpadding="0"
+                               width="100%">
+                            <thead>
+                            <tr>
+                                <th>S.No</th>
+                                <th>Name of item</th>
+                                <th>Price of item</th>
+                                <th>Quantity of item</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for obj in object.order.all %}
+                            <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td>{{obj.product}}</td>
+                                <td>{{obj.price}}</td>
+                                <td>{{obj.quantity}}</td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- <div class="Pagination">
+    <ul>
+        <li><a href="#">Previous</a></li>
+        <li class="active"><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">Next</a></li>
+    </ul>
+</div> -->
+{% endblock body %}

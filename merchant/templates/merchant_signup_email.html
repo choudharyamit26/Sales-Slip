@@ -1,0 +1,14 @@
+{% load i18n %}{% autoescape off %}
+{% blocktrans %}You're receiving this email because you have been allocated a merchant account  at E-Receipt.{% endblocktrans %}
+
+{% trans "Please go to the following page to login to merchant panel:" %}
+{{ protocol }}://{{ domain }}{% url 'merchant:login' %}
+{% trans 'Your username is:' %} {{ email }}
+{% trans 'Your password is:' %} {{ password }}
+
+{% trans "Thank you for using our site!" %}
+
+{% blocktrans %}The {{ site_name }} team{% endblocktrans %}
+
+{% endautoescape %}
+

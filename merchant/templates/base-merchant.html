@@ -1,0 +1,160 @@
+{% load static %}
+<head>
+    <title>Merchant Panel | Dashboard</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="icon" href="{% static 'adminpanel/images/logo.jpg' %}" type="image/ico" sizes="16x16">
+    <link type="text/css" rel="stylesheet" href="{% static 'adminpanel/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'adminpanel/css/media.css' %}">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+    <script>
+    var protocol = window.location.protocol
+    var hostname = window.location.hostname
+    var port = window.location.port
+    var url = protocol + "//" + hostname + ":" + port + "/adminpanel" + "/notification-count" + "/"
+    fetch(url)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (myJson) {
+        document.querySelector("#count").innerHTML = myJson;
+      })
+      .catch(function (error) {
+        console.log("Error: " + error);
+      });
+
+
+
+
+
+
+    </script>
+</head>
+
+<body>
+
+<div class="Header">
+    <div class="Logo">
+        <img src="{% static 'adminpanel/images/logo.jpg' %}">
+    </div>
+    <div class="Navigation">
+        <div class="header-notifications">
+            <a href="{% url 'merchant:notification' %}">
+                <i class="fa fa-bell fa-2x" aria-hidden="true"></i>
+                <span class="badge" id="count"></span>
+            </a>
+        </div>
+
+        <div class="Avater">
+            <a href="javascript:void(0);">
+                <figure><img src="{{user.profile_pic.url}}"></figure>
+                {{user}} </a>
+            <ul>
+                <li>
+                    <figure><img src="{{user.profile_pic.url}}"></figure>
+                    <h4> {{user}} <span>Administrator</span></h4>
+                </li>
+                <li><a href="{% url 'merchant:change_password' %}"><span><i class="fa fa-cog"></i></span> Setting</a></li>
+                <li><a href="{% url 'merchant:logout' %}"><span><i class="fa fa-sign-out"></i></span> Logout</a></li>
+            </ul>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+
+<div class="SidenavBar">
+    <ul>
+
+        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'merchant:dashboard' %}active{% endif %}">
+            <a href="{% url 'merchant:dashboard'  %}">
+                <span><i class="fa fa-tachometer"></i></span> Dashboard
+            </a>
+        </li>
+        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'merchant:create-order' %}active{% endif %}">
+            <a href="{% url 'merchant:create-order'  %}">
+                <span><i class="fa fa-first-order"></i></span>Generate QR Code
+            </a>
+        </li>
+        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'merchant:order-list' %}active{% endif %}">
+            <a href="{% url 'merchant:order-list'  %}">
+                <span><i class="fa fa-list"></i></span> Receipt List
+            </a>
+        </li>
+        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'merchant:api-tutorial' %}active{% endif %}">
+            <a href="{% url 'merchant:api-tutorial'  %}">
+                <span><i class="fa fa-book"></i></span> Api Tutorial
+            </a>
+        </li>
+<!--        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'merchant:static-content' %}active{% endif %}">-->
+<!--            <a href="{% url 'merchant:static-content'  %}">-->
+<!--                <span><i class="fa fa-font"></i></span> Static Content-->
+<!--            </a>-->
+<!--        </li>-->
+        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'merchant:profile' %}active{% endif %}">
+            <a href="{% url 'merchant:profile'  %}">
+                <span><i class="fa fa-flag"></i></span> My Profile
+            </a>
+        </li>
+
+
+        <!--        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'adminpanel:users-list' %}active{% endif %}">-->
+        <!--            <a href="{% url 'adminpanel:users-list' %}">-->
+        <!--                <span><i class="fa fa-user"></i></span> User Management-->
+        <!--            </a>-->
+        <!--        </li>-->
+
+        <!--        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'adminpanel:receipt-list' %}active{% endif %}">-->
+        <!--            <a href="{% url 'adminpanel:receipt-list' %}">-->
+        <!--                <span><i class="faImg"><img src="{% static 'adminpanel/images/transaction.svg' %}" alt="paid"-->
+        <!--                                            class="img-fluid"></i></span>-->
+        <!--                <p>Receipts Management</p>-->
+        <!--            </a>-->
+        <!--        </li>-->
+        <!--        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'adminpanel:reports' %}active{% endif %}">-->
+        <!--            <a href="{% url 'adminpanel:reports' %}">-->
+        <!--                <span><i class="fa fa-flag-o"></i></span>-->
+        <!--                <p>Reports Management </p>-->
+        <!--            </a>-->
+        <!--        </li>-->
+
+        <!--        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'adminpanel:send-notification' %}active{% endif %}">-->
+        <!--            <a href="{% url 'adminpanel:send-notification' %}">-->
+        <!--                <span><i class="fa fa-bell"></i></span>-->
+        <!--                <p>Push Notification</p>-->
+        <!--            </a>-->
+        <!--        </li>-->
+
+        <!--        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'adminpanel:static-content' %}active{% endif %}">-->
+        <!--            <a href="{% url 'adminpanel:static-content' %}">-->
+        <!--                <span><i class="fa fa-font"></i></span>-->
+        <!--                <p>Static content Management</p>-->
+        <!--            </a>-->
+        <!--        </li>-->
+        <!--        <li>-->
+        <!--            <a href="paid-management.html">-->
+        <!--                <span><i class="faImg"><img src="{% static 'adminpanel/images/paid.svg' %}" alt="paid"-->
+        <!--                                            class="img-fluid"></i></span>-->
+        <!--                <p>Profiles Management</p>-->
+        <!--            </a>-->
+        <!--        </li>-->
+
+        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'logout' %}active{% endif %}">
+            <a href="{% url 'merchant:logout' %}">
+                <span><i class="fa fa-sign-out"></i></span>
+                <p>Logout</p>
+            </a>
+        </li>
+    </ul>
+</div>
+{% block body %}
+
+{% endblock body %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="{% static 'adminpanel/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'adminpanel/js/app.js' %}"></script>
+
+</body>
+
+</html>

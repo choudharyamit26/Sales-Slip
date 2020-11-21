@@ -1,0 +1,47 @@
+{% extends 'base-ereceipt.html' %}
+{% block body %}
+<div class="WrapperArea">
+    <div class="WrapperBox">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-info" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <div class="Small-Wrapper">
+            <h4 class="Title" style="text-align: center; padding-bottom: 20px;">Dashboard</h4>
+
+            <div class="DashboardArea">
+                <h4 class="Title">Total Users</h4>
+                <div class="row">
+
+                    <div class="col-sm-4">
+                        <aside>
+                            <h4> Total Active Users</h4>
+                            <h2 class="count">{{users_count}}</h2>
+                        </aside>
+                    </div>
+                    <div class="col-sm-4">
+                        <aside>
+                            <h4>Total Number of Active Merchants</h4>
+                            <h2 class="count">{{merchant_count}}</h2>
+                        </aside>
+                    </div>
+                    <div class="col-sm-4">
+                        <aside>
+                            <h4>Total Number of Receipts on the platform</h4>
+                            <h2 class="count">{{receipts_count}}</h2>
+                        </aside>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock body %}

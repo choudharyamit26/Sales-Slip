@@ -1,0 +1,135 @@
+{% load static %}
+<html lang="en-us">
+
+<head>
+    <title>E-receipt | Login</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link type="text/css" rel="stylesheet" href="{% static 'adminpanel/css/style.css' %}">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+</head>
+
+<body onload="remember()">
+<div class="LoginArea" style="background-image: url('images/pattern.png');">
+    <!--    <div class="content-wrapper">-->
+    <!--        {% if messages %}-->
+    <!--        {% for message in messages %}-->
+    <!--        <div class="alert alert-{{ message.tags }} alert-dismissible fade in" role="alert">-->
+    <!--            {{ message }}-->
+    <!--            <button type="button" class="close" data-dismiss="alert" aria-label="Close">-->
+    <!--                <span aria-hidden="true">&times;</span>-->
+    <!--            </button>-->
+    <!--        </div>-->
+    <!--        {% endfor %}-->
+    <!--        {% endif %}-->
+    <!--        {% block content %}-->
+    <!--        {% endblock content %}-->
+    <!--    </div>-->
+    <div class="LoginBox">
+        <figure>
+            <div class="logoMainImg">
+                <img src="{% static 'adminpanel/images/logo.jpg' %}">
+            </div>
+        </figure>
+<!--        <h5>Let's Started Snapic</h5>-->
+        <h6>To keep connected wit us please login .</h6>
+        <div class="content-wrapper">
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-warning alert-dismissible fade in" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label>Email ID</label>
+                <input type="text" placeholder="Enter Email ID" name="email" id="email" class="form-control"
+                       value="{{cookie1}}">
+                <!--                <h1>Cookie:{{cookie1}}</h1>-->
+                <span class="Icon"><i class="fa fa-envelope"></i></span>
+            </div>
+
+            <div class="form-group">
+                <label>Password </label>
+                <input type="password" placeholder="Enter Password" name="password" id="password" class="form-control"
+                       value="{{cookie2}}">
+                <span class="Icon"><i class="fa fa-unlock-alt"></i></span>
+            </div>
+
+            <div class="Checkboxs">
+                <a href="{% url 'merchant:password_reset' %}">Forgot password?</a>
+                <label class="CheckBox" id="check">Remember Me
+                    <input name="remember_me" class="remember_me" id='remember' type="checkbox" value="{{cookie3}}">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+
+            <button type="submit" class="Login" onclick="login()">Log In <i class="fa fa-sign-in"></i></button>
+            <!--             <button onclick="bulkNotification()">Log In <i class="fa fa-sign-in"></i></button>-->
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+
+function remember(){
+<!--        var remember_me = document.getElementById("remember").checked;-->
+        var remember_me = {{cookie3}};
+        console.log('On load function --->>>> ',remember_me,typeof(remember_me))
+        if (remember_me){
+        console.log('inside remember me checked true or false')
+        $("#remember").prop("checked",true);
+        }
+    }
+
+
+
+function login() {
+    var email = $("#email").val();
+    var password = $("#password").val();
+    var remember_me = document.getElementById("remember").checked;
+    console.log(remember_me)
+
+    console.log(email,password,remember_me)
+    var url = "{% url 'merchant:login' %}";
+    $.ajax({
+        url: url,
+        method: 'POST',
+        data: {
+            email: $("#email").val(),
+            password:$("#password").val(),
+            remember_me: remember_me,
+            csrfmiddlewaretoken: "{{ csrf_token }}"
+        },
+        success: function (data) {
+        var protocol = window.location.protocol
+        var hostname = window.location.hostname
+        var port = window.location.port
+        var url = protocol + "//" + hostname + ":" + port + "/merchant" + "/dashboard" + "/"
+        window.location.href = url
+        },
+        error: function (data) {
+        var protocol = window.location.protocol
+        var hostname = window.location.hostname
+        var port = window.location.port
+        var url = protocol + "//" + hostname + ":" + port + "/merchant"  + "/login" + "/"
+        window.location.href = url
+        }
+    });
+    event.preventDefault();
+}
+</script>
+<script src="{% static 'adminpanel/js/jquery.min.js' %}"></script>
+<script src="{% static 'adminpanel/js/bootstrap.min.js' %}"></script>
+</body>
+
+</html>

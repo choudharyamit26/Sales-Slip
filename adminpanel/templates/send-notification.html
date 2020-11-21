@@ -1,0 +1,95 @@
+{% extends 'base-ereceipt.html' %}
+{% block body %}
+<div class="WrapperArea">
+    <div class="WrapperBox">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-info" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <div class="Small-Wrapper">
+            <h4 class="Title">Notification Management</h4>
+            <div class="NotificationArea">
+                <div class="NotificationForm">
+                    <h4>Send Notifications</h4>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label>Select User</label>
+                            <ul class="Multiple" id="table">
+                                <li><label><input type="checkbox" id="selectAll" class="main">Select All</label></li>
+                                {% for user in users %}
+                                <li><label><input class="checkbox" type="checkbox" name="to" id="checkbox"
+                                                  value="{{user.id}}">{{user.first_name}}</label>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="form-group">
+                            <label>Title</label>
+                            <input type="text" class="form-control desc" id="title" name="title" placeholder="Enter title here...">
+                            <br>
+                            <label>Notification Message</label>
+                            <textarea rows="5" class="form-control desc" placeholder="Typing ...."
+                                      id="message" name="body"></textarea>
+                        </div>
+                        <button id="send" class="btn btn-info" onclick="bulkNotification()"><span id="send_btn">Send Notification</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+   $('#selectAll').click(function () {
+        if ($(this).hasClass('allChecked')) {
+           $(".checkbox").prop('checked', false);
+        } else {
+           $(".checkbox").prop('checked', true);
+        }
+        $(this).toggleClass('allChecked');
+    });
+
+
+</script>
+<script>
+    function bulkNotification() {
+        var users = [];
+        $('.checkbox:checkbox:checked').each(function (i) {
+            users[i] = $(this).val();
+            console.log(users)
+        });
+        var title = $("#title").val();
+        var message = $("#message").val();
+        var url = "{% url 'adminpanel:send-notification' %}";
+        $.ajax({
+            url: url,
+            method: 'POST',
+            data: {
+                user_ids: users,
+                title:title,
+                message: message,
+                csrfmiddlewaretoken: {{ csrf_token }}
+            },
+            success: function (data) {
+                alert(data);
+            },
+            error: function (data) {
+                alert(data.status);
+                alert(data.responseJSON.error);
+            }
+        });
+        event.preventDefault();
+        console.log(val);
+    }
+
+
+
+</script>
+{% endblock body %}
