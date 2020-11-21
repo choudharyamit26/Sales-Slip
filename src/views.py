@@ -17,7 +17,7 @@ from rest_framework.views import APIView
 
 from .models import User, Settings, UserNotification, Otp
 from .serializers import UserCreateSerializer, AuthTokenSerializer, ForgetPasswordSerializer, ChangePasswordSerializer, \
-    UpdateNotificationSerializer, NotificationSerializer
+    UpdateNotificationSerializer, NotificationSerializer, OtpSerializer
 
 from rest_framework.settings import api_settings
 

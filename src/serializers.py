@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model, authenticate
 from rest_framework import serializers
 from rest_framework.response import Response
 from rest_framework.status import HTTP_400_BAD_REQUEST
-from .models import UserNotification
+from .models import UserNotification,Otp
 
 User = get_user_model()
 
@@ -133,3 +133,10 @@ class UpdateNotificationSerializer(serializers.ModelSerializer):
         model = UserNotification
         fields = ('read',)
 
+
+class OtpSerializer(serializers.ModelSerializer):
+    """Email otp serializer"""
+
+    class Meta:
+        model = Otp
+        fields = '__all__'
