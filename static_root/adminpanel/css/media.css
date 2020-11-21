@@ -1,0 +1,208 @@
+@media(max-width:1199px) {
+     table {
+        width: 1020px;
+    }
+}
+
+@media(max-width:991px) {
+    .margin_left {
+        margin-left: 60px;
+    }
+}
+
+@media(max-width:767px) {
+    .enterKey {
+        display: block;
+    }
+
+    .SearchBox {
+        margin: 0 0 15px;
+    }
+
+    .Filter {
+        flex-wrap: wrap;
+    }
+
+    #empy-label {
+        display: none;
+    }
+
+    .DetailsArea .DetailsProfile {
+        float:none;
+        margin: 0 auto 40px;
+    }
+
+    .DetailsArea ul li span {
+        width: 200px;
+    }
+
+    .HelpArea ul.nav-tabs li a {
+        font-size: 13px;
+        padding: 10px 8px;
+
+    }
+
+    .PasswordArea form {
+        border:none;
+        padding: 0;
+    }
+
+    .PasswordArea .row {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .PasswordArea .row .col-sm-7,
+    .PasswordArea .row .col-sm-5 {
+        width: 100%;
+    }
+
+    .PasswordArea .row .col-sm-7 {
+        order: 1;
+    }
+
+    .d_flex {
+        display: block;
+    }
+
+    .welceomback_box p {
+        margin-bottom: 40px;
+    }
+}
+
+@media(max-width:575px) {}
+
+@media(max-width:560px) {
+    .Header .Logo {
+        width: 135px;
+        
+    }
+
+    .Header .Navigation {
+        margin-left: 135px;
+        padding-left: 15px;
+        padding-right: 15px;
+        width: calc(100% - 135px);
+    }
+
+    .Header .Navigation .header-notifications,
+    .Header .Navigation .Avater {
+        margin-left: 0;
+    }
+
+    .Header .Navigation .header-notifications a {
+        margin-right: 15px;
+    }
+
+    .WrapperArea .WrapperBox {
+        padding: 15px;
+    }
+
+    .SearchBox form input,
+    .SearchBox form button {
+        width: 100%;
+        border-radius: 4px;
+    }
+
+    .SearchBox form {
+        display: block;
+        width: 100%;
+    }
+
+    .SearchBox form button {
+        margin-top: 15px;
+    }
+
+    .Filter .form-group .form-control,.apply_btn {
+        width: 100%;
+    }
+
+    .Filter,.Filter .form-group {
+        display: block;
+    }
+
+    .Filter .form-group {
+        margin-right: 0;
+    }
+
+    .Pagination ul li {
+        margin-bottom: 10px;
+    }
+
+    .DetailsArea ul li span {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .DetailsArea ul li span:after {
+        display: none;
+    }
+
+    .DetailsArea .DetailsProfile {
+        height: 110px;
+        width: 110px;
+    }
+
+    .modal {
+        padding: 0 15px;
+    }
+
+   
+}
+
+@media(max-width:414px) {
+    h4.Title {
+        font-size: 20px;
+    }
+
+    .DetailsArea ul li ul.sub_ingredients_list li span {
+        width: 100%;
+    }
+
+    .NotificationArea .NotificationForm form .form-group label {
+        font-size: 12px;
+    }
+
+    .NotificationArea .NotificationForm form button {
+        padding: 10px 15px;
+        font-size: 12px;
+        margin: 0 auto;
+        display: block;
+    }
+
+    .HelpArea .HelpContent a.Edit {
+        float: none;
+        margin-bottom: 15px;
+    }
+
+    .HelpArea .HelpContent h3 {
+        font-size: 20px;
+    }
+
+    .LoginArea .LoginBox h5 {
+        font-size: 20px;
+    }
+
+    .welceomback_box h2 {
+        font-size: 22px;
+    }
+
+    .welceomback_box p {
+        margin-bottom: 20px;
+        font-size: 14px;
+    }
+
+    .welceomback_box .col-sm-4 img {
+        min-height: initial;
+    }
+
+    .recipes_box ul li {
+        font-size: 12px;
+    }
+
+    .HelpArea ul.nav-tabs li {
+        float: none;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
