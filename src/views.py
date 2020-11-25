@@ -65,7 +65,7 @@ class UserCreateAPIView(CreateAPIView):
     serializer_class = UserCreateSerializer
     queryset = User.objects.all()
 
-    def data(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         serializer = UserCreateSerializer(data=request.data)
         first_name = self.request.data['first_name']
         last_name = self.request.data['last_name']
@@ -130,7 +130,7 @@ class LoginAPIView(ObtainAuthToken):
     serializer_class = AuthTokenSerializer
     renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES
 
-    def data(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         email = self.request.data['email']
         password = self.request.data['password']
         device_token = self.request.data['device_token']
@@ -178,7 +178,7 @@ class ForgetPasswordAPIView(CreateAPIView):
     """
     serializer_class = ForgetPasswordSerializer
 
-    def data(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         data = self.request.data
         # country_code = data['country_code']
         phone_number = data['phone_number']
@@ -315,6 +315,7 @@ class ChangePasswordAPIView(UpdateAPIView):
                         return Response({"success": "تم تغيير كلمة المرور الخاصة بك بنجاح",
                                          "status": HTTP_200_OK, "detail": ""})
         except Exception as e:
+            print(e)
             return Response({"message": serializer.errors, "status": HTTP_400_BAD_REQUEST, "detail": ""})
 
 
@@ -351,7 +352,7 @@ class SendOtpEmail(APIView):
 
 class VerifyEmailOtp(APIView):
 
-    def data(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         otp = self.request.data['otp']
         try:
             otpObj = Otp.objects.get(otp=otp)
@@ -443,7 +444,7 @@ class DeleteNotification(APIView):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
 
-    def data(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         user = self.request.user
         id = self.request.data['id']
         obj = UserNotification.objects.get(id=id)
@@ -710,7 +711,7 @@ class ScannedDataView(CreateAPIView):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
 
-    def data(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         serializer = ScannedDataSerializer(data=request.data)
         merchant = self.request.data['merchant']
         order = self.request.data['order']
