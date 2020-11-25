@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.urls import reverse
 
 
@@ -153,3 +155,17 @@ class FAQ(models.Model):
     question_in_arabic = models.CharField(default='question', max_length=300)
     answer = models.TextField()
     answer_in_arabic = models.TextField(default='')
+
+
+@receiver(post_save, sender=User)
+def setting(sender, instance, created, **kwargs):
+    if created:
+        user_id = instance.id
+        user = User.objects.get(id=user_id)
+        setting_obj = Settings.objects.create(
+            user=user,
+            notification=True,
+            language='English'
+        )
+        return setting_obj
+
