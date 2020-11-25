@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model, authenticate
 from rest_framework import serializers
 from rest_framework.response import Response
 from rest_framework.status import HTTP_400_BAD_REQUEST
-from .models import UserNotification,Otp
+from .models import UserNotification, Otp, ScannedData, TermsAndCondition, ContactUs, PrivacyPolicy, Settings, FAQ
 
 User = get_user_model()
 
@@ -140,3 +140,79 @@ class OtpSerializer(serializers.ModelSerializer):
     class Meta:
         model = Otp
         fields = '__all__'
+
+
+class UpdatePhoneSerializer(serializers.ModelSerializer):
+    """Serializer to update user's phone number"""
+
+    class Meta:
+        model = User
+        fields = ("country_code", "phone_number")
+
+
+class ScannedDataSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ScannedData
+        exclude = ('user', 'created_at')
+
+
+class ContactUsSerializer(serializers.ModelSerializer):
+    """Serializer for contact details of admin"""
+
+    class Meta:
+        model = ContactUs
+        fields = '__all__'
+
+
+class TermsandConditionSerializer(serializers.ModelSerializer):
+    """Serializer for app's usage terms and condition"""
+
+    class Meta:
+        model = TermsAndCondition
+        fields = '__all__'
+
+
+class PrivacyPolicySerializer(serializers.ModelSerializer):
+    """Serializer for privacy policy"""
+
+    class Meta:
+        model = PrivacyPolicy
+        fields = '__all__'
+
+
+class FAQSerializer(serializers.ModelSerializer):
+    """Serializer for frequently asked questions"""
+
+    class Meta:
+        model = FAQ
+        fields = '__all__'
+
+
+class NotificationSettingSerializer(serializers.ModelSerializer):
+    """Serializer for user's notification settings"""
+
+    class Meta:
+        model = Settings
+        fields = ('user', 'notification')
+
+
+class LanguageSettingSerializer(serializers.ModelSerializer):
+    """Serializer for user's language settings"""
+
+    class Meta:
+        model = Settings
+        fields = ('user', 'language')
+
+
+class SettingsSerializer(serializers.ModelSerializer):
+    """Settings Serializer"""
+
+    class Meta:
+        model = Settings
+        fields = ('notification',)
+
+
+class LanguageSettingsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Settings
+        fields = ('language',)

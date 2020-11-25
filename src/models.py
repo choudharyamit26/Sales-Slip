@@ -97,6 +97,7 @@ class ScannedData(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     merchant = models.ForeignKey(Merchant, on_delete=models.CASCADE)
     order = models.ForeignKey(Receipt, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
 
 
 class UserNotification(models.Model):
@@ -144,3 +145,11 @@ class AboutUs(models.Model):
 class Otp(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     otp = models.IntegerField()
+
+
+class FAQ(models.Model):
+    """Frequently asked questions"""
+    question = models.CharField(default='question', max_length=300)
+    question_in_arabic = models.CharField(default='question', max_length=300)
+    answer = models.TextField()
+    answer_in_arabic = models.TextField(default='')
