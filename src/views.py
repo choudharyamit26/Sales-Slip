@@ -134,6 +134,7 @@ class LoginAPIView(ObtainAuthToken):
         email = self.request.data['email']
         password = self.request.data['password']
         device_token = self.request.data['device_token']
+        lang = self.request.data['lang']
         print('login---->>>>', device_token)
         try:
             if not email.isdigit():
@@ -148,6 +149,9 @@ class LoginAPIView(ObtainAuthToken):
                     userObj.save(update_fields=['device_token'])
                     print('updated device token ', userObj.device_token)
                     token = token[0]
+                    settings_obj = Settings.objects.get(user=userObj)
+                    settings_obj.language = lang
+                    settings_obj.save(update_fields=['language'])
                     return Response({"Token": token.key, "id": user_id, "status": HTTP_200_OK})
                 else:
                     return Response({"message": "Wrong password", "status": HTTP_400_BAD_REQUEST})
@@ -161,12 +165,16 @@ class LoginAPIView(ObtainAuthToken):
                     print('previous token ', user_device_token)
                     userObj.device_token = device_token
                     userObj.save(update_fields=['device_token'])
+                    settings_obj = Settings.objects.get(user=userObj)
+                    settings_obj.language = lang
+                    settings_obj.save(update_fields=['language'])
                     print('updated device token ', userObj.device_token)
                     token = token[0]
                     return Response({"Token": token.key, "id": user_id, "status": HTTP_200_OK})
                 else:
                     return Response({"message": "Wrong password", "status": HTTP_400_BAD_REQUEST})
         except Exception as e:
+            print(e)
             return Response({"message": "User does not exists", "status": HTTP_400_BAD_REQUEST})
 
 
@@ -1143,18 +1151,18 @@ class UserLanguageSettingApiView(APIView):
         return Response({"language": lang, "id": settings_obj.id, "status": HTTP_200_OK})
 
 
-@method_decorator(csrf_exempt, name='dispatch')
-class ChangeNotificationApiView(UpdateAPIView):
-    """ Change User's notification settings """
-    serializer_class = NotificationSettingSerializer
-    queryset = Settings.objects.all()
-
-
-@method_decorator(csrf_exempt, name='dispatch')
-class ChangeLanguageApiView(UpdateAPIView):
-    """Change User's language settings"""
-    serializer_class = LanguageSettingSerializer
-    queryset = Settings.objects.all()
+# @method_decorator(csrf_exempt, name='dispatch')
+# class ChangeNotificationApiView(UpdateAPIView):
+#     """ Change User's notification settings """
+#     serializer_class = NotificationSettingSerializer
+#     queryset = Settings.objects.all()
+#
+#
+# @method_decorator(csrf_exempt, name='dispatch')
+# class ChangeLanguageApiView(UpdateAPIView):
+#     """Change User's language settings"""
+#     serializer_class = LanguageSettingSerializer
+#     queryset = Settings.objects.all()
 
 
 class PrivacyPolicyApiView(APIView):

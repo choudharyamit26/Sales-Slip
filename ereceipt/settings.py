@@ -145,6 +145,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 DEFAULT_FROM_EMAIL = 'servacnt@fatortech.net'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_HOST = 'smtp.fatortech.net'
 EMAIL_HOST_USER = 'servacnt@fatortech.net'
 EMAIL_HOST_PASSWORD = 'Test@2020'
 EMAIL_PORT = 587
