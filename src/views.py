@@ -152,7 +152,10 @@ class LoginAPIView(ObtainAuthToken):
                     settings_obj = Settings.objects.get(user=userObj)
                     settings_obj.language = lang
                     settings_obj.save(update_fields=['language'])
-                    return Response({"Token": token.key, "id": user_id, "status": HTTP_200_OK})
+                    return Response({"Token": token.key, "id": user_id, "first_name": userObj.first_name,
+                                     "last_name": userObj.last_name, "email": userObj.email,
+                                     "country_code": userObj.country_code, "phone_number": userObj.phone_number,
+                                     "status": HTTP_200_OK})
                 else:
                     return Response({"message": "Wrong password", "status": HTTP_400_BAD_REQUEST})
             else:
@@ -170,7 +173,10 @@ class LoginAPIView(ObtainAuthToken):
                     settings_obj.save(update_fields=['language'])
                     print('updated device token ', userObj.device_token)
                     token = token[0]
-                    return Response({"Token": token.key, "id": user_id, "status": HTTP_200_OK})
+                    return Response({"Token": token.key, "id": user_id, "first_name": userObj.first_name,
+                                     "last_name": userObj.last_name, "email": userObj.email,
+                                     "country_code": userObj.country_code, "phone_number": userObj.phone_number,
+                                     "status": HTTP_200_OK})
                 else:
                     return Response({"message": "Wrong password", "status": HTTP_400_BAD_REQUEST})
         except Exception as e:

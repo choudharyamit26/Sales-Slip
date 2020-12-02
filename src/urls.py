@@ -5,12 +5,13 @@ from .views import UserCreateAPIView, LoginAPIView, ForgetPasswordAPIView, Chang
     CreateReceiptManually, GetLatestTransactions, FAQApiView, GetNotificationList, DeleteNotification, \
     UpdateNotification, UpdateUserNotificationSettingsApi, UpdateUserLanguageSettingApiView, GetUnreadMessageCount, \
     UserLanguageSettingApiView, GetUserNotificationSettingsApi, ChangeLanguageApiView, ChangeNotificationApiView, \
-    PrivacyPolicyApiView, ContactUsApiView, TermsandConditionApiView
+    PrivacyPolicyApiView, ContactUsApiView, TermsandConditionApiView, GetUserDetailApiView
 
 app_name = 'src'
 
 urlpatterns = [
     path('user-create/', UserCreateAPIView.as_view(), name='user-create'),
+    path('user-detail/', GetUserDetailApiView.as_view(), name='user-detail'),
     path('user-login/', LoginAPIView.as_view(), name='user-login'),
     path('forget-password/', ForgetPasswordAPIView.as_view(), name='forget-password'),
     path('change-password/', ChangePasswordAPIView.as_view(), name='change-password'),
