@@ -41,10 +41,10 @@ class CheckPhoneNumber(APIView):
         try:
             user = User.objects.get(phone_number=phone_number)
             if user:
-                return Response({"msg": "User with this phone number already exists", "status": HTTP_400_BAD_REQUEST})
+                return Response({"message": "User with this phone number already exists", "status": HTTP_400_BAD_REQUEST})
         except Exception as e:
             print(e)
-            return Response({"msg": "No user is registered with this number", "status": HTTP_200_OK})
+            return Response({"message": "No user is registered with this number", "status": HTTP_200_OK})
 
 
 class CheckEmail(APIView):
@@ -54,9 +54,9 @@ class CheckEmail(APIView):
         try:
             user = User.objects.get(email=email)
             if user:
-                return Response({"msg": "User with this email already exists", "status": HTTP_400_BAD_REQUEST})
+                return Response({"message": "User with this email already exists", "status": HTTP_400_BAD_REQUEST})
         except Exception as e:
-            return Response({"msg": "No user is registered with this email", "status": HTTP_200_OK})
+            return Response({"message": "No user is registered with this email", "status": HTTP_200_OK})
 
 
 @method_decorator(csrf_exempt, name='dispatch')
@@ -370,9 +370,9 @@ class SendOtpEmail(APIView):
                     to=[email]
                 )
                 email.send()
-                return Response({"msg": "Otp sent", "status": HTTP_200_OK})
+                return Response({"message": "Otp sent", "status": HTTP_200_OK})
         except Exception as e:
-            return Response({"msg": "Failed to send OTP to specified email.Please check your E-Mail ID",
+            return Response({"message": "Failed to send OTP to specified email.Please check your E-Mail ID",
                              "status": HTTP_400_BAD_REQUEST})
 
 
@@ -389,13 +389,13 @@ class VerifyEmailOtp(APIView):
                 # token = token[0]
                 otpObj.delete()
                 return Response(
-                    {"msg": "Otp verified successfully", "status": HTTP_200_OK})
+                    {"message": "Otp verified successfully", "status": HTTP_200_OK})
             else:
-                return Response({"msg": "Incorrect Otp", "status": HTTP_400_BAD_REQUEST})
+                return Response({"message": "Incorrect Otp", "status": HTTP_400_BAD_REQUEST})
 
         except Exception as e:
             print(e)
-            return Response({"msg": "Incorrect Otp", "status": HTTP_400_BAD_REQUEST})
+            return Response({"message": "Incorrect Otp", "status": HTTP_400_BAD_REQUEST})
 
 
 class ResendOtp(APIView):
