@@ -259,18 +259,18 @@ class ChangePasswordAPIView(UpdateAPIView):
                 if not user.check_password(old_password):
                     if lang_setting_obj.language == 'English':
                         return Response(
-                            {"success": "Incorrect old password", "status": HTTP_400_BAD_REQUEST, "detail": ""})
+                            {"message": "Incorrect old password", "status": HTTP_400_BAD_REQUEST, "detail": ""})
                     else:
                         return Response(
-                            {"success": "كلمة السر القديمة غير صحيحة", "status": HTTP_400_BAD_REQUEST, "detail": ""})
+                            {"message": "كلمة السر القديمة غير صحيحة", "status": HTTP_400_BAD_REQUEST, "detail": ""})
                 elif new_password != confirm_new_password:
                     if lang_setting_obj.language == 'English':
                         return Response(
-                            {"success": "Password and confirm password didn't match", "status": HTTP_400_BAD_REQUEST,
+                            {"message": "Password and confirm password didn't match", "status": HTTP_400_BAD_REQUEST,
                              "detail": ""})
                     else:
                         return Response(
-                            {"success": "كلمة المرور وتأكيد كلمة المرور غير متطابقتين", "status": HTTP_400_BAD_REQUEST,
+                            {"message": "كلمة المرور وتأكيد كلمة المرور غير متطابقتين", "status": HTTP_400_BAD_REQUEST,
                              "detail": ""})
                 else:
                     user.set_password(new_password)
@@ -335,10 +335,10 @@ class ChangePasswordAPIView(UpdateAPIView):
                     #     user.auth_token.delete()
                     # token, created = Token.objects.get_or_create(user=user)
                     if lang_setting_obj.language == 'English':
-                        return Response({"success": "Your Password has been changed successfully",
+                        return Response({"message": "Your Password has been changed successfully",
                                          "status": HTTP_200_OK, "detail": ""})
                     else:
-                        return Response({"success": "تم تغيير كلمة المرور الخاصة بك بنجاح",
+                        return Response({"message": "تم تغيير كلمة المرور الخاصة بك بنجاح",
                                          "status": HTTP_200_OK, "detail": ""})
         except Exception as e:
             print(e)
@@ -751,7 +751,7 @@ class ScannedDataView(CreateAPIView):
                 order=order_obj
             )
             # return Response({"data": serializer.data, "status": HTTP_200_OK})
-            return Response({"data": "Data scanned successfully", "id": scanned_data_obj.id, "status": HTTP_200_OK})
+            return Response({"message": "Data scanned successfully", "id": scanned_data_obj.id, "status": HTTP_200_OK})
         else:
             return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
 
@@ -984,7 +984,7 @@ class CreateReceiptManually(CreateAPIView):
             merchant=merchant_obj,
             order=receipt_obj
         )
-        return Response({"data": "Order created successfully", "status": HTTP_200_OK})
+        return Response({"message": "Order created successfully", "status": HTTP_200_OK})
 
 
 class GetLatestTransactions(ListAPIView):
