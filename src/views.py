@@ -639,25 +639,25 @@ class UpdateUserDetailApiView(UpdateAPIView):
                     pass
                 if lang_setting_obj.language == 'English':
                     data = {
-                        "id": user.id,
-                        "first_name": user.first_name,
-                        "last_name": user.last_name,
-                        "profile_pic":user.profile_pic,
-                        "email": user.email,
-                        "country_code": user.country_code,
-                        "phone_number": user.phone_number,
+                        "id": instance.id,
+                        "first_name": instance.first_name,
+                        "last_name": instance.last_name,
+                        "profile_pic":instance.profile_pic.url,
+                        "email": instance.email,
+                        "country_code": instance.country_code,
+                        "phone_number": instance.phone_number,
                         # "token": token.key
                     }
                     return Response({"message": "Profile updated successfully", "status": HTTP_200_OK, "data": data})
                 else:
                     data = {
-                        "id": user.id,
-                        "first_name": user.first_name,
-                        "last_name": user.last_name,
-                        "profile_pic": user.profile_pic,
-                        "email": user.email,
-                        "country_code": user.country_code,
-                        "phone_number": user.phone_number,
+                        "id": instance.id,
+                        "first_name": instance.first_name,
+                        "last_name": instance.last_name,
+                        "profile_pic": instance.profile_pic.url,
+                        "email": instance.email,
+                        "country_code": instance.country_code,
+                        "phone_number": instance.phone_number,
                         # "token": token.key
                     }
                     return Response({"message": "تم تحديث الملف الشخصي بنجاح", "status": HTTP_200_OK, "data": data})
