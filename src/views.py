@@ -365,7 +365,7 @@ class SendOtpEmail(APIView):
                 otp = Otp.objects.create(user=user, otp=otp)
                 email = EmailMessage(
                     'Your Password Reset OTP',
-                    'OTP to reset password of your Snapic Account : ' +
+                    'OTP to reset password of your E-Receipt Account : ' +
                     str(otp.otp),
                     to=[email]
                 )
@@ -409,7 +409,7 @@ class ResendOtp(APIView):
                 otp = Otp.objects.create(user=user, otp=otp)
                 email = EmailMessage(
                     'Your Password Reset OTP',
-                    'OTP to reset password of your Snapic Account : ' +
+                    'OTP to reset password of your E-Receipt Account : ' +
                     str(otp.otp),
                     to=[email]
                 )
@@ -577,7 +577,7 @@ class UpdateUserDetailApiView(UpdateAPIView):
                 instance.save(
                     update_fields=['email', 'first_name', 'last_name', 'profile_pic'])
                 # if Settings.user == user and Settings.notification:
-                admin = User.objects.get(email='snapicapp@gmail.com')
+                admin = User.objects.get(email='ereceipt@gmail.com')
                 setting_obj = Settings.objects.get(user=admin)
                 if setting_obj.notification:
                     UserNotification.objects.create(
