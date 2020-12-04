@@ -41,7 +41,8 @@ class CheckPhoneNumber(APIView):
         try:
             user = User.objects.get(phone_number=phone_number)
             if user:
-                return Response({"message": "User with this phone number already exists", "status": HTTP_400_BAD_REQUEST})
+                return Response(
+                    {"message": "User with this phone number already exists", "status": HTTP_400_BAD_REQUEST})
         except Exception as e:
             print(e)
             return Response({"message": "No user is registered with this number", "status": HTTP_200_OK})
@@ -637,9 +638,29 @@ class UpdateUserDetailApiView(UpdateAPIView):
                 else:
                     pass
                 if lang_setting_obj.language == 'English':
-                    return Response({"message": "Profile updated successfully", "status": HTTP_200_OK})
+                    data = {
+                        "id": user.id,
+                        "first_name": user.first_name,
+                        "last_name": user.last_name,
+                        "profile_pic":user.profile_pic.url,
+                        "email": user.email,
+                        "country_code": user.country_code,
+                        "phone_number": user.phone_number,
+                        # "token": token.key
+                    }
+                    return Response({"message": "Profile updated successfully", "status": HTTP_200_OK, "data": data})
                 else:
-                    return Response({"message": "تم تحديث الملف الشخصي بنجاح", "status": HTTP_200_OK})
+                    data = {
+                        "id": user.id,
+                        "first_name": user.first_name,
+                        "last_name": user.last_name,
+                        "profile_pic": user.profile_pic.url,
+                        "email": user.email,
+                        "country_code": user.country_code,
+                        "phone_number": user.phone_number,
+                        # "token": token.key
+                    }
+                    return Response({"message": "تم تحديث الملف الشخصي بنجاح", "status": HTTP_200_OK, "data": data})
             else:
                 return Response({"message": serializer.errors, "status": HTTP_400_BAD_REQUEST})
             # else:
