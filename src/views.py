@@ -646,7 +646,8 @@ class UpdateUserDetailApiView(UpdateAPIView):
             #     return Response({"message": "User does not exists", "status": HTTP_404_NOT_FOUND})
         except Exception as e:
             print(e)
-            return Response({"message": "Something went wrong", "status": HTTP_400_BAD_REQUEST})
+            x = {"Error": str(e)}
+            return Response({"message": x["Error"], "status": HTTP_400_BAD_REQUEST})
 
 
 class UpdatePhoneNumberView(UpdateAPIView):
