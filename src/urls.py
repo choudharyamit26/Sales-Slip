@@ -5,7 +5,7 @@ from .views import UserCreateAPIView, LoginAPIView, ForgetPasswordAPIView, Chang
     CreateReceiptManually, GetLatestTransactions, FAQApiView, GetNotificationList, DeleteNotification, \
     UpdateNotification, UpdateUserNotificationSettingsApi, UpdateUserLanguageSettingApiView, GetUnreadMessageCount, \
     UserLanguageSettingApiView, GetUserNotificationSettingsApi, ChangeLanguageApiView, ChangeNotificationApiView, \
-    PrivacyPolicyApiView, ContactUsApiView, TermsandConditionApiView, GetUserDetailApiView
+    PrivacyPolicyApiView, ContactUsApiView, TermsandConditionApiView, GetUserDetailApiView, CheckMobileOrPhoneNumber
 
 app_name = 'src'
 
@@ -50,4 +50,5 @@ urlpatterns = [
     path('update-user-lang/<int:pk>/',
          UpdateUserLanguageSettingApiView.as_view(), name='update-user-lang'),
     path('get-user-unread-message-count/', GetUnreadMessageCount.as_view(), name='get-user-unread-message-count'),
+    path('check-mobile-or-phone-number/', CheckMobileOrPhoneNumber.as_view(), name='check-mobile-or-phone-number')
 ]

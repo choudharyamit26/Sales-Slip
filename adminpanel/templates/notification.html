@@ -38,58 +38,13 @@
       .catch(function (error) {
         console.log("Error: " + error);
       });
-
-
-
-
-
-
-
-
-
-
-
 </script>
-<!--<div class="WrapperArea">-->
-<!--    <div class="WrapperBox">-->
-<!--        <div class="Small-Wrapper">-->
-<!--            <h4 class="Title">Notifications</h4>-->
-<!--            <div class="NotificationArea">-->
-<!--                {% for object in object_list %}-->
-<!--                <div class="list-group">-->
-<!--                    <a class="list-group-item list-group-item-action flex-column align-items-start">-->
-<!--                        {% if object.title == 'User Creation' %}-->
-<!--                        <figure class="pull-left"><i class="fa  fa-user fa-2x" aria-hidden="true"></i></figure>-->
-<!--                        {% elif object.title == 'Password Changed' %}-->
-<!--                        <figure class="pull-left"><i class="fa  fa-lock fa-2x" aria-hidden="true"></i></figure>-->
-<!--                        {% elif object.title == 'Phone number Update' %}-->
-<!--                        <figure class="pull-left"><i class="fa  fa-phone fa-2x" aria-hidden="true"></i></figure>-->
-<!--                        {% else %}-->
-<!--                        <figure class="pull-left ml-5"><i class="fa  fa-shopping-cart fa-2x" aria-hidden="true"></i>-->
-<!--                        </figure>-->
-<!--                        {% endif %}-->
-<!--                        <div class="msg-right">-->
-<!--                            <div class="d-flex w-100 justify-content-between">-->
-<!--                                <h5 class="mb-1">{{object.title}}</h5>-->
-<!--                                <small>{{object.created_at}}</small>-->
-<!--                            </div>-->
-<!--                            <p class="mb-1"> {{object.body}}</p>-->
-<!--                            &lt;!&ndash;                                                        <small>Donec id elit non mi porta.</small>&ndash;&gt;-->
-<!--                        </div>-->
-<!--                    </a>-->
-<!--                </div>-->
-<!--                {% endfor %}-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
 
 
 <div class="WrapperArea">
     <div class="WrapperBox">
         <div class="Small-Wrapper">
             <h4 class="Title">Notifications</h4>
-
             <div class="NotificationList">
                 {% for object in object_list %}
                 {% if object.to.is_superuser %}
@@ -101,8 +56,6 @@
                         <figure class="pull-left"><i class="fa  fa-lock fa-2x" aria-hidden="true"></i></figure>
                         {% elif object.title == 'Phone number Update' %}
                         <figure class="pull-left"><i class="fa  fa-phone fa-2x" aria-hidden="true"></i></figure>
-                        {% elif object.title == 'Payment' %}
-                        <figure class="pull-left"><i class="fa  fa-money fa-2x" aria-hidden="true"></i></figure>
                         {% elif object.title == 'Profile Update' %}
                         <figure class="pull-left"><i class="fa  fa-user fa-2x" aria-hidden="true"></i></figure>
                         {% else %}

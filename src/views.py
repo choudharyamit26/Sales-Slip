@@ -642,7 +642,7 @@ class UpdateUserDetailApiView(UpdateAPIView):
                         "id": instance.id,
                         "first_name": instance.first_name,
                         "last_name": instance.last_name,
-                        "profile_pic":instance.profile_pic.url,
+                        "profile_pic": instance.profile_pic.url,
                         "email": instance.email,
                         "country_code": instance.country_code,
                         "phone_number": instance.phone_number,
@@ -1284,3 +1284,22 @@ class GetUnreadMessageCount(APIView):
         count = UserNotification.objects.filter(to=user.id).filter(read=False).count()
         print(count)
         return Response({"count": count, "status": HTTP_200_OK})
+
+
+class CheckMobileOrPhoneNumber(APIView):
+
+    def get(self, request, *args, **kwargs):
+        email_or_phone = self.request.GET.get('email_or_phone')
+        try:
+            if email_or_phone.isdigit():
+                user_obj = User.objects.get(phone_number=email_or_phone)
+                if user_obj:
+                    return Response(
+                        {"message": "User with this email or phone number already exists", "status": HTTP_400_BAD_REQUEST})
+            else:
+                user_obj = User.objects.get(email=email_or_phone)
+                if user_obj:
+                    return Response(
+                        {"message": "User with this email or phone number already exists", "status": HTTP_400_BAD_REQUEST})
+        except Exception as e:
+            return Response({"meassge": "User not found", "status": HTTP_404_NOT_FOUND})
