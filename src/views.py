@@ -222,6 +222,7 @@ class ForgetPasswordAPIView(CreateAPIView):
                     return Response(
                         {"message": "Password and Confirm password did not match", "status": HTTP_400_BAD_REQUEST})
             except Exception as e:
+                print(e)
                 return Response({"message": "User does not exists", "status": HTTP_400_BAD_REQUEST})
         else:
             try:
@@ -234,6 +235,7 @@ class ForgetPasswordAPIView(CreateAPIView):
                     return Response(
                         {"message": "Confirm password and password does not match", "status": HTTP_400_BAD_REQUEST})
             except Exception as e:
+                print(e)
                 return Response({"message": "User does not exists", "status": HTTP_400_BAD_REQUEST})
 
 
