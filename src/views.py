@@ -1137,7 +1137,8 @@ class UpdateUserNotificationSettingsApi(UpdateAPIView):
             instance = self.get_object()
             print(request.data.get('notification'))
             notification = request.data.get('notification')
-            instance.notification = notification.capitalize()
+            instance.notification = notification
+            # instance.notification = notification.capitalize()
             if serializer.is_valid():
                 instance.save(
                     update_fields=['notification'])
