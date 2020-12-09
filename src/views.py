@@ -1132,6 +1132,7 @@ class UpdateUserNotificationSettingsApi(UpdateAPIView):
             user = self.request.user
             print(user)
             lang_setting_obj = Settings.objects.get(user=user)
+            print(lang_setting_obj)
             serializer = SettingsSerializer(data=request.data)
             instance = self.get_object()
             print(request.data.get('notification'))
