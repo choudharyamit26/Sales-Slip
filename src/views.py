@@ -25,6 +25,7 @@ from .serializers import UserCreateSerializer, AuthTokenSerializer, ForgetPasswo
     NotificationSettingSerializer, SettingsSerializer, FAQSerializer, LanguageSettingsSerializer
 
 from rest_framework.settings import api_settings
+from rest_framework.viewsets import ModelViewSet
 
 
 def remove_html_tags(text):
@@ -749,10 +750,11 @@ class UpdatePhoneNumberView(UpdateAPIView):
                     pass
                 if lang_setting_obj.language == 'English':
                     data = {'country_code': instance.country_code, 'phone_number': instance.phone_number}
-                    return Response({"message": "Phone number updated successfully",'data':data, "status": HTTP_200_OK})
+                    return Response(
+                        {"message": "Phone number updated successfully", 'data': data, "status": HTTP_200_OK})
                 else:
                     data = {'country_code': instance.country_code, 'phone_number': instance.phone_number}
-                    return Response({"message": "تم تحديث رقم الهاتف بنجاح",'data':data, "status": HTTP_200_OK})
+                    return Response({"message": "تم تحديث رقم الهاتف بنجاح", 'data': data, "status": HTTP_200_OK})
             else:
                 return Response({"message": serializer.errors, "status": HTTP_400_BAD_REQUEST})
         except Exception as e:
@@ -1182,7 +1184,8 @@ class GetUserNotificationSettingsApi(ListAPIView):
     def get(self, request, *args, **kwargs):
         user = self.request.user
         setting = Settings.objects.get(user=user)
-        return Response({"data": setting.notification, "id": setting.id, "status": HTTP_200_OK})
+        return Response({"message": "Fetched user settings successfully", "data": setting.notification, "id": setting.id,
+                         "status": HTTP_200_OK})
 
 
 class UserLanguageSettingApiView(APIView):
@@ -1309,3 +1312,8 @@ class CheckMobileOrPhoneNumber(APIView):
                          "status": HTTP_400_BAD_REQUEST})
         except Exception as e:
             return Response({"meassge": "User not found", "status": HTTP_404_NOT_FOUND})
+
+
+class FirstViewSet(ModelViewSet):
+    serializer_class = UserCreateSerializer
+    queryset = User.objects.all()

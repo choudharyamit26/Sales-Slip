@@ -1,13 +1,19 @@
 from django.urls import path
+
+from rest_framework.routers import DefaultRouter
 from .views import UserCreateAPIView, LoginAPIView, ForgetPasswordAPIView, ChangePasswordAPIView, Logout, SendOtpEmail, \
     VerifyEmailOtp, ResendOtp, CheckPhoneNumber, CheckEmail, UpdatePhoneNumberView, UpdateUserDetailApiView, \
     ScannedDataView, GetScannedDataDetail, GetUserTransactions, ReceiptSearchView, FilterByCategory, FilterByDate, \
     CreateReceiptManually, GetLatestTransactions, FAQApiView, GetNotificationList, DeleteNotification, \
     UpdateNotification, UpdateUserNotificationSettingsApi, UpdateUserLanguageSettingApiView, GetUnreadMessageCount, \
     UserLanguageSettingApiView, GetUserNotificationSettingsApi, ChangeLanguageApiView, ChangeNotificationApiView, \
-    PrivacyPolicyApiView, ContactUsApiView, TermsandConditionApiView, GetUserDetailApiView, CheckMobileOrPhoneNumber
+    PrivacyPolicyApiView, ContactUsApiView, TermsandConditionApiView, GetUserDetailApiView, CheckMobileOrPhoneNumber, \
+    FirstViewSet
 
 app_name = 'src'
+# router = DefaultRouter()
+# router.register(r'users', FirstViewSet, basename='user')
+# urlpatterns = router.urls
 
 urlpatterns = [
     path('user-create/', UserCreateAPIView.as_view(), name='user-create'),
