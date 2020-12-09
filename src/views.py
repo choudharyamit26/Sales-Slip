@@ -18,7 +18,7 @@ from rest_framework.views import APIView
 from django.utils.crypto import get_random_string
 from .fcm_notification import send_another, send_to_one
 from .models import User, Settings, UserNotification, Otp, ScannedData, Merchant, Receipt, Category, OrderItem, FAQ, \
-    TermsAndCondition, ContactUs, PrivacyPolicy
+    TermsAndCondition, ContactUs, PrivacyPolicy, AboutUs
 from .serializers import UserCreateSerializer, AuthTokenSerializer, ForgetPasswordSerializer, ChangePasswordSerializer, \
     UpdateNotificationSerializer, NotificationSerializer, OtpSerializer, UpdatePhoneSerializer, ScannedDataSerializer, \
     TermsandConditionSerializer, ContactUsSerializer, PrivacyPolicySerializer, LanguageSettingSerializer, \
@@ -1188,8 +1188,9 @@ class GetUserNotificationSettingsApi(ListAPIView):
     def get(self, request, *args, **kwargs):
         user = self.request.user
         setting = Settings.objects.get(user=user)
-        return Response({"message": "Fetched user settings successfully", "data": setting.notification, "id": setting.id,
-                         "status": HTTP_200_OK})
+        return Response(
+            {"message": "Fetched user settings successfully", "data": setting.notification, "id": setting.id,
+             "status": HTTP_200_OK})
 
 
 class UserLanguageSettingApiView(APIView):
@@ -1256,7 +1257,9 @@ class ContactUsApiView(ListAPIView):
     def get(self, request, *args, **kwargs):
         phone_number = ContactUs.objects.all()[0].phone_number
         email = ContactUs.objects.all()[0].email
-        return Response({"phone number": phone_number, "email": email, "status": HTTP_200_OK})
+        company_name = ContactUs.objects.all()[0].company_name
+        return Response(
+            {"company_name": company_name, "phone number": phone_number, "email": email, "status": HTTP_200_OK})
 
 
 class TermsandConditionApiView(APIView):
@@ -1316,6 +1319,16 @@ class CheckMobileOrPhoneNumber(APIView):
                          "status": HTTP_400_BAD_REQUEST})
         except Exception as e:
             return Response({"meassge": "User not found", "status": HTTP_404_NOT_FOUND})
+
+
+class AboutUsView(APIView):
+    model = AboutUs
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, *args, **kwargs):
+        about_us = AboutUs.objects.first()
+        return Response({"message": "About us fetched successfully", "data": about_us.content, "status": HTTP_200_OK})
 
 
 class FirstViewSet(ModelViewSet):

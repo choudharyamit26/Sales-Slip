@@ -8,7 +8,7 @@ from .views import UserCreateAPIView, LoginAPIView, ForgetPasswordAPIView, Chang
     UpdateNotification, UpdateUserNotificationSettingsApi, UpdateUserLanguageSettingApiView, GetUnreadMessageCount, \
     UserLanguageSettingApiView, GetUserNotificationSettingsApi, ChangeLanguageApiView, ChangeNotificationApiView, \
     PrivacyPolicyApiView, ContactUsApiView, TermsandConditionApiView, GetUserDetailApiView, CheckMobileOrPhoneNumber, \
-    FirstViewSet
+    FirstViewSet,AboutUsView
 
 app_name = 'src'
 # router = DefaultRouter()
@@ -56,5 +56,6 @@ urlpatterns = [
     path('update-user-lang/<int:pk>/',
          UpdateUserLanguageSettingApiView.as_view(), name='update-user-lang'),
     path('get-user-unread-message-count/', GetUnreadMessageCount.as_view(), name='get-user-unread-message-count'),
-    path('check-mobile-or-phone-number/', CheckMobileOrPhoneNumber.as_view(), name='check-mobile-or-phone-number')
+    path('check-mobile-or-phone-number/', CheckMobileOrPhoneNumber.as_view(), name='check-mobile-or-phone-number'),
+    path('about-us/', AboutUsView.as_view(), name='about-us')
 ]

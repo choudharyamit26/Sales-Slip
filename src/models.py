@@ -125,6 +125,7 @@ class Settings(models.Model):
 
 class ContactUs(models.Model):
     """Contact us model"""
+    company_name = models.CharField(default='',max_length=100)
     phone_number = models.CharField(default='+9199999', max_length=13)
     email = models.EmailField(default='support@snapic.com', max_length=100)
 
