@@ -1130,9 +1130,11 @@ class UpdateUserNotificationSettingsApi(UpdateAPIView):
     def update(self, request, *args, **kwargs):
         try:
             user = self.request.user
+            print(user)
             lang_setting_obj = Settings.objects.get(user=user)
             serializer = SettingsSerializer(data=request.data)
             instance = self.get_object()
+            print(request.data.get('notification'))
             notification = request.data.get('notification')
             instance.notification = notification.capitalize()
             if serializer.is_valid():
