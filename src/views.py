@@ -748,9 +748,11 @@ class UpdatePhoneNumberView(UpdateAPIView):
                 else:
                     pass
                 if lang_setting_obj.language == 'English':
-                    return Response({"message": "Phone number updated successfully", "status": HTTP_200_OK})
+                    data = {'country_code': instance.country_code, 'phone_number': instance.phone_number}
+                    return Response({"message": "Phone number updated successfully",'data':data, "status": HTTP_200_OK})
                 else:
-                    return Response({"message": "تم تحديث رقم الهاتف بنجاح", "status": HTTP_200_OK})
+                    data = {'country_code': instance.country_code, 'phone_number': instance.phone_number}
+                    return Response({"message": "تم تحديث رقم الهاتف بنجاح",'data':data, "status": HTTP_200_OK})
             else:
                 return Response({"message": serializer.errors, "status": HTTP_400_BAD_REQUEST})
         except Exception as e:
@@ -1297,11 +1299,13 @@ class CheckMobileOrPhoneNumber(APIView):
                 user_obj = User.objects.get(phone_number=email_or_phone)
                 if user_obj:
                     return Response(
-                        {"message": "User with this email or phone number already exists", "status": HTTP_400_BAD_REQUEST})
+                        {"message": "User with this email or phone number already exists",
+                         "status": HTTP_400_BAD_REQUEST})
             else:
                 user_obj = User.objects.get(email=email_or_phone)
                 if user_obj:
                     return Response(
-                        {"message": "User with this email or phone number already exists", "status": HTTP_400_BAD_REQUEST})
+                        {"message": "User with this email or phone number already exists",
+                         "status": HTTP_400_BAD_REQUEST})
         except Exception as e:
             return Response({"meassge": "User not found", "status": HTTP_404_NOT_FOUND})
