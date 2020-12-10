@@ -125,7 +125,7 @@ class Settings(models.Model):
 
 class ContactUs(models.Model):
     """Contact us model"""
-    company_name = models.CharField(default='',max_length=100)
+    company_name = models.CharField(default='', max_length=100)
     phone_number = models.CharField(default='+9199999', max_length=13)
     email = models.EmailField(default='support@snapic.com', max_length=100)
 
@@ -138,11 +138,13 @@ class PrivacyPolicy(models.Model):
 class TermsAndCondition(models.Model):
     """Terms and condition Model"""
     conditions = models.TextField()
+    conditions_in_arabic = models.TextField()
 
 
 class AboutUs(models.Model):
     """About us Model"""
     content = models.TextField()
+    content_in_arabic = models.TextField()
 
 
 class Otp(models.Model):
@@ -169,4 +171,3 @@ def setting(sender, instance, created, **kwargs):
             language='English'
         )
         return setting_obj
-
