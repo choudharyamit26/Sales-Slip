@@ -1259,7 +1259,7 @@ class ContactUsApiView(ListAPIView):
         email = ContactUs.objects.all()[0].email
         company_name = ContactUs.objects.all()[0].company_name
         return Response(
-            {"company_name": company_name, "phone number": phone_number, "email": email, "status": HTTP_200_OK})
+            {"company_name": company_name, "phone_number": phone_number, "email": email, "status": HTTP_200_OK})
 
 
 class TermsandConditionApiView(APIView):
