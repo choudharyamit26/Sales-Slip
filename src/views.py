@@ -1202,7 +1202,8 @@ class UserLanguageSettingApiView(APIView):
         user = self.request.user
         settings_obj = Settings.objects.get(user=user)
         lang = settings_obj.language
-        return Response({"language": lang, "id": settings_obj.id, "status": HTTP_200_OK})
+        return Response({"language": lang, "id": settings_obj.id, "status": HTTP_200_OK,
+                         "message": "Fetched user language successfully"})
 
 
 # @method_decorator(csrf_exempt, name='dispatch')
