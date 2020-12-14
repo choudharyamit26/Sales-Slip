@@ -648,29 +648,55 @@ class UpdateUserDetailApiView(UpdateAPIView):
                 else:
                     pass
                 if lang_setting_obj.language == 'English':
-                    data = {
-                        "id": instance.id,
-                        "first_name": instance.first_name,
-                        "last_name": instance.last_name,
-                        "profile_pic": instance.profile_pic.url,
-                        "email": instance.email,
-                        "country_code": instance.country_code,
-                        "phone_number": instance.phone_number,
-                        # "token": token.key
-                    }
-                    return Response({"message": "Profile updated successfully", "status": HTTP_200_OK, "data": data})
+                    if instance.profile_pic.url is not None:
+                        data = {
+                            "id": instance.id,
+                            "first_name": instance.first_name,
+                            "last_name": instance.last_name,
+                            "profile_pic": instance.profile_pic.url,
+                            "email": instance.email,
+                            "country_code": instance.country_code,
+                            "phone_number": instance.phone_number,
+                            # "token": token.key
+                        }
+                        return Response({"message": "Profile updated successfully", "status": HTTP_200_OK, "data": data})
+                    else:
+                        data = {
+                            "id": instance.id,
+                            "first_name": instance.first_name,
+                            "last_name": instance.last_name,
+                            # "profile_pic": instance.profile_pic.url,
+                            "email": instance.email,
+                            "country_code": instance.country_code,
+                            "phone_number": instance.phone_number,
+                            # "token": token.key
+                        }
                 else:
-                    data = {
-                        "id": instance.id,
-                        "first_name": instance.first_name,
-                        "last_name": instance.last_name,
-                        "profile_pic": instance.profile_pic.url,
-                        "email": instance.email,
-                        "country_code": instance.country_code,
-                        "phone_number": instance.phone_number,
-                        # "token": token.key
-                    }
-                    return Response({"message": "تم تحديث الملف الشخصي بنجاح", "status": HTTP_200_OK, "data": data})
+                    if instance.profile_pic.url is not None:
+                        data = {
+                            "id": instance.id,
+                            "first_name": instance.first_name,
+                            "last_name": instance.last_name,
+                            "profile_pic": instance.profile_pic.url,
+                            "email": instance.email,
+                            "country_code": instance.country_code,
+                            "phone_number": instance.phone_number,
+                            # "token": token.key
+                        }
+                        return Response({"message": "تم تحديث الملف الشخصي بنجاح", "status": HTTP_200_OK, "data": data})
+                    else:
+
+                        data = {
+                            "id": instance.id,
+                            "first_name": instance.first_name,
+                            "last_name": instance.last_name,
+                            # "profile_pic": instance.profile_pic.url,
+                            "email": instance.email,
+                            "country_code": instance.country_code,
+                            "phone_number": instance.phone_number,
+                            # "token": token.key
+                        }
+                        return Response({"message": "تم تحديث الملف الشخصي بنجاح", "status": HTTP_200_OK, "data": data})
             else:
                 return Response({"message": serializer.errors, "status": HTTP_400_BAD_REQUEST})
             # else:
