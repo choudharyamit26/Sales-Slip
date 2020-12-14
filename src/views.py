@@ -576,192 +576,103 @@ class UpdateUserDetailApiView(UpdateAPIView):
             instance.last_name = request.data.get('last_name')
             # instance.country_code = request.data.get('country_code')
             # instance.phone_number = request.data.get('phone_number')
-            instance.profile_pic = request.data.get('profile_pic' or None)
-            print('>>>>>>>>>>>>>>>',self.request.data)
-            print('----------------',request.data.get('profile_pic'))
-
-            if request.data.get('profille_pic') is  None:
-                if serializer.is_valid():
-                    instance.save(
-                        update_fields=['email', 'first_name', 'last_name'])
-                    # if Settings.user == user and Settings.notification:
-                    admin = User.objects.get(email='ereceipt@gmail.com')
-                    setting_obj = Settings.objects.get(user=admin)
-                    if setting_obj.notification:
-                        UserNotification.objects.create(
-                            to=admin,
-                            title='Profile Update',
-                            body='User with user id USER {} updated his/her profile'.format(
-                                user.id),
-                        )
-                    user_setting_obj = Settings.objects.get(user=user)
-                    if user_setting_obj.notification:
-                        if user_setting_obj.language == 'English':
-                            UserNotification.objects.create(
-                                to=user,
-                                title='Profile Update',
-                                body='Your profile has been updated successfully',
-                            )
-                            fcm_token = user.device_token
-                            try:
-                                data_message = {"data": {"title": "Profile Update",
-                                                         "body": "Your profile has been updated successfully",
-                                                         "type": "profileUpdate"}}
-                                # data_message = json.dumps(data_message)
-                                title = "Profile Update"
-                                body = "Your profile has been updated successfully"
-                                message_type = "profileUpdate"
-                                respo = send_another(
-                                    fcm_token, title, body, message_type)
-                                respo = send_to_one(fcm_token, data_message)
-                                print("FCM Response===============>0", respo)
-                                # title = "Profile Update"
-                                # body = "Your profile has been updated successfully"
-                                # respo = send_to_one(fcm_token, title, body)
-                                # print("FCM Response===============>0", respo)
-                            except:
-                                pass
-                        else:
-                            UserNotification.objects.create(
-                                to=user,
-                                title='تحديث الملف الشخصي',
-                                body='تم تحديث ملفك الشخصي بنجاح',
-                            )
-                            fcm_token = user.device_token
-                            try:
-                                data_message = {"data": {"title": "تحديث الملف الشخصي",
-                                                         "body": "تم تحديث ملفك الشخصي بنجاح",
-                                                         "type": "تحديث"}}
-                                # data_message = json.dumps(data_message)
-                                respo = send_to_one(fcm_token, data_message)
-                                title = "تحديث الملف الشخصي"
-                                body = "تم تحديث ملفك الشخصي بنجاح"
-                                message_type = "تحديث"
-                                respo = send_another(
-                                    fcm_token, title, body, message_type)
-                                print("FCM Response===============>0", respo)
-                            except:
-                                pass
-                    else:
-                        pass
-                    if lang_setting_obj.language == 'English':
-                        data = {
-                            "id": instance.id,
-                            "first_name": instance.first_name,
-                            "last_name": instance.last_name,
-                            "profile_pic": instance.profile_pic.url,
-                            "email": instance.email,
-                            "country_code": instance.country_code,
-                            "phone_number": instance.phone_number,
-                            # "token": token.key
-                        }
-                        return Response(
-                            {"message": "Profile updated successfully", "status": HTTP_200_OK, "data": data})
-                    else:
-                        data = {
-                            "id": instance.id,
-                            "first_name": instance.first_name,
-                            "last_name": instance.last_name,
-                            "profile_pic": instance.profile_pic.url,
-                            "email": instance.email,
-                            "country_code": instance.country_code,
-                            "phone_number": instance.phone_number,
-                            # "token": token.key
-                        }
-                        return Response({"message": "تم تحديث الملف الشخصي بنجاح", "status": HTTP_200_OK, "data": data})
-                else:
-                    return Response({"message": serializer.errors, "status": HTTP_400_BAD_REQUEST})
-            else:
-                if serializer.is_valid():
+            instance.profile_pic = request.data.get('profile_pic')
+            if serializer.is_valid():
+                if request.data.get('profile_pic') is not None:
+                    print('_____________inside if ',request.data.get('profile_pic'))
                     instance.save(
                         update_fields=['email', 'first_name', 'last_name', 'profile_pic'])
-                    # if Settings.user == user and Settings.notification:
-                    admin = User.objects.get(email='ereceipt@gmail.com')
-                    setting_obj = Settings.objects.get(user=admin)
-                    if setting_obj.notification:
-                        UserNotification.objects.create(
-                            to=admin,
-                            title='Profile Update',
-                            body='User with user id USER {} updated his/her profile'.format(
-                                user.id),
-                        )
-                    user_setting_obj = Settings.objects.get(user=user)
-                    if user_setting_obj.notification:
-                        if user_setting_obj.language == 'English':
-                            UserNotification.objects.create(
-                                to=user,
-                                title='Profile Update',
-                                body='Your profile has been updated successfully',
-                            )
-                            fcm_token = user.device_token
-                            try:
-                                data_message = {"data": {"title": "Profile Update",
-                                                         "body": "Your profile has been updated successfully",
-                                                         "type": "profileUpdate"}}
-                                # data_message = json.dumps(data_message)
-                                title = "Profile Update"
-                                body = "Your profile has been updated successfully"
-                                message_type = "profileUpdate"
-                                respo = send_another(
-                                    fcm_token, title, body, message_type)
-                                respo = send_to_one(fcm_token, data_message)
-                                print("FCM Response===============>0", respo)
-                                # title = "Profile Update"
-                                # body = "Your profile has been updated successfully"
-                                # respo = send_to_one(fcm_token, title, body)
-                                # print("FCM Response===============>0", respo)
-                            except:
-                                pass
-                        else:
-                            UserNotification.objects.create(
-                                to=user,
-                                title='تحديث الملف الشخصي',
-                                body='تم تحديث ملفك الشخصي بنجاح',
-                            )
-                            fcm_token = user.device_token
-                            try:
-                                data_message = {"data": {"title": "تحديث الملف الشخصي",
-                                                         "body": "تم تحديث ملفك الشخصي بنجاح",
-                                                         "type": "تحديث"}}
-                                # data_message = json.dumps(data_message)
-                                respo = send_to_one(fcm_token, data_message)
-                                title = "تحديث الملف الشخصي"
-                                body = "تم تحديث ملفك الشخصي بنجاح"
-                                message_type = "تحديث"
-                                respo = send_another(
-                                    fcm_token, title, body, message_type)
-                                print("FCM Response===============>0", respo)
-                            except:
-                                pass
-                    else:
-                        pass
-                    if lang_setting_obj.language == 'English':
-                        data = {
-                            "id": instance.id,
-                            "first_name": instance.first_name,
-                            "last_name": instance.last_name,
-                            "profile_pic": instance.profile_pic.url,
-                            "email": instance.email,
-                            "country_code": instance.country_code,
-                            "phone_number": instance.phone_number,
-                            # "token": token.key
-                        }
-                        return Response(
-                            {"message": "Profile updated successfully", "status": HTTP_200_OK, "data": data})
-                    else:
-                        data = {
-                            "id": instance.id,
-                            "first_name": instance.first_name,
-                            "last_name": instance.last_name,
-                            "profile_pic": instance.profile_pic.url,
-                            "email": instance.email,
-                            "country_code": instance.country_code,
-                            "phone_number": instance.phone_number,
-                            # "token": token.key
-                        }
-                        return Response({"message": "تم تحديث الملف الشخصي بنجاح", "status": HTTP_200_OK, "data": data})
                 else:
-                    return Response({"message": serializer.errors, "status": HTTP_400_BAD_REQUEST})
+                    print('_____________inside else ', request.data.get('profile_pic'))
+                    instance.save(
+                        update_fields=['email', 'first_name', 'last_name'])
+
+                # if Settings.user == user and Settings.notification:
+                admin = User.objects.get(email='ereceipt@gmail.com')
+                setting_obj = Settings.objects.get(user=admin)
+                if setting_obj.notification:
+                    UserNotification.objects.create(
+                        to=admin,
+                        title='Profile Update',
+                        body='User with user id USER {} updated his/her profile'.format(
+                            user.id),
+                    )
+                user_setting_obj = Settings.objects.get(user=user)
+                if user_setting_obj.notification:
+                    if user_setting_obj.language == 'English':
+                        UserNotification.objects.create(
+                            to=user,
+                            title='Profile Update',
+                            body='Your profile has been updated successfully',
+                        )
+                        fcm_token = user.device_token
+                        try:
+                            data_message = {"data": {"title": "Profile Update",
+                                                     "body": "Your profile has been updated successfully",
+                                                     "type": "profileUpdate"}}
+                            # data_message = json.dumps(data_message)
+                            title = "Profile Update"
+                            body = "Your profile has been updated successfully"
+                            message_type = "profileUpdate"
+                            respo = send_another(
+                                fcm_token, title, body, message_type)
+                            respo = send_to_one(fcm_token, data_message)
+                            print("FCM Response===============>0", respo)
+                            # title = "Profile Update"
+                            # body = "Your profile has been updated successfully"
+                            # respo = send_to_one(fcm_token, title, body)
+                            # print("FCM Response===============>0", respo)
+                        except:
+                            pass
+                    else:
+                        UserNotification.objects.create(
+                            to=user,
+                            title='تحديث الملف الشخصي',
+                            body='تم تحديث ملفك الشخصي بنجاح',
+                        )
+                        fcm_token = user.device_token
+                        try:
+                            data_message = {"data": {"title": "تحديث الملف الشخصي",
+                                                     "body": "تم تحديث ملفك الشخصي بنجاح",
+                                                     "type": "تحديث"}}
+                            # data_message = json.dumps(data_message)
+                            respo = send_to_one(fcm_token, data_message)
+                            title = "تحديث الملف الشخصي"
+                            body = "تم تحديث ملفك الشخصي بنجاح"
+                            message_type = "تحديث"
+                            respo = send_another(
+                                fcm_token, title, body, message_type)
+                            print("FCM Response===============>0", respo)
+                        except:
+                            pass
+                else:
+                    pass
+                if lang_setting_obj.language == 'English':
+                    data = {
+                        "id": instance.id,
+                        "first_name": instance.first_name,
+                        "last_name": instance.last_name,
+                        "profile_pic": instance.profile_pic.url,
+                        "email": instance.email,
+                        "country_code": instance.country_code,
+                        "phone_number": instance.phone_number,
+                        # "token": token.key
+                    }
+                    return Response({"message": "Profile updated successfully", "status": HTTP_200_OK, "data": data})
+                else:
+                    data = {
+                        "id": instance.id,
+                        "first_name": instance.first_name,
+                        "last_name": instance.last_name,
+                        "profile_pic": instance.profile_pic.url,
+                        "email": instance.email,
+                        "country_code": instance.country_code,
+                        "phone_number": instance.phone_number,
+                        # "token": token.key
+                    }
+                    return Response({"message": "تم تحديث الملف الشخصي بنجاح", "status": HTTP_200_OK, "data": data})
+            else:
+                return Response({"message": serializer.errors, "status": HTTP_400_BAD_REQUEST})
             # else:
             #     return Response({"message": "User does not exists", "status": HTTP_404_NOT_FOUND})
         except Exception as e:
