@@ -40,7 +40,8 @@ OrderFormSet = modelformset_factory(OrderItem, fields=('product', 'quantity', 'p
     'product': forms.TextInput(
         attrs={
             # 'class': 'form-control',
-            'required': 'required'
+            'required': 'required',
+            # 'remove':'remove'
         },
     ),
     'quantity': forms.TextInput(
