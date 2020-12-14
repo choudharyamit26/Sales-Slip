@@ -576,7 +576,7 @@ class UpdateUserDetailApiView(UpdateAPIView):
             instance.last_name = request.data.get('last_name')
             # instance.country_code = request.data.get('country_code')
             # instance.phone_number = request.data.get('phone_number')
-            instance.profile_pic = request.data.get('profile_pic')
+            instance.profile_pic = request.data.get('profile_pic' or None)
             print(request.data.get('profile_pic'))
             if request.data.get('profille_pic') == None:
                 if serializer.is_valid():
