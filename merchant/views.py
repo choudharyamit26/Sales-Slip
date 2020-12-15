@@ -527,13 +527,15 @@ class PrintQRCode(LoginRequiredMixin, View):
         domain = request.META['HTTP_HOST']
         qr_url = protocol + '://' + domain + bill.qr_code.url
         print(qr_url)
-        qr = res.get(qr_url)
-        print('>>>>>>>>>>>>',qr.url)
+        # qr = res.get(qr_url)
+        # print('>>>>>>>>>>>>',qr.url)
         context = {
-            # 'qr_url': qr_url
-            'qr_url': qr.url
+            'qr_url': qr_url
+            # 'qr_url': qr.url
         }
+        print(context)
         pdf = render_to_pdf('qr.html', context)
+        print('after render to pdf')
         return HttpResponse(pdf, content_type='application/pdf')
         # if pdf:
         #     response = HttpResponse(pdf, content_type='application/pdf')
