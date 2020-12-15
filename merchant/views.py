@@ -523,6 +523,7 @@ class PrintQRCode(LoginRequiredMixin, View):
             protocol = "http"
         domain = request.META['HTTP_HOST']
         qr_url = protocol + '://' + domain + bill.qr_code.url
+        print(qr_url)
         context = {
             'qr_url': qr_url
         }
