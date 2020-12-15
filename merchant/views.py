@@ -1,5 +1,5 @@
 import json
-
+import requests as res
 from django.conf.global_settings import DEFAULT_FROM_EMAIL
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
@@ -524,8 +524,11 @@ class PrintQRCode(LoginRequiredMixin, View):
         domain = request.META['HTTP_HOST']
         qr_url = protocol + '://' + domain + bill.qr_code.url
         print(qr_url)
+        qr = res.get(qr_url)
+        print(qr)
         context = {
-            'qr_url': qr_url
+            # 'qr_url': qr_url
+            'qr_url': qr
         }
         pdf = render_to_pdf('qr.html', context)
         return HttpResponse(pdf, content_type='application/pdf')
