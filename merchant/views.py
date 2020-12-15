@@ -39,6 +39,9 @@ from xhtml2pdf import pisa
 
 
 def render_to_pdf(template_src, context_dict={}):
+    print('inside render to pdf ')
+    print(template_src)
+    print(context_dict)
     template = get_template(template_src)
     html = template.render(context_dict)
     result = BytesIO()
@@ -525,10 +528,10 @@ class PrintQRCode(LoginRequiredMixin, View):
         qr_url = protocol + '://' + domain + bill.qr_code.url
         print(qr_url)
         qr = res.get(qr_url)
-        print(qr)
+        print('>>>>>>>>>>>>',qr.url)
         context = {
             # 'qr_url': qr_url
-            'qr_url': qr
+            'qr_url': qr.url
         }
         pdf = render_to_pdf('qr.html', context)
         return HttpResponse(pdf, content_type='application/pdf')
