@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'crispy_forms',
     'rest_framework',
     'rest_framework.authtoken',
-    'fcm_django'
+    'fcm_django',
+    'storages'
 
 ]
 
@@ -138,9 +139,9 @@ LOGIN_REDIRECT_URL = 'adminpanel:dashboard'
 LOGOUT_REDIRECT_URL = 'adminpanel:login'
 
 MEDIA_URL = '/media/'
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-STATIC_ROOT = os.path.join(BASE_DIR, 'static_root')
+# STATIC_URL = '/static/'
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static_root')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -162,6 +163,27 @@ REST_FRAMEWORK = {
     # 'DEFAULT_PERMISSION_CLASSES': (
     #     'rest_framework.permissions.IsAuthenticated',)
 }
+
+
+# Client S3 BUCKET CONFIG
+AWS_LOCATION = 'static'
+AWS_ACCESS_KEY_ID = 'AKIAZUDUHP2OVMC7W62Y'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'ereceipt-bucket'
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+AWS_S3_FILE_OVERWRITE = False
+AWS_S3_REGION_NAME = "us-east-2"
+AWS_S3_HOST = "s3.us-east-2.amazonaws.com"
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+AWS_DEFAULT_ACL = None
+
+AWS_QUERYSTRING_AUTH = False
+
 CKEDITOR_JQUERY_URL = 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js'
 
 CKEDITOR_UPLOAD_PATH = 'uploads/'
