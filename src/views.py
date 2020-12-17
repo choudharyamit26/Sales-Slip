@@ -1386,7 +1386,7 @@ class UpdateEmailView(UpdateAPIView):
                 print(email)
                 user.email = email
                 user.save()
-                return Response({"message": "Email updates successfully", "status": HTTP_200_OK})
+                return Response({"message": "Email updated successfully", "email": email, "status": HTTP_200_OK})
             else:
                 return Response({"message": serializer.errors, "status": HTTP_400_BAD_REQUEST})
         except Exception as e:
