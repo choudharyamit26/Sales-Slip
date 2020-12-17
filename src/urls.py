@@ -8,7 +8,7 @@ from .views import UserCreateAPIView, LoginAPIView, ForgetPasswordAPIView, Chang
     UpdateNotification, UpdateUserNotificationSettingsApi, UpdateUserLanguageSettingApiView, GetUnreadMessageCount, \
     UserLanguageSettingApiView, GetUserNotificationSettingsApi, ChangeLanguageApiView, ChangeNotificationApiView, \
     PrivacyPolicyApiView, ContactUsApiView, TermsandConditionApiView, GetUserDetailApiView, CheckMobileOrPhoneNumber, \
-    FirstViewSet,AboutUsView
+    FirstViewSet,AboutUsView,UpdateEmailView
 
 app_name = 'src'
 # router = DefaultRouter()
@@ -29,6 +29,7 @@ urlpatterns = [
     path('resend-otp/', ResendOtp.as_view(), name='resend-otp'),
     path('update-user-phone-number/<int:pk>/', UpdatePhoneNumberView.as_view(), name='update-user-phone-number'),
     path('user-update/<int:pk>/', UpdateUserDetailApiView.as_view(), name='user-update'),
+    path('update-user-email/<int:pk>/', UpdateEmailView.as_view(), name='update-user-email'),
     path('scanned-data/', ScannedDataView.as_view(), name='scanned-data'),
     path('scanned-data-detail/', GetScannedDataDetail.as_view(), name='scanned-data-detail'),
     path('scanned-data-list/', GetUserTransactions.as_view(), name='scanned-data-list'),

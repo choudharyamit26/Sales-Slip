@@ -22,7 +22,7 @@ from .models import User, Settings, UserNotification, Otp, ScannedData, Merchant
 from .serializers import UserCreateSerializer, AuthTokenSerializer, ForgetPasswordSerializer, ChangePasswordSerializer, \
     UpdateNotificationSerializer, NotificationSerializer, OtpSerializer, UpdatePhoneSerializer, ScannedDataSerializer, \
     TermsandConditionSerializer, ContactUsSerializer, PrivacyPolicySerializer, LanguageSettingSerializer, \
-    NotificationSettingSerializer, SettingsSerializer, FAQSerializer, LanguageSettingsSerializer
+    NotificationSettingSerializer, SettingsSerializer, FAQSerializer, LanguageSettingsSerializer, UpdateEmailSerializer
 
 from rest_framework.settings import api_settings
 from rest_framework.viewsets import ModelViewSet
@@ -579,7 +579,7 @@ class UpdateUserDetailApiView(UpdateAPIView):
             instance.profile_pic = request.data.get('profile_pic')
             if serializer.is_valid():
                 if request.data.get('profile_pic') is not None:
-                    print('_____________inside if ',request.data.get('profile_pic'))
+                    print('_____________inside if ', request.data.get('profile_pic'))
                     instance.save(
                         update_fields=['email', 'first_name', 'last_name', 'profile_pic'])
                 else:
@@ -659,7 +659,8 @@ class UpdateUserDetailApiView(UpdateAPIView):
                             "phone_number": instance.phone_number,
                             # "token": token.key
                         }
-                        return Response({"message": "Profile updated successfully", "status": HTTP_200_OK, "data": data})
+                        return Response(
+                            {"message": "Profile updated successfully", "status": HTTP_200_OK, "data": data})
                     else:
                         data = {
                             "id": instance.id,
@@ -1363,6 +1364,30 @@ class AboutUsView(APIView):
     def get(self, request, *args, **kwargs):
         about_us = AboutUs.objects.first()
         return Response({"message": "About us fetched successfully", "data": about_us.content, "status": HTTP_200_OK})
+
+
+class UpdateEmailView(UpdateAPIView):
+    model = User
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+    queryset = User.objects.all()
+
+    def patch(self, request, *args, **kwargs):
+        user = self.get_object()
+        print(user)
+        serializer = UpdateEmailSerializer(data=request.data)
+        try:
+            if serializer.is_valid():
+                email = request.data['email']
+                print(email)
+                user.email = email
+                user.save()
+                return Response({"message": "Email updates successfully", "status": HTTP_200_OK})
+            else:
+                return Response({"message": serializer.errors, "status": HTTP_400_BAD_REQUEST})
+        except Exception as e:
+            x = {"Error": str(e)}
+            return Response({'message': x['Error'], "status": HTTP_400_BAD_REQUEST})
 
 
 class FirstViewSet(ModelViewSet):

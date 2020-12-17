@@ -216,3 +216,9 @@ class LanguageSettingsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Settings
         fields = ('language',)
+
+
+class UpdateEmailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('email',)

@@ -1953,3 +1953,14 @@ div.dataTables_wrapper div.dataTables_filter label {
     .TableList{
     margin-top:30px;
     }
+
+.closed-pos{
+	position: relative;
+}
+.closed{
+	position: absolute;
+	right: 0;
+	top: 0;
+	font-size: 22px;
+	color: #000;
+}

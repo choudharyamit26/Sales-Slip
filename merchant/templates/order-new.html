@@ -23,7 +23,7 @@
                         </div>
                         {% endfor %}
                         {% endif %}
-                        <form method="POST">
+                        <form method="POST" >
                             {% csrf_token %}
                             <div class="row">
                                 <div class="col-sm-6">
@@ -33,17 +33,21 @@
 
                             {{ formset.management_form }}
                             {% for form in formset %}
-                            <div class="form-row mt-4 mb-4 closed-pos" style="position:relative">
-                                <a href="#0" class="closed" style="position: absolute;right: 0;font-size: 20px;">
-                                    <i class="fa fa-times"></i>
-                                </a>
-                                {{ form.as_table }}
+                            <div class="contentAll">
+                                <div class="form-row mt-4 mb-4 closed-pos" style="position:relative">
+                                    <a href="#0" class="closed" style="position: absolute;right: 0;font-size: 20px;">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+                                    {{ form.as_table }}
+                                </div>
                             </div>
                             {% endfor %}
                             <div style="margin-top:40px;">
                                 <button class="btn btn-success B" type="submit">Create Order</button>
                                 <a class="btn btn-info add-form-row" type="submit" id="myBtn"
                                    data-toggle="modal">Add item</a>
+<!--                                <a class="btn btn-info add-Row" type="submit" id="myBtn"-->
+<!--                                   data-toggle="modal">Add item</a>-->
                             </div>
                         </form>
                     </div>
@@ -51,9 +55,18 @@
             </div>
         </div>
     </div>
-
 </div>
+<!--<script>-->
+<!--      $(document).on("click", ".addRow", function () {-->
 
+<!--//    alert(new_row);-->
+<!--  $('.contentAll').append('<div class ="closed-pos form-row"><label for="id_form-0-product">Product:</label><input type="text" name="form-0-product"><label for="id_form-0-product">Quantity:</label><input type="text" name="form-0-product"><label for="id_form-0-product">Price:</label><input type="text" name="form-0-product"><a href ="#0" class ="closed"><i class="fa fa-times"></i></a></div>');-->
+
+<!--  });-->
+<!--$(document).on('click','.closed',function(){-->
+<!--    $(this).parent('.closed-pos.form-row').hide();-->
+<!--});-->
+<!--</script>-->
 <script type='text/javascript'>
     function updateElementIndex(el, prefix, ndx) {
         var id_regex = new RegExp('(' + prefix + '-\\d+)');
@@ -113,14 +126,9 @@
     });
 
 
-
-
 $(document).on('click','.closed',function(){
     $(this).parent('.closed-pos').hide();
 });
-
-
-
 
 
 </script>
