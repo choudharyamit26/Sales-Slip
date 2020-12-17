@@ -383,6 +383,8 @@ class SendOtpEmail(APIView):
 
 
 class VerifyEmailOtp(APIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
 
     def post(self, request, *args, **kwargs):
         otp = self.request.data['otp']
