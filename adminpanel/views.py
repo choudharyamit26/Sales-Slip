@@ -748,7 +748,7 @@ class CreateCategory(LoginRequiredMixin, CreateView):
     template_name = 'category.html'
     login_url = 'adminpanel:login'
     form_class = CategoryForm
-    success_url = reverse_lazy("adminpanel:static-content")
+    success_url = reverse_lazy("adminpanel:category-list")
 
 
 class CategoryList(LoginRequiredMixin, ListView):
