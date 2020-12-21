@@ -1,34 +1,31 @@
-import json
-import requests as res
 from django.conf.global_settings import DEFAULT_FROM_EMAIL
+import pyqrcode
+import os
+from django.core.files import File
+from django.conf.global_settings import DEFAULT_FROM_EMAIL
+from django.contrib import messages
+from django.contrib.auth import get_user_model, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.views import PasswordContextMixin
 from django.core.mail import send_mail
-from django.core.paginator import Paginator
-from django.db.models import Q
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
-from django.template.loader import render_to_string, get_template
+from django.template.loader import render_to_string
 from django.urls import reverse_lazy, reverse
 from django.utils.crypto import get_random_string
 from django.utils.decorators import method_decorator
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+from django.utils.translation import gettext_lazy as _
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
-
-from django.utils.translation import gettext_lazy as _
-from src.models import User, OrderItem, Receipt, Product, Merchant, TermsAndCondition, UserNotification, Settings
 from django.views.generic import View, ListView, DetailView, CreateView, FormView, TemplateView, UpdateView
+from src.models import User, OrderItem, Receipt, Merchant, TermsAndCondition, UserNotification, Settings
+
 from .forms import MerchantLoginForm, OrderForm, OrderFormSet, MerchantUpdateForm
-from django.contrib.auth import get_user_model, login, authenticate, logout, update_session_auth_hash
-import pyqrcode
-import png
-from pyqrcode import QRCode
-from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
 
 user = get_user_model()
 
@@ -361,9 +358,9 @@ class CreateOrder(LoginRequiredMixin, CreateView):
             item_string += ', Order Id : ' + str(bill.id)
             url = pyqrcode.create(item_string, encoding='utf-8')
             url.png(f'media/{receipt_id}.png', scale=6)
-            print(item_string)
-            bill.qr_code = f'{receipt_id}.png'
-            bill.save()
+            qr = os.path.basename(f'{receipt_id}.png'), File(open(f'media/{receipt_id}.png', 'rb'))
+            bill.qr_code = qr[1]
+            bill.save(update_fields=['qr_code'])
             return HttpResponseRedirect(reverse('merchant:order-detail', args=(bill.id,)))
 
     def form_invalid(self, form):
@@ -520,22 +517,10 @@ class PrintQRCode(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         template = get_template('qr.html')
         bill = Receipt.objects.get(pk=self.kwargs.get('pk'))
-        if request.is_secure():
-            protocol = "https"
-        else:
-            protocol = "http"
-        domain = request.META['HTTP_HOST']
-        qr_url = protocol + '://' + domain + bill.qr_code.url
-        print(qr_url)
-        # qr = res.get(qr_url)
-        # print('>>>>>>>>>>>>',qr.url)
         context = {
-            'qr_url': qr_url
-            # 'qr_url': qr.url
+            'qr_url': bill.qr_code.url
         }
-        print(context)
         pdf = render_to_pdf('qr.html', context)
-        print('after render to pdf')
         return HttpResponse(pdf, content_type='application/pdf')
         # if pdf:
         #     response = HttpResponse(pdf, content_type='application/pdf')
