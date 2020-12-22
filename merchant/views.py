@@ -431,18 +431,18 @@ class MyProfile(LoginRequiredMixin, View):
         user = self.request.user
         category = Merchant.objects.get(email=self.request.user.email)
         # print(user.profile_pic.url)
-        if request.is_secure():
-            protocol = "https"
-        else:
-            protocol = "http"
-        domain = request.META['HTTP_HOST']
-        profile_pic_url = protocol + '://' + domain + user.profile_pic.url
-        print(profile_pic_url)
+        # if request.is_secure():
+        #     protocol = "https"
+        # else:
+        #     protocol = "http"
+        # domain = request.META['HTTP_HOST']
+        # profile_pic_url = protocol + '://' + domain + user.profile_pic.url
+        # print(profile_pic_url)
 
         context = {
             'object': user,
             'category': category,
-            'profile_pic_url': profile_pic_url
+            # 'profile_pic_url': profile_pic_url
         }
         return render(self.request, 'myprofile.html', context)
 
@@ -555,7 +555,8 @@ class UpdateProfilePicView(LoginRequiredMixin, UpdateView):
             user.save()
             messages.info(self.request, 'Profile pic updated successfully')
             return redirect('merchant:profile')
-        except:
+        except Exception as e:
+            print(e)
             messages.error(self.request, "Please select an image")
             return redirect(self.request.path_info)
 
