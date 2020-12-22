@@ -918,7 +918,7 @@ class ReceiptSearchView(ListAPIView):
                 # data.update({'total': obj.total})
             data.update({'total': total})
             data_list.append(data)
-            return Response({'data': data, "status": HTTP_200_OK})
+            return Response({'data': data_list, "status": HTTP_200_OK})
         except Exception as e:
             print(e)
             return Response({'error': "Data not found", "status": HTTP_400_BAD_REQUEST})
