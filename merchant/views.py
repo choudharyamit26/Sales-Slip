@@ -547,12 +547,15 @@ class UpdateProfilePicView(LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         try:
             profile_pic = self.request.FILES['profile_pic']
-            merchant_obj = Merchant.objects.get(id=self.request.user.id)
-            merchant_obj.profile_pic = profile_pic
-            merchant_obj.save()
+            print(self.request.user)
+            print(self.request.user.id)
+            print(self.request.user.email)
             user = User.objects.get(id=self.request.user.id)
             user.profile_pic = profile_pic
             user.save()
+            merchant_obj = Merchant.objects.get(email=self.request.user.email)
+            merchant_obj.profile_pic = profile_pic
+            merchant_obj.save()
             messages.info(self.request, 'Profile pic updated successfully')
             return redirect('merchant:profile')
         except Exception as e:
