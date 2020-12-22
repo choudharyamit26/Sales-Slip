@@ -892,9 +892,10 @@ class GetUserTransactions(ListAPIView):
 
 class ReceiptSearchView(ListAPIView):
     model = Receipt
+
     # model = ScannedData
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    # authentication_classes = (TokenAuthentication,)
+    # permission_classes = (IsAuthenticated,)
 
     def get(self, request, *args, **kwargs):
         receipt_id = self.request.GET.get('id')
@@ -906,18 +907,25 @@ class ReceiptSearchView(ListAPIView):
                     'merchant_id': receipt_obj.merchant.id}
             total = 0
             i = 1
+            c = 0
             for obj in receipt_obj.order.all():
                 # data.update({'product_name': obj.product})
                 # data.update({'product_price': obj.price})
                 # data.update({'product_quantity': obj.quantity})
-                data.update({'product_{}_name'.format(i): obj.product})
-                data.update({'product_{}_price'.format(i): obj.price})
-                data.update({'product_{}_quantity'.format(i): obj.quantity})
+                # data.update({'product_{}_name'.format(i): obj.product})
+                # data.update({'product_{}_price'.format(i): obj.price})
+                # data.update({'product_{}_quantity'.format(i): obj.quantity})
+                data_list.append({'product_name':obj.product})
+                data_list.append({'product_price':obj.price})
+                data_list.append({'product_quantity':obj.quantity})
                 i += 1
+                c = i
                 total = obj.total
                 # data.update({'total': obj.total})
             data.update({'total': total})
-            data_list.append(data)
+            # data_list.append(data)
+
+            print(data_list)
             return Response({'data': data_list, "status": HTTP_200_OK})
         except Exception as e:
             print(e)
