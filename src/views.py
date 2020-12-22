@@ -901,6 +901,7 @@ class ReceiptSearchView(ListAPIView):
         try:
             # receipt_obj = ScannedData.objects.get(id=receipt_id)
             receipt_obj = Receipt.objects.get(id=receipt_id)
+            data_list = []
             data = {'id': receipt_obj.id, 'merchant': receipt_obj.merchant.email,
                     'merchant_id': receipt_obj.merchant.id}
             total = 0
@@ -916,6 +917,7 @@ class ReceiptSearchView(ListAPIView):
                 total = obj.total
                 # data.update({'total': obj.total})
             data.update({'total': total})
+            data_list.append(data)
             return Response({'data': data, "status": HTTP_200_OK})
         except Exception as e:
             print(e)
