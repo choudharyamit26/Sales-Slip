@@ -394,8 +394,15 @@ class OrderList(LoginRequiredMixin, ListView):
     def get(self, request, *args, **kwargs):
         merchant_obj = Merchant.objects.get(email=self.request.user.email)
         receipts = Receipt.objects.filter(merchant=merchant_obj)
+        print([x.qr_code for x in receipts])
+        re = []
+        for x in receipts:
+            if x.qr_code:
+                re.append(x)
+            else:
+                pass
         context = {
-            'object_list': receipts,
+            'object_list': re,
         }
         return render(self.request, "order-list.html", context)
 

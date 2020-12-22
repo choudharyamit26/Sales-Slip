@@ -62,6 +62,7 @@ class Merchant(models.Model):
     password = models.CharField(default='', max_length=100)
     confirm_password = models.CharField(default='', max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
+    commercial_id = models.CharField(default='', max_length=256)
 
     def __str__(self):
         return self.email

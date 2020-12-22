@@ -17,8 +17,8 @@
             <div class="SearchBox">
                 <form action="" method="get">
                     <!--                    {% csrf_token %}-->
-                    <input type="text" name="qs" placeholder="Enter Key">
-                    <button>Apply</button>
+                    <input type="text" name="qs" placeholder="Filter merchant">
+                    <button>Filter</button>
                 </form>
             </div>
 
@@ -55,6 +55,7 @@
                             <th>User ID</th>
                             <th>Name of the user</th>
                             <th>Category</th>
+                            <th>Commerce Id</th>
                             <th>Email id</th>
                             <th>Registration Date</th>
                             <th>action</th>
@@ -67,6 +68,7 @@
                             <td>{{object.id}}</td>
                             <td>{{object.full_name}}</td>
                             <td>{{object.category.category_name}}</td>
+                            <td>{{object.commercial_id}}</td>
                             <td>{{object.email}}</td>
                             <td>{{object.created_at|date:'M. d, Y'}}</td>
                             <td>
@@ -95,6 +97,7 @@
                             <th>Merchant ID</th>
                             <th>Name of the user</th>
                             <th>Category</th>
+                            <th>Commerce Number</th>
                             <th>Email id</th>
                             <th>Registration Date</th>
                             <th>action</th>
@@ -107,6 +110,7 @@
                             <td>{{object.id}}</td>
                             <td>{{object.full_name}}</td>
                             <td>{{object.category.category_name}}</td>
+                            <td>{{object.commercial_id}}</td>
                             <td>{{object.email}}</td>
                             <td>{{object.created_at|date:'M. d, Y'}}</td>
                             <td>
@@ -135,6 +139,7 @@
                             <th>User ID</th>
                             <th>Name of the user</th>
                             <th>Category</th>
+                            <th>Commerce Number</th>
                             <th>Email id</th>
                             <th>Registration Date</th>
                             <th>action</th>
@@ -147,6 +152,7 @@
                             <td>{{object.id}}</td>
                             <td>{{object.full_name}}</td>
                             <td>{{object.category.category_name}}</td>
+                            <td>{{object.commercial_id}}</td>
                             <td>{{object.email}}</td>
                             <td>{{object.phone_number}}</td>
                             <td>{{object.created_at|date:'M. d, Y'}}</td>

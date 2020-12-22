@@ -327,6 +327,7 @@ class AddMerchant(View):
         full_name = self.request.POST['full_name']
         categories = self.request.POST['category']
         email = self.request.POST['email']
+        commercial_id = self.request.POST['commercial_id']
         password = self.request.POST['password']
         confirm_password = self.request.POST['confirm_password']
         category = Category.objects.all()
@@ -352,6 +353,7 @@ class AddMerchant(View):
                         full_name=full_name,
                         category=category_object,
                         email=email,
+                        commercial_id=commercial_id,
                         password=password
                     )
                     merchant = User.objects.create(
@@ -402,6 +404,7 @@ class AddMerchant(View):
                             full_name=full_name,
                             category=category_object,
                             email=email,
+                            commercial_id=commercial_id,
                             password=password
                         )
                         merchant = User.objects.create(
@@ -440,6 +443,7 @@ class AddMerchant(View):
                         full_name=full_name,
                         category=category_object,
                         email=email,
+                        commercial_id=commercial_id,
                         password=password
                     )
                     merchant = User.objects.create(
@@ -493,7 +497,8 @@ class MerchantList(LoginRequiredMixin, ListView):
             search = Merchant.objects.filter(Q(full_name__icontains=qs) |
                                              Q(category__category_name__icontains=qs) |
                                              Q(email__icontains=qs) |
-                                             Q(id__icontains=qs))
+                                             Q(id__icontains=qs) |
+                                             Q(commercial_id__icontains=qs))
 
             search_count = len(search)
             context = {
@@ -510,6 +515,7 @@ class MerchantList(LoginRequiredMixin, ListView):
             myfilter = MerchantFilter(self.request.GET, queryset=users)
             users = myfilter.qs
             print(users.count())
+            print('Commercial id ', [x.commercial_id for x in users])
             paginator = Paginator(users, self.paginate_by)
             page_number = self.request.GET.get('page')
             page_obj = paginator.get_page(page_number)
@@ -527,10 +533,29 @@ class ReceiptList(LoginRequiredMixin, ListView):
     login_url = 'adminpanel:login'
 
     def get(self, request, *args, **kwargs):
+        qs = self.request.GET.get('qs')
         receipts = Receipt.objects.all()
         context = {
             'receipts': receipts
         }
+        if qs:
+            search = Receipt.objects.filter(Q(id__icontains=qs) |
+                                            Q(merchant__category__category_name__icontains=qs) |
+                                            Q(merchant__email__icontains=qs) |
+                                            Q(user__email__contains=qs))
+            print(search)
+            print([x.user.email for x in search])
+
+            search_count = len(search)
+            context = {
+                'search': search,
+            }
+            if search:
+                messages.success(self.request, str(search_count) + ' matches found')
+                return render(self.request, 'receipt_list.html', context)
+            else:
+                messages.info(self.request, 'No results found')
+                return render(self.request, 'receipt_list.html', context)
         return render(self.request, 'receipt_list.html', context)
 
 

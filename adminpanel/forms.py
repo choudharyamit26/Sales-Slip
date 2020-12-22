@@ -18,7 +18,7 @@ class MerchantForm(forms.ModelForm):
 
     class Meta:
         model = Merchant
-        fields = ('full_name', 'category', 'email', 'password', 'confirm_password')
+        fields = ('full_name', 'category', 'commercial_id', 'email', 'password', 'confirm_password')
 
 
 class UserNotificationForm(forms.ModelForm):

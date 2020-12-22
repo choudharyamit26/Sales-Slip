@@ -5,7 +5,7 @@
         <div class="content-wrapper">
             {% if messages %}
             {% for message in messages %}
-            <div class="alert alert-warning alert-dismissible fade in" role="alert">
+            <div class="alert alert-info alert-dismissible fade in" role="alert">
                 {{ message }}
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -15,9 +15,17 @@
             {% endif %}
         </div>
         <div class="Small-Wrapper">
+            <div class="SearchBox">
+                <form action="" method="get">
+                    <!--                    {% csrf_token %}-->
+                    <input type="text" name="qs" placeholder="Filter by receipt id/category/user email/merchant email" style="font-size:10x;">
+                    <button>Filter</button>
+                </form>
+            </div>
             <div class="PasswordArea">
                 <div class="row">
                     <h4 class="Title">Receipt Management</h4>
+                    {% if search %}
                     <div class="TableList">
                         <div class="dragscroll">
                             <table style="width: 150vw">
@@ -27,19 +35,21 @@
                                     <th>Receipt ID</th>
                                     <th>Merchant</th>
                                     <th>Category</th>
-                                    <th>Email id</th>
+                                    <th>Merchant Email id</th>
+                                    <th>User Email id</th>
                                     <th>Date</th>
                                     <th>action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {% for object in receipts %}
+                                {% for object in search %}
                                 <tr>
                                     <td>{{forloop.counter}}</td>
                                     <td>{{object.id}}</td>
                                     <td>{{object.merchant.full_name}}</td>
                                     <td>{{object.merchant.category.category_name}}</td>
                                     <td>{{object.merchant.email}}</td>
+                                    <td>{{object.user.email}}</td>
                                     <td>{{object.created_at}}</td>
                                     <td>
                                         <a class="Blue" href="{% url 'adminpanel:receipt-detail' object.id %}">
@@ -52,6 +62,44 @@
                             </table>
                         </div>
                     </div>
+                    {% else %}
+                    <div class="TableList">
+                        <div class="dragscroll">
+                            <table style="width: 150vw">
+                                <thead>
+                                <tr>
+                                    <th>S. No</th>
+                                    <th>Receipt ID</th>
+                                    <th>Merchant</th>
+                                    <th>Category</th>
+                                    <th>Merchant Email id</th>
+                                    <th>User Email id</th>
+                                    <th>Date</th>
+                                    <th>action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for object in receipts %}
+                                <tr>
+                                    <td>{{forloop.counter}}</td>
+                                    <td>{{object.id}}</td>
+                                    <td>{{object.merchant.full_name}}</td>
+                                    <td>{{object.merchant.category.category_name}}</td>
+                                    <td>{{object.merchant.email}}</td>
+                                    <td>{{object.user.email}}</td>
+                                    <td>{{object.created_at}}</td>
+                                    <td>
+                                        <a class="Blue" href="{% url 'adminpanel:receipt-detail' object.id %}">
+                                            <i class="fa fa-eye"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    {% endif %}
                 </div>
             </div>
         </div>

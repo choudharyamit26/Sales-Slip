@@ -71,11 +71,11 @@
                 <span><i class="fa fa-tachometer"></i></span> Dashboard
             </a>
         </li>
-        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'merchant:create-order' %}active{% endif %}">
-            <a href="{% url 'merchant:create-order'  %}">
-                <span><i class="fa fa-first-order"></i></span>Generate QR Code
-            </a>
-        </li>
+<!--        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'merchant:create-order' %}active{% endif %}">-->
+<!--            <a href="{% url 'merchant:create-order'  %}">-->
+<!--                <span><i class="fa fa-first-order"></i></span>Generate QR Code-->
+<!--            </a>-->
+<!--        </li>-->
         <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'merchant:order-list' %}active{% endif %}">
             <a href="{% url 'merchant:order-list'  %}">
                 <span><i class="fa fa-list"></i></span> Receipt's Management

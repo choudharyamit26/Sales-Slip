@@ -165,23 +165,23 @@ input[type="date"] {
     font-weight: 500;
     display: inline-block;
     position: relative;
-    background-color: #007cd0;
+    background-color: #fec93d;
     font-size: 15px;
     color: #fff;
     text-transform: capitalize;
     letter-spacing: .5px;
     border-radius: 0;
     outline: 0;
-    border: 1px solid #007cd0;
+    border: 1px solid #fec93d;
 }
 
 .Button:hover {
     background-color: #fff;
-    color: #007cd0;
+    color: #fec93d;
 }
 
 .LoginArea {
-    background-color: #01bcfd;
+    background-color: #fec93d;
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -195,7 +195,7 @@ input[type="date"] {
     margin: auto;
     width: 95%;
     border-radius: 15px;
-    border: 10px solid #007cd0;
+    border: 10px solid #fec93d;
 }
 
 .LoginArea .LoginBox figure .logoMainImg {
@@ -299,7 +299,7 @@ input[type="date"] {
     font-weight: 500;
     display: block;
     position: relative;
-    background-color:#007cd0;
+    background-color:#fec93d;
     font-size: 15px;
     color: #fff;
     text-transform: capitalize;
@@ -310,7 +310,7 @@ input[type="date"] {
 
 .LoginArea .LoginBox button:hover,
 .LoginArea .LoginBox a.Login:hover {
-    background-color: #007cd0;
+    background-color: #fec93d;
 }
 
 .CheckBox {
@@ -344,17 +344,17 @@ input[type="date"] {
     height: 20px;
     width: 24px;
     background-color: transparent;
-    border: 1px solid #007cd0;
+    border: 1px solid #fec93d;
     border-radius: 2px;
 }
 
 .CheckBox:hover input~.checkmark {
-    background-color: #007cd0;
+    background-color: #fec93d;
     border-color: #01bcfd;
 }
 
 .CheckBox input:checked~.checkmark {
-    background-color: #007cd0;
+    background-color: #fec93d;
 }
 
 .CheckBox .checkmark:after {
@@ -451,7 +451,7 @@ input[type="date"] {
 }
 
 .Header .Navigation .Avater ul li:first-child {
-    background-image: linear-gradient(45deg, #05899b, #007cd0);
+    background-image: linear-gradient(45deg, #05899b, #fec93d);
     position: relative;
     padding: 15px 10px 15px 60px;
     text-align: left;
@@ -492,7 +492,7 @@ input[type="date"] {
 }
 
 .Header .Navigation .Avater ul li a:hover {
-    background-color: #007cd0;
+    background-color: #fec93d;
     color: #fff
 }
 
@@ -513,7 +513,7 @@ input[type="date"] {
     display: flex;
     align-items: center;
     font-size: 14px;
-    color: #007cd0;
+    color: #fec93d;
 }
 
 .Header .Navigation .header-notifications a figure {
@@ -566,7 +566,7 @@ input[type="date"] {
     float: left;
     text-align: center;
     background: #fdebe3;
-    color: #007cd0;
+    color: #fec93d;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -583,7 +583,7 @@ input[type="date"] {
     padding: 5px;
     padding-left: 50px;
     text-align: left;
-    color: #007cd0;
+    color: #fec93d;
 }
 
 .Header .Navigation .header-notifications ul li h4 span {
@@ -681,7 +681,7 @@ input[type="date"] {
 
 .SidenavBar ul li.active a,
 .SidenavBar ul li a:hover {
-    background-color: #007cd0;
+    background-color: #fec93d;
     color: #fff;
 }
 
@@ -760,14 +760,14 @@ h4.Title a:hover {
 .SearchBox form button {
     padding: 7px 30px 9px;
     display: inline-block;
-    background-color: #007cd0;
+    background-color: #fec93d;
     margin: 0;
     color: #fff;
     -webkit-transition: 0.5s all ease-in-out;
     transition: 0.5s all ease-in-out;
     font-size: 14px;
     letter-spacing: .5px;
-    border: 1px solid #007cd0;
+    border: 1px solid #fec93d;
     outline: 0;
     border-top-right-radius: 6px;
     border-bottom-right-radius: 6px;
@@ -775,7 +775,7 @@ h4.Title a:hover {
 
 .SearchBox form button:hover {
     background-color: #fff;
-    color:#007cd0;
+    color:#fec93d;
 }
 
 .SearchBox a {
@@ -824,7 +824,7 @@ h4.Title a:hover {
 }
 
 .DashboardArea aside h5 {
-    background-color: #007cd0;;
+    background-color: #fec93d;;
     padding: 12px 15px;
     text-transform: capitalize;
     line-height: 21px;
@@ -921,7 +921,7 @@ a.Export:hover {
 }
 
 .TableList table tr th {
-    background-color: #007cd0;
+    background-color: #fec93d;
     font-weight: 600;
     text-transform: capitalize;
     color: #fff;
@@ -1041,8 +1041,8 @@ a.Export:hover {
 }
 
 .Pagination ul li.active a {
-    border-color: #007cd0;
-    background-color: #007cd0;
+    border-color: #fec93d;
+    background-color: #fec93d;
     color: #fff;
 }
 
@@ -1159,7 +1159,7 @@ ul.Multiple::-webkit-scrollbar-track {
 }
 
 ul.Multiple::-webkit-scrollbar-thumb {
-    background-color: #007cd0;
+    background-color: #fec93d;
     border-radius: 0;
     transition: background-color 0.2s linear, width 0.2s ease-in-out;
     -webkit-transition: background-color 0.2s linear, width 0.2s ease-in-out;
@@ -1195,7 +1195,7 @@ ul.Multiple::-webkit-scrollbar {
 }
 
 .HelpArea ul.nav-tabs .active a {
-    background-color: #007cd0;
+    background-color: #fec93d;
     color: #fff;
     border: none;
     cursor: pointer;
@@ -1269,7 +1269,7 @@ ul.Multiple::-webkit-scrollbar {
 
 /* .PasswordArea form button {
     padding: 10px 40px;
-    background-color: #007cd0;
+    background-color: #fec93d;
     text-transform: uppercase;
     color: #fff;
     font-size: 15px;
@@ -1645,11 +1645,11 @@ ul.Multiple::-webkit-scrollbar {
 
 .TableList table tr td .switch input:checked+.slider,
 .TableList table tr td .switch .slider:before {
-    background-color: #007cd0;
+    background-color: #fec93d;
 }
 
 .TableList table tr td .switch .slider {
-    border-color: #007cd0;
+    border-color: #fec93d;
 }
 
 .TableList table tr td .switch input:checked+.slider:before {
@@ -1780,13 +1780,13 @@ input[type=number]::-webkit-outer-spin-button {
     right: 15px;
 }
 .apply_btnWhite{
-    color: #007cd0;
+    color: #fec93d;
     background-color: #fff;
     margin-right: 20px;
 }
 .apply_btnWhite:hover{
     color: #fff;
-    background-color: #007cd0;
+    background-color: #fec93d;
 }
 .FilterSearch{
     display: inline !important;
@@ -1835,13 +1835,13 @@ input[type=number]::-webkit-outer-spin-button {
     cursor: pointer;
     background-color: #eee;
     text-decoration: none;
-  } 
+  }
 /* pagination  end*/
 div.dataTables_wrapper div.dataTables_filter label {
     display: none;
 }
 .btns button {
-    background-color: #007cd0;
+    background-color: #fec93d;
     border-radius: 0;
     padding: 10px 25px;
     border: none;
@@ -1886,7 +1886,7 @@ div.dataTables_wrapper div.dataTables_filter label {
     height: 120px;
     position: relative;
     border-radius: 100%;
-    border: 3px solid #007cd0;
+    border: 3px solid #fec93d;
 }
 
 .avatar-upload .avatar-preview > div {
