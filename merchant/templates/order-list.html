@@ -15,9 +15,9 @@
                         <thead>
                         <tr>
                             <th>S.No</th>
-                            <th>User Id</th>
-                            <th>User Name</th>
-                            <th> Contact Details</th>
+<!--                            <th>User Id</th>-->
+<!--                            <th>User Name</th>-->
+<!--                            <th>Contact Details</th>-->
                             <th>Order Id</th>
                             <th>Date & time of purchasing</th>
                             <th>QR Code</th>
@@ -28,9 +28,9 @@
                         {% for object in object_list %}
                         <tr>
                             <td>{{forloop.counter}}</td>
-                            <td>{{object.user.id}}</td>
-                            <td>{{object.user.first_name}} {{object.user.last_name}}</td>
-                            <td>{{object.user.phone_number}}</td>
+<!--                            <td>{{object.user.id}}</td>-->
+<!--                            <td>{{object.user.first_name}} {{object.user.last_name}}</td>-->
+<!--                            <td>{{object.user.phone_number}}</td>-->
                             <td>{{object.id}}</td>
                             <td>{{object.created_at}}</td>
                             <td><figure><img src="{{object.qr_code.url}}"></figure></td>
