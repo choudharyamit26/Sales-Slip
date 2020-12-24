@@ -858,7 +858,8 @@ class GetScannedDataDetail(ListAPIView):
             # print(receipt_obj.user)
             return Response({'data': receipt_object, "status": HTTP_200_OK})
         except Exception as e:
-            return Response({'error': e, "status": HTTP_400_BAD_REQUEST})
+            x = {"Error": str(e)}
+            return Response({'error': x['Error'], "status": HTTP_400_BAD_REQUEST})
 
 
 class GetUserTransactions(ListAPIView):
@@ -915,9 +916,9 @@ class ReceiptSearchView(ListAPIView):
                 # data.update({'product_{}_name'.format(i): obj.product})
                 # data.update({'product_{}_price'.format(i): obj.price})
                 # data.update({'product_{}_quantity'.format(i): obj.quantity})
-                data_list.append({'product_name':obj.product})
-                data_list.append({'product_price':obj.price})
-                data_list.append({'product_quantity':obj.quantity})
+                data_list.append({'product_name': obj.product})
+                data_list.append({'product_price': obj.price})
+                data_list.append({'product_quantity': obj.quantity})
                 i += 1
                 c = i
                 total = obj.total
