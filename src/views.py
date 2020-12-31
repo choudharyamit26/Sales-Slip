@@ -905,7 +905,8 @@ class ReceiptSearchView(ListAPIView):
             receipt_obj = Receipt.objects.get(id=receipt_id)
             data_list = []
             data = {'id': receipt_obj.id, 'merchant': receipt_obj.merchant.email,
-                    'merchant_id': receipt_obj.merchant.id}
+                    'merchant_id': receipt_obj.merchant.id, 'merchant_name': receipt_obj.merchant.full_name,
+                    'merchant_category': receipt_obj.merchant.category.category_name}
             total = 0
             i = 1
             c = 0
@@ -925,9 +926,10 @@ class ReceiptSearchView(ListAPIView):
                 # data.update({'total': obj.total})
             data.update({'total': total})
             # data_list.append(data)
+            # data_list.append(data)
 
             print(data_list)
-            return Response({'data': data_list, "status": HTTP_200_OK})
+            return Response({'data': data_list, "status": HTTP_200_OK, 'data2': data})
         except Exception as e:
             print(e)
             return Response({'error': "Data not found", "status": HTTP_400_BAD_REQUEST})
