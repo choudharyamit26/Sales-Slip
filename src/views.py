@@ -1023,6 +1023,7 @@ class FilterByDate(ListAPIView):
 
 class GetCategoryList(APIView):
     model = Category
+
     # authentication_classes = (TokenAuthentication,)
     # permission_classes = (IsAuthenticated,)
 
@@ -1449,3 +1450,47 @@ class UpdateEmailView(UpdateAPIView):
 class FirstViewSet(ModelViewSet):
     serializer_class = UserCreateSerializer
     queryset = User.objects.all()
+
+
+class POSOrder(CreateAPIView):
+
+    def post(self, request, *args, **kwargs):
+        merchant_id = self.request.data['merchant_id']
+        merchant_name = self.request.data['merchant_name']
+        category = self.request.data['category']
+        date_of_purchase = self.request.data['date_of_purchase']
+        time_of_purchase = self.request.data['time_of_purchase']
+        customer_email = self.request.data['customer_email']
+        product_name = self.request.data['product_name']
+        product_cost = self.request.data['product_cost']
+        product_quantity = self.request.data['product_quantity']
+        order_amount = self.request.data['order_amount']
+        vat_percent = self.request.data['vat_percent']
+        merchant_obj = Merchant.objects.get(id=merchant_id)
+        user = User.objects.get(email=customer_email)
+        category_obj = Category.objects.get(id=category)
+        final_item = zip(product_name, product_cost, product_quantity)
+        order_id = get_random_string(16)
+        for item in final_item:
+            order_obj = OrderItem.objects.create(
+                user=user,
+                product=item[0],
+                price=item[1],
+                quantity=item[2],
+                vat=vat_percent,
+                total=order_amount + (15/100)*order_amount,
+                order_id=order_id
+            )
+        ordered_items = OrderItem.objects.filter(order_id=order_id)
+        receipt_obj = Receipt.objects.create(
+            user=user,
+            merchant=merchant_obj,
+        )
+        for item in ordered_items:
+            receipt_obj.order.add(item)
+        scanned_data_obj = ScannedData.objects.create(
+            user=user,
+            merchant=merchant_obj,
+            order=receipt_obj
+        )
+        return Response({"message": "Order created successfully", "status": HTTP_200_OK})
