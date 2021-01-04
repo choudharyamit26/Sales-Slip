@@ -1021,6 +1021,42 @@ class FilterByDate(ListAPIView):
             return Response({'error': "data not found", "status": HTTP_400_BAD_REQUEST})
 
 
+class GetCategoryList(APIView):
+    model = Category
+    # authentication_classes = (TokenAuthentication,)
+    # permission_classes = (IsAuthenticated,)
+
+    def get(self, request, *args, **kwargs):
+        return Response({'data': Category.objects.all().values(), 'status': HTTP_200_OK})
+
+
+class AddToCart(CreateAPIView):
+    model = OrderItem
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request, *args, **kwargs):
+        user = self.request.user
+        merchant_id = self.request.data['merchant_id']
+        category = self.request.data['category']
+        date_of_purchase = self.request.data['date_of_purchase']
+        time_of_purchase = self.request.data['time_of_purchase']
+        order_id = self.request.data['order_id']
+        order_amount = self.request.data['order_amount']
+        product_name = self.request.data['product_name']
+        product_cost = self.request.data['product_cost']
+        product_quantity = self.request.data['product_quantity']
+        order_obj = OrderItem.objects.create(
+            user=user,
+            product=product_name,
+            price=product_cost,
+            quantity=product_quantity,
+            total=order_amount,
+            order_id=order_id
+        )
+        return Response({"message": "Item added successfully", "id": order_obj.id, "status": HTTP_200_OK})
+
+
 class CreateReceiptManually(CreateAPIView):
     model = Receipt
     authentication_classes = (TokenAuthentication,)
@@ -1036,32 +1072,33 @@ class CreateReceiptManually(CreateAPIView):
         category = self.request.data['category']
         date_of_purchase = self.request.data['date_of_purchase']
         time_of_purchase = self.request.data['time_of_purchase']
-        order_id = self.request.data['order_id']
-        order_amount = self.request.data['order_amount']
-        customer_name = self.request.data['customer_name']
-        product_name = self.request.data['product_name']
-        product_cost = self.request.data['product_cost']
-        product_quantity = self.request.data['product_quantity']
+        # order_id = self.request.data['order_id']
+        # order_amount = self.request.data['order_amount']
+        ordered_items = self.request.data['ordered_items']
+        # customer_name = self.request.data['customer_name']
+        # product_name = self.request.data['product_name']
+        # product_cost = self.request.data['product_cost']
+        # product_quantity = self.request.data['product_quantity']
         merchant_obj = Merchant.objects.get(id=merchant_id)
         category_obj = Category.objects.get(id=category)
-        final_item = zip(product_name, product_cost, product_quantity)
-        order_id = get_random_string(16)
-        for item in final_item:
-            order_obj = OrderItem.objects.create(
-                user=user,
-                product=item[0],
-                price=item[1],
-                quantity=item[2],
-                total=order_amount,
-                order_id=order_id
-            )
-        ordered_items = OrderItem.objects.filter(order_id=order_id)
+        # final_item = zip(product_name, product_cost, product_quantity)
+        # order_id = get_random_string(16)
+        # for item in final_item:
+        #     order_obj = OrderItem.objects.create(
+        #         user=user,
+        #         product=item[0],
+        #         price=item[1],
+        #         quantity=item[2],
+        #         total=order_amount,
+        #         order_id=order_id
+        #     )
+        # ordered_items = OrderItem.objects.filter(order_id=order_id)
         receipt_obj = Receipt.objects.create(
             user=self.request.user,
             merchant=merchant_obj,
         )
         for item in ordered_items:
-            receipt_obj.order.add(item)
+            receipt_obj.order.add(OrderItem.objects.get(id=item))
         scanned_data_obj = ScannedData.objects.create(
             user=self.request.user,
             merchant=merchant_obj,

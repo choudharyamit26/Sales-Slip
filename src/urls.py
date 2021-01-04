@@ -8,7 +8,7 @@ from .views import UserCreateAPIView, LoginAPIView, ForgetPasswordAPIView, Chang
     UpdateNotification, UpdateUserNotificationSettingsApi, UpdateUserLanguageSettingApiView, GetUnreadMessageCount, \
     UserLanguageSettingApiView, GetUserNotificationSettingsApi, ChangeLanguageApiView, ChangeNotificationApiView, \
     PrivacyPolicyApiView, ContactUsApiView, TermsandConditionApiView, GetUserDetailApiView, CheckMobileOrPhoneNumber, \
-    FirstViewSet,AboutUsView,UpdateEmailView
+    FirstViewSet, AboutUsView, UpdateEmailView, AddToCart,GetCategoryList
 
 app_name = 'src'
 # router = DefaultRouter()
@@ -37,9 +37,11 @@ urlpatterns = [
     path('filter-by-category/', FilterByCategory.as_view(), name='filter-by-category'),
     path('filter-by-date/', FilterByDate.as_view(), name='filter-by-date'),
     path('create-order/', CreateReceiptManually.as_view(), name='create-order'),
+    path('add-to-cart/', AddToCart.as_view(), name='add-to-cart'),
     path('latest-transactions/', GetLatestTransactions.as_view(), name='latest-transactions'),
     # path('faq/', FAQApiView.as_view(), name='faq'),
     path('contact-us/', ContactUsApiView.as_view(), name='contact-us'),
+    path('category-list/', GetCategoryList.as_view(), name='category-list'),
     path('terms-and-condition/', TermsandConditionApiView.as_view(),
          name='terms-and-condition'),
     path('privacy-policy/', PrivacyPolicyApiView.as_view(), name='privacy-policy'),
