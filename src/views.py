@@ -893,9 +893,10 @@ class GetUserTransactions(ListAPIView):
 
 class ReceiptSearchView(ListAPIView):
     model = Receipt
+
     # model = ScannedData
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    # authentication_classes = (TokenAuthentication,)
+    # permission_classes = (IsAuthenticated,)
 
     def get(self, request, *args, **kwargs):
         receipt_id = self.request.GET.get('id')
@@ -916,9 +917,10 @@ class ReceiptSearchView(ListAPIView):
                 # data.update({'product_{}_name'.format(i): obj.product})
                 # data.update({'product_{}_price'.format(i): obj.price})
                 # data.update({'product_{}_quantity'.format(i): obj.quantity})
-                data_list.append({'product_name': obj.product})
-                data_list.append({'product_price': obj.price})
-                data_list.append({'product_quantity': obj.quantity})
+                data_list.append(
+                    {'product_name': obj.product, 'product_price': obj.price, 'product_quantity': obj.quantity})
+                # data_list.append({'product_price': obj.price})
+                # data_list.append({'product_quantity': obj.quantity})
                 i += 1
                 c = i
                 total = obj.total
@@ -928,7 +930,8 @@ class ReceiptSearchView(ListAPIView):
             # data_list.append(data)
 
             print(data_list)
-            return Response({'data': data_list, "status": HTTP_200_OK, 'data2': data})
+            return Response(
+                {'data': data_list, "status": HTTP_200_OK, 'data2': data, "message": "Fetched data successfully"})
         except Exception as e:
             print(e)
             return Response({'error': "Data not found", "status": HTTP_400_BAD_REQUEST})
