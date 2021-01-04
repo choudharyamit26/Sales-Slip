@@ -893,10 +893,9 @@ class GetUserTransactions(ListAPIView):
 
 class ReceiptSearchView(ListAPIView):
     model = Receipt
-
     # model = ScannedData
-    # authentication_classes = (TokenAuthentication,)
-    # permission_classes = (IsAuthenticated,)
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
 
     def get(self, request, *args, **kwargs):
         receipt_id = self.request.GET.get('id')
