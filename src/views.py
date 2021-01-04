@@ -905,7 +905,8 @@ class ReceiptSearchView(ListAPIView):
             data_list = []
             data = {'id': receipt_obj.id, 'merchant': receipt_obj.merchant.email,
                     'merchant_id': receipt_obj.merchant.id, 'merchant_name': receipt_obj.merchant.full_name,
-                    'merchant_category': receipt_obj.merchant.category.category_name}
+                    'merchant_category': receipt_obj.merchant.category.category_name,
+                    'created_at': receipt_obj.created_at}
             total = 0
             i = 1
             c = 0
