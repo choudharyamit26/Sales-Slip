@@ -83,7 +83,7 @@ class OrderItem(models.Model):
     total = models.FloatField(default=0.0)
     order_id = models.CharField(default='', max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
-    vat = models.FloatField()
+    vat = models.FloatField(null=True, blank=True)
 
 
 class Receipt(models.Model):
