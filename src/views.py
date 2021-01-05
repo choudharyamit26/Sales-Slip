@@ -934,7 +934,7 @@ class ReceiptSearchView(ListAPIView):
                 {'data': data_list, "status": HTTP_200_OK, 'data2': data, "message": "Fetched data successfully"})
         except Exception as e:
             print(e)
-            return Response({'error': "Data not found", "status": HTTP_400_BAD_REQUEST})
+            return Response({'message': "Data not found", "status": HTTP_400_BAD_REQUEST})
 
 
 class FilterByCategory(ListAPIView):
