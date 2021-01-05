@@ -8,7 +8,7 @@ from .views import UserCreateAPIView, LoginAPIView, ForgetPasswordAPIView, Chang
     UpdateNotification, UpdateUserNotificationSettingsApi, UpdateUserLanguageSettingApiView, GetUnreadMessageCount, \
     UserLanguageSettingApiView, GetUserNotificationSettingsApi, ChangeLanguageApiView, ChangeNotificationApiView, \
     PrivacyPolicyApiView, ContactUsApiView, TermsandConditionApiView, GetUserDetailApiView, CheckMobileOrPhoneNumber, \
-    FirstViewSet, AboutUsView, UpdateEmailView, AddToCart, GetCategoryList, POSOrder
+    FirstViewSet, AboutUsView, UpdateEmailView, AddToCart, GetCategoryList, POSOrder,GetCartItemDetail
 
 app_name = 'src'
 # router = DefaultRouter()
@@ -32,6 +32,7 @@ urlpatterns = [
     path('update-user-email/<int:pk>/', UpdateEmailView.as_view(), name='update-user-email'),
     path('scanned-data/', ScannedDataView.as_view(), name='scanned-data'),
     path('scanned-data-detail/', GetScannedDataDetail.as_view(), name='scanned-data-detail'),
+    path('cart-item-detail/', GetCartItemDetail.as_view(), name='cart-item-detail'),
     path('scanned-data-list/', GetUserTransactions.as_view(), name='scanned-data-list'),
     path('search-scanned-data/', ReceiptSearchView.as_view(), name='search-scanned-data'),
     path('filter-by-category/', FilterByCategory.as_view(), name='filter-by-category'),

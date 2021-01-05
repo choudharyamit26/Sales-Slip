@@ -1478,7 +1478,7 @@ class POSOrder(CreateAPIView):
                 price=item[1],
                 quantity=item[2],
                 vat=vat_percent,
-                total=order_amount + (15/100)*order_amount,
+                total=order_amount + (15 / 100) * order_amount,
                 order_id=order_id
             )
         ordered_items = OrderItem.objects.filter(order_id=order_id)
@@ -1494,3 +1494,28 @@ class POSOrder(CreateAPIView):
             order=receipt_obj
         )
         return Response({"message": "Order created successfully", "status": HTTP_200_OK})
+
+
+class GetCartItemDetail(APIView):
+    model = OrderItem
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, *args, **kwargs):
+        item_id = self.request.GET.get('item_id')
+        try:
+            item_obj = OrderItem.objects.get(id=item_id)
+            print(item_obj)
+            data_dict = {
+                # 'merchant_id': item_obj.merchant.id,
+                # 'merchant_name': item_obj.merchant.full_name,
+                # 'merchant_email': item_obj.merchant.email,
+                # 'merchant_category': item_obj.merchant.category.category_name,
+                'item_name': item_obj.product,
+                'item_price': item_obj.price,
+                'item_quantity': item_obj.quantity,
+            }
+            return Response({'data': data_dict, 'status': HTTP_200_OK})
+        except Exception as e:
+            x = {'error': str(e)}
+            return Response({'message': x['error'], 'status': HTTP_400_BAD_REQUEST})
