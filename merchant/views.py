@@ -596,13 +596,14 @@ class SendOnBoardMessage(LoginRequiredMixin, CreateView):
             else:
                 form = self.form_class(self.request.POST)
                 return render(self.request, 'onboard.html', {'form': form})
-        except:
+        except Exception as e:
             form = self.form_class(self.request.POST)
             if form.is_valid():
-                messages.info(self.request, 'Unable to send message')
+                messages.error(self.request, str(e))
                 return redirect(self.request.path_info)
             else:
                 form = self.form_class(self.request.POST)
+                messages.error(self.request, str(e))
                 return render(self.request, 'onboard.html', {'form': form})
             # if self.form_valid(self.request.POST):
             #     print('inside form valid')
