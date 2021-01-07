@@ -1455,6 +1455,8 @@ class FirstViewSet(ModelViewSet):
 class POSOrder(CreateAPIView):
 
     def post(self, request, *args, **kwargs):
+        country_code = self.request.data['country_code']
+        user_mobile_no = self.request.data['user_mobile_no']
         merchant_id = self.request.data['merchant_id']
         merchant_name = self.request.data['merchant_name']
         category = self.request.data['category']
@@ -1466,34 +1468,121 @@ class POSOrder(CreateAPIView):
         product_quantity = self.request.data['product_quantity']
         order_amount = self.request.data['order_amount']
         vat_percent = self.request.data['vat_percent']
-        merchant_obj = Merchant.objects.get(id=merchant_id)
-        user = User.objects.get(email=customer_email)
-        category_obj = Category.objects.get(id=category)
-        final_item = zip(product_name, product_cost, product_quantity)
-        order_id = get_random_string(16)
-        for item in final_item:
-            order_obj = OrderItem.objects.create(
-                user=user,
-                product=item[0],
-                price=item[1],
-                quantity=item[2],
-                vat=vat_percent,
-                total=order_amount + (15 / 100) * order_amount,
-                order_id=order_id
+        try:
+            check_user = User.objects.get(phone_number=user_mobile_no)
+            if check_user:
+                merchant_obj = Merchant.objects.get(id=merchant_id)
+                user = User.objects.get(email=customer_email)
+                category_obj = Category.objects.get(id=category)
+                final_item = zip(product_name, product_cost, product_quantity)
+                order_id = get_random_string(16)
+                for item in final_item:
+                    order_obj = OrderItem.objects.create(
+                        user=user,
+                        product=item[0],
+                        price=item[1],
+                        quantity=item[2],
+                        vat=vat_percent,
+                        total=order_amount + (15 / 100) * order_amount,
+                        order_id=order_id
+                    )
+                ordered_items = OrderItem.objects.filter(order_id=order_id)
+                receipt_obj = Receipt.objects.create(
+                    user=user,
+                    merchant=merchant_obj,
+                )
+                for item in ordered_items:
+                    receipt_obj.order.add(item)
+                scanned_data_obj = ScannedData.objects.create(
+                    user=user,
+                    merchant=merchant_obj,
+                    order=receipt_obj
+                )
+                return Response({"message": "Order created successfully", "status": HTTP_200_OK})
+            else:
+                user = User.objects.create(
+                    # first_name=first_name,
+                    # last_name=last_name,
+                    country_code=country_code,
+                    phone_number=user_mobile_no,
+                    # profile_pic=profile_pic,
+                    # email=email,
+                    # device_token=device_token
+                )
+                user.set_password('FatorTech@001')
+                user.save()
+                token = Token.objects.create(user=user)
+
+                merchant_obj = Merchant.objects.get(id=merchant_id)
+                user = User.objects.get(email=customer_email)
+                category_obj = Category.objects.get(id=category)
+                final_item = zip(product_name, product_cost, product_quantity)
+                order_id = get_random_string(16)
+                for item in final_item:
+                    order_obj = OrderItem.objects.create(
+                        user=user,
+                        product=item[0],
+                        price=item[1],
+                        quantity=item[2],
+                        vat=vat_percent,
+                        total=order_amount + (15 / 100) * order_amount,
+                        order_id=order_id
+                    )
+                ordered_items = OrderItem.objects.filter(order_id=order_id)
+                receipt_obj = Receipt.objects.create(
+                    user=user,
+                    merchant=merchant_obj,
+                )
+                for item in ordered_items:
+                    receipt_obj.order.add(item)
+                scanned_data_obj = ScannedData.objects.create(
+                    user=user,
+                    merchant=merchant_obj,
+                    order=receipt_obj
+                )
+                return Response({"message": "Order created successfully", "status": HTTP_200_OK})
+        except Exception as e:
+            print(e)
+            user = User.objects.create(
+                # first_name=first_name,
+                # last_name=last_name,
+                country_code=country_code,
+                phone_number=user_mobile_no,
+                # profile_pic=profile_pic,
+                # email=email,
+                # device_token=device_token
             )
-        ordered_items = OrderItem.objects.filter(order_id=order_id)
-        receipt_obj = Receipt.objects.create(
-            user=user,
-            merchant=merchant_obj,
-        )
-        for item in ordered_items:
-            receipt_obj.order.add(item)
-        scanned_data_obj = ScannedData.objects.create(
-            user=user,
-            merchant=merchant_obj,
-            order=receipt_obj
-        )
-        return Response({"message": "Order created successfully", "status": HTTP_200_OK})
+            user.set_password('FatorTech@001')
+            user.save()
+            token = Token.objects.create(user=user)
+            merchant_obj = Merchant.objects.get(id=merchant_id)
+            user = User.objects.get(email=customer_email)
+            category_obj = Category.objects.get(id=category)
+            final_item = zip(product_name, product_cost, product_quantity)
+            order_id = get_random_string(16)
+            for item in final_item:
+                order_obj = OrderItem.objects.create(
+                    user=user,
+                    product=item[0],
+                    price=item[1],
+                    quantity=item[2],
+                    vat=vat_percent,
+                    total=order_amount + (15 / 100) * order_amount,
+                    order_id=order_id
+                )
+            ordered_items = OrderItem.objects.filter(order_id=order_id)
+            receipt_obj = Receipt.objects.create(
+                user=user,
+                merchant=merchant_obj,
+            )
+            for item in ordered_items:
+                receipt_obj.order.add(item)
+            scanned_data_obj = ScannedData.objects.create(
+                user=user,
+                merchant=merchant_obj,
+                order=receipt_obj
+            )
+            return Response({"message": "Order created successfully", "status": HTTP_200_OK})
 
 
 class GetCartItemDetail(APIView):

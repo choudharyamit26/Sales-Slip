@@ -25,7 +25,7 @@ from django.views.decorators.debug import sensitive_post_parameters
 from django.views.generic import View, ListView, DetailView, CreateView, FormView, TemplateView, UpdateView
 from src.models import User, OrderItem, Receipt, Merchant, TermsAndCondition, UserNotification, Settings
 
-from .forms import MerchantLoginForm, OrderForm, OrderFormSet, MerchantUpdateForm
+from .forms import MerchantLoginForm, OrderForm, OrderFormSet, MerchantUpdateForm, OnBoardMessageForm
 
 user = get_user_model()
 
@@ -565,3 +565,24 @@ class UpdateProfilePicView(LoginRequiredMixin, UpdateView):
 
     def form_invalid(self, form):
         return self.render_to_response(self.get_context_data(form=form))
+
+
+class SendOnBoardMessage(LoginRequiredMixin, CreateView):
+    model = User
+    form_class = OnBoardMessageForm
+    template_name = 'onboard.html'
+    login_url = 'merchant:login'
+
+    def post(self, request, *args, **kwargs):
+        print(self.request.POST)
+        country_code = self.request.POST['country_code']
+        phone_number = self.request.POST['phone_number']
+        try:
+            user_obj = User.objects.get(phone_number=phone_number)
+            message_text = 'Dummy text'
+            ### Send message to the user here
+            messages.info(self.request, 'Message sent successfully')
+            return redirect('merchant:order-list')
+        except:
+            messages.info(self.request, 'Unable to send message')
+            return redirect('merchant:order-list')

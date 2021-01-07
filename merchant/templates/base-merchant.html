@@ -29,6 +29,7 @@
 
 
 
+
     </script>
 </head>
 
@@ -55,7 +56,8 @@
                     <figure><img src="{{user.profile_pic.url}}"></figure>
                     <h4> {{user}} <span>Administrator</span></h4>
                 </li>
-                <li><a href="{% url 'merchant:change_password' %}"><span><i class="fa fa-cog"></i></span> Setting</a></li>
+                <li><a href="{% url 'merchant:change_password' %}"><span><i class="fa fa-cog"></i></span> Setting</a>
+                </li>
                 <li><a href="{% url 'merchant:logout' %}"><span><i class="fa fa-sign-out"></i></span> Logout</a></li>
             </ul>
         </div>
@@ -76,21 +78,26 @@
                 <span><i class="fa fa-first-order"></i></span>Generate QR Code
             </a>
         </li>
+        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'merchant:on-board' %}active{% endif %}">
+            <a href="{% url 'merchant:on-board'  %}">
+                <span><i class="fa fa-group"></i></span>On Board User
+            </a>
+        </li>
         <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'merchant:order-list' %}active{% endif %}">
             <a href="{% url 'merchant:order-list'  %}">
                 <span><i class="fa fa-list"></i></span> Receipt's Management
             </a>
         </li>
-<!--        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'merchant:api-tutorial' %}active{% endif %}">-->
-<!--            <a href="{% url 'merchant:api-tutorial'  %}">-->
-<!--                <span><i class="fa fa-book"></i></span> Api Tutorial-->
-<!--            </a>-->
-<!--        </li>-->
-<!--        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'merchant:static-content' %}active{% endif %}">-->
-<!--            <a href="{% url 'merchant:static-content'  %}">-->
-<!--                <span><i class="fa fa-font"></i></span> Static Content-->
-<!--            </a>-->
-<!--        </li>-->
+        <!--        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'merchant:api-tutorial' %}active{% endif %}">-->
+        <!--            <a href="{% url 'merchant:api-tutorial'  %}">-->
+        <!--                <span><i class="fa fa-book"></i></span> Api Tutorial-->
+        <!--            </a>-->
+        <!--        </li>-->
+        <!--        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'merchant:static-content' %}active{% endif %}">-->
+        <!--            <a href="{% url 'merchant:static-content'  %}">-->
+        <!--                <span><i class="fa fa-font"></i></span> Static Content-->
+        <!--            </a>-->
+        <!--        </li>-->
         <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'merchant:profile' %}active{% endif %}">
             <a href="{% url 'merchant:profile'  %}">
                 <span><i class="fa fa-flag"></i></span> My Profile

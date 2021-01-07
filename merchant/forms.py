@@ -66,3 +66,12 @@ class MerchantUpdateForm(forms.ModelForm):
     class Meta:
         model = Merchant
         fields = ('full_name', 'email', 'profile_pic')
+
+
+class OnBoardMessageForm(forms.ModelForm):
+    country_code = forms.IntegerField(widget=forms.TextInput({'required': 'required'}))
+    phone_number = forms.IntegerField(widget=forms.TextInput({'required': 'required'}))
+
+    class Meta:
+        model = User
+        fields = ('country_code', 'phone_number')

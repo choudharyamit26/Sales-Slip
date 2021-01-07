@@ -33,7 +33,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(default='', max_length=100, null=True, blank=True)
     email = models.CharField(default='', max_length=255, unique=True)
     country_code = models.CharField(default='+91', max_length=10)
-    phone_number = models.CharField(default='', max_length=13)
+    phone_number = models.CharField(default='', max_length=18)
     profile_pic = models.ImageField(default='default_profile.png', null=True, blank=True)
     device_token = models.CharField(default='', max_length=500, null=True, blank=True)
     password = models.CharField(default='', max_length=100)

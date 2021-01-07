@@ -4,7 +4,7 @@ from django.urls import path
 from .views import MerchantLogin, MerchantDashBoard, MerchantLogout, PasswordResetConfirmView, PasswordResetView, \
     CreateOrder, OrderDetail, OrderList, ApiIntegrationTutorial, StaticContent, MyProfile, PasswordChangeView, \
     PasswordChangeDoneView, NotificationCount, ReadNotifications, SetAdminNotificationSetting, \
-    GetAdminNotificationSetting, NotificationView, PrintQRCode, UpdateProfilePicView
+    GetAdminNotificationSetting, NotificationView, PrintQRCode, UpdateProfilePicView,SendOnBoardMessage
 
 app_name = 'merchant'
 
@@ -36,6 +36,7 @@ urlpatterns = [
     path('password-change-done/', PasswordChangeDoneView.as_view(template_name='merchant/change_password_done.html'),
          name='password_change_done'),
     path('create-order/', CreateOrder.as_view(), name='create-order'),
+    path('on-board/', SendOnBoardMessage.as_view(), name='on-board'),
     path('order-detail/<int:pk>/', OrderDetail.as_view(), name='order-detail'),
     path('order-list/', OrderList.as_view(), name='order-list'),
     path('api-tutorial/', ApiIntegrationTutorial.as_view(), name='api-tutorial'),
