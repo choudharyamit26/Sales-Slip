@@ -579,10 +579,37 @@ class SendOnBoardMessage(LoginRequiredMixin, CreateView):
         phone_number = self.request.POST['phone_number']
         try:
             user_obj = User.objects.get(phone_number=phone_number)
-            message_text = 'Dummy text'
-            ### Send message to the user here
-            messages.info(self.request, 'Message sent successfully')
-            return redirect('merchant:order-list')
+            #     print('insdie try---------')
+            #     message_text = 'Dummy text'
+            #     ### Send message to the user here
+            #     if self.form_valid(self.request.POST):
+            #         print('inside form valid')
+            #         messages.info(self.request, 'Message sent successfully')
+            #         return redirect('merchant:order-list')
+            #     else:
+            #         print('inside invalid form')
+            #         return redirect(self.request.path_info)
+            form = self.form_class(self.request.POST)
+            if form.is_valid():
+                messages.info(self.request, 'Message sent successfully')
+                return redirect('merchant:order-list')
+            else:
+                form = self.form_class(self.request.POST)
+                return render(self.request, 'onboard.html', {'form': form})
         except:
-            messages.info(self.request, 'Unable to send message')
-            return redirect('merchant:order-list')
+            form = self.form_class(self.request.POST)
+            if form.is_valid():
+                messages.info(self.request, 'Unable to send message')
+                return redirect(self.request.path_info)
+            else:
+                form = self.form_class(self.request.POST)
+                return render(self.request, 'onboard.html', {'form': form})
+            # if self.form_valid(self.request.POST):
+            #     print('inside form valid')
+            # elif self.form_invalid(self.request.POST):
+            #     print('inside except invalid form')
+            #     return redirect(self.request.path_info)
+            # else:
+            #     print('inside except ------->>>>>')
+            #     messages.info(self.request, 'Unable to send message')
+            #     return redirect('merchant:order-list')
