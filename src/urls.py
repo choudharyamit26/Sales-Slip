@@ -8,7 +8,7 @@ from .views import UserCreateAPIView, LoginAPIView, ForgetPasswordAPIView, Chang
     UpdateNotification, UpdateUserNotificationSettingsApi, UpdateUserLanguageSettingApiView, GetUnreadMessageCount, \
     UserLanguageSettingApiView, GetUserNotificationSettingsApi, ChangeLanguageApiView, ChangeNotificationApiView, \
     PrivacyPolicyApiView, ContactUsApiView, TermsandConditionApiView, GetUserDetailApiView, CheckMobileOrPhoneNumber, \
-    FirstViewSet, AboutUsView, UpdateEmailView, AddToCart, GetCategoryList, POSOrder,GetCartItemDetail
+    FirstViewSet, AboutUsView, UpdateEmailView, AddToCart, GetCategoryList, POSOrder,GetCartItemDetail,GetMerchantNameAndCategory
 
 app_name = 'src'
 # router = DefaultRouter()
@@ -62,5 +62,6 @@ urlpatterns = [
          UpdateUserLanguageSettingApiView.as_view(), name='update-user-lang'),
     path('get-user-unread-message-count/', GetUnreadMessageCount.as_view(), name='get-user-unread-message-count'),
     path('check-mobile-or-phone-number/', CheckMobileOrPhoneNumber.as_view(), name='check-mobile-or-phone-number'),
+    path('get-merchant-name-and-category/', GetMerchantNameAndCategory.as_view(), name='get-merchant-name-and-category'),
     path('about-us/', AboutUsView.as_view(), name='about-us')
 ]

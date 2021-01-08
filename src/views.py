@@ -1608,3 +1608,18 @@ class GetCartItemDetail(APIView):
         except Exception as e:
             x = {'error': str(e)}
             return Response({'message': x['error'], 'status': HTTP_400_BAD_REQUEST})
+
+
+class GetMerchantNameAndCategory(APIView):
+    model = Merchant
+    # authentication_classes = (TokenAuthentication,)
+    # permission_classes = (IsAuthenticated,)
+
+    def get(self, request, *args, **kwargs):
+        merchant_id = self.request.GET.get('merchant_id')
+        try:
+            merchant_obj = Merchant.objects.get(id=merchant_id)
+            return Response({'name': merchant_obj.full_name, 'category': merchant_obj.category.category_name, 'status': HTTP_200_OK})
+        except Exception as e:
+            x = {'error': str(e)}
+            return Response({'message': x['error'], 'status': HTTP_400_BAD_REQUEST})
