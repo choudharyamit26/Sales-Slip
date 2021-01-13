@@ -868,27 +868,42 @@ class GetUserTransactions(ListAPIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request, *args, **kwargs):
-        data = {}
+
         user = self.request.user
         # receipt_obj = ScannedData.objects.filter(user=user)
         receipt_obj = Receipt.objects.filter(user=user)
         # print(receipt_obj)
-        i = 1
-        j = 1
+        # i = 1
+        # j = 1
+        receipt_list = []
         for obj in receipt_obj:
-            data['receipt_id_{}'.format(j)] = obj.id
-            data['merchant_{}'.format(j)] = obj.merchant.email
-            data['merchant_id_{}'.format(j)] = obj.merchant.id
+            # data['receipt_id_{}'.format(j)] = obj.id
+            # data['merchant_{}'.format(j)] = obj.merchant.email
+            # data['merchant_id_{}'.format(j)] = obj.merchant.id
+            data = {}
+            data['receipt_id'] = obj.id
+            data['merchant'] = obj.merchant.email
+            data['merchant_id'] = obj.merchant.id
+            data['merchant_name'] = obj.merchant.full_name
+            data['merchant_category'] = obj.merchant.category.category_name
+            data['created_at'] = obj.created_at
+            product_list = []
             for order_obj in obj.order.all():
                 # print(i)
-                data.update({'receipt_id_{}_product_{}_name'.format(j, i): order_obj.product})
-                data.update({'receipt_id_{}_product_{}_price'.format(j, i): order_obj.price})
-                data.update({'receipt_id_{}_product_{}_quantity'.format(j, i): order_obj.quantity})
-                data.update({'total_{}'.format('receipt_id_{}'.format(j)): order_obj.total})
-                i += 1
-            i = 1
-            j += 1
-        return Response({"data": data, "status": HTTP_200_OK})
+                # data.update({'receipt_id_{}_product_{}_name'.format(j, i): order_obj.product})
+                # data.update({'receipt_id_{}_product_{}_price'.format(j, i): order_obj.price})
+                # data.update({'receipt_id_{}_product_{}_quantity'.format(j, i): order_obj.quantity})
+                # data.update({'total_{}'.format('receipt_id_{}'.format(j)): order_obj.total})
+                # i += 1
+                product_list.append({'product_name': order_obj.product, 'product_price': order_obj.price,
+                                     'product_quantity': order_obj.quantity})
+                data.update({'total': order_obj.total})
+                data.update({'products': product_list})
+            # print(obj.id)
+            receipt_list.append(data)
+            # i = 1
+            # j += 1
+        return Response({"data": receipt_list, "status": HTTP_200_OK})
 
 
 class ReceiptSearchView(ListAPIView):
@@ -1612,6 +1627,7 @@ class GetCartItemDetail(APIView):
 
 class GetMerchantNameAndCategory(APIView):
     model = Merchant
+
     # authentication_classes = (TokenAuthentication,)
     # permission_classes = (IsAuthenticated,)
 
@@ -1619,7 +1635,8 @@ class GetMerchantNameAndCategory(APIView):
         merchant_id = self.request.GET.get('merchant_id')
         try:
             merchant_obj = Merchant.objects.get(id=merchant_id)
-            return Response({'name': merchant_obj.full_name, 'category': merchant_obj.category.category_name, 'status': HTTP_200_OK})
+            return Response({'name': merchant_obj.full_name, 'category': merchant_obj.category.category_name,
+                             'status': HTTP_200_OK})
         except Exception as e:
             x = {'error': str(e)}
             return Response({'message': x['error'], 'status': HTTP_400_BAD_REQUEST})
