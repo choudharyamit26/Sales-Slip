@@ -954,6 +954,7 @@ class FilterByCategory(ListAPIView):
         try:
             data = {}
             merchant_obj = Merchant.objects.filter(category=category)
+            receipt_list = []
             for obj in merchant_obj:
                 # print('Inside for loop ', obj)
                 receipts = Receipt.objects.filter(user=self.request.user).filter(merchant=obj)
@@ -964,22 +965,35 @@ class FilterByCategory(ListAPIView):
                     i = 1
                     j = 1
                     for x in receipts:
-                        data['receipt_id_{}'.format(j)] = x.id
-                        data['merchant_id_{}'.format(j)] = x.merchant.id
-                        data['merchant_email_{}'.format(j)] = x.merchant.email
-                        data['created_at_{}'.format(j)] = x.created_at
+                        data = {}
+                        # data['receipt_id_{}'.format(j)] = x.id
+                        # data['merchant_id_{}'.format(j)] = x.merchant.id
+                        # data['merchant_email_{}'.format(j)] = x.merchant.email
+                        # data['created_at_{}'.format(j)] = x.created_at
+                        data['receipt_id'] = x.id
+                        data['merchant'] = x.merchant.email
+                        data['merchant_id'] = x.merchant.id
+                        data['merchant_name'] = x.merchant.full_name
+                        data['merchant_category'] = x.merchant.category.category_name
+                        data['created_at'] = x.created_at
                         for order_obj in x.order.all():
                             # print(i)
-                            data.update({'receipt_id_{}_product_{}_name'.format(j, i): order_obj.product})
-                            data.update({'receipt_id_{}_product_{}_price'.format(j, i): order_obj.price})
-                            data.update({'receipt_id_{}_product_{}_quantity'.format(j, i): order_obj.quantity})
-                            data.update({'total_{}'.format('receipt_id_{}'.format(j)): order_obj.total})
-                            i += 1
-                        i = 1
-                        j += 1
+                            product_list = []
+                            product_list.append({'product_name': order_obj.product, 'product_price': order_obj.price,
+                                                 'product_quantity': order_obj.quantity})
+                            data.update({'total': order_obj.total})
+                            data.update({'products': product_list})
+                        receipt_list.append(data)
+                        #     data.update({'receipt_id_{}_product_{}_name'.format(j, i): order_obj.product})
+                        #     data.update({'receipt_id_{}_product_{}_price'.format(j, i): order_obj.price})
+                        #     data.update({'receipt_id_{}_product_{}_quantity'.format(j, i): order_obj.quantity})
+                        #     data.update({'total_{}'.format('receipt_id_{}'.format(j)): order_obj.total})
+                        #     i += 1
+                        # i = 1
+                        # j += 1
                 else:
                     pass
-            return Response({'data': data, "status": HTTP_200_OK})
+            return Response({'data': receipt_list, "status": HTTP_200_OK})
         except Exception as e:
             print(e)
             return Response({"error": 'data not found', "status": HTTP_400_BAD_REQUEST})
@@ -1150,7 +1164,7 @@ class GetLatestTransactions(ListAPIView):
                     data.update({'total': order_obj.total})
                     data.update({'products': product_list})
                 receipt_list.append(data)
-                    # i += 1
+                # i += 1
                 # i = 1
                 # j += 1
         else:
@@ -1180,7 +1194,7 @@ class GetLatestTransactions(ListAPIView):
                     data.update({'total': order_obj.total})
                     data.update({'products': product_list})
                 receipt_list.append(data)
-                    # i += 1
+                # i += 1
                 # i = 1
                 # j += 1
         return Response({"data": receipt_list, "status": HTTP_200_OK})
