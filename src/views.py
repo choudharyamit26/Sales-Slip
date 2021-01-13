@@ -838,6 +838,9 @@ class GetScannedDataDetail(ListAPIView):
             receipt_obj = Receipt.objects.get(id=receipt_id)
             receipt_object['merchant'] = receipt_obj.merchant.email
             receipt_object['merchant_id'] = receipt_obj.merchant.id
+            receipt_object['receipt_id'] = receipt_obj.id
+            receipt_object['merchant_name'] = receipt_obj.merchant.full_name
+            receipt_object['merchant_category'] = receipt_obj.merchant.category.category_name
             receipt_object['user'] = receipt_obj.user.email
             receipt_object['created_at'] = receipt_obj.created_at
             # receipt_object.update({'merchant_id': receipt_obj.merchant})
@@ -845,15 +848,20 @@ class GetScannedDataDetail(ListAPIView):
             print(receipt_obj.merchant)
             i = 1
             total = 0
+            product_list = []
             for obj in receipt_obj.order.all():
-                receipt_object.update({'product_{}'.format(i): obj.product})
-                receipt_object.update({'product_{}_price'.format(i): obj.price})
-                receipt_object.update({'product_{}_quantity'.format(i): obj.quantity})
+                # receipt_object.update({'product_{}'.format(i): obj.product})
+                # receipt_object.update({'product_{}_price'.format(i): obj.price})
+                # receipt_object.update({'product_{}_quantity'.format(i): obj.quantity})
+
+                product_list.append({'product_name': obj.product, 'product_price': obj.price,
+                                     'product_quantity': obj.quantity})
                 total = obj.total
                 i += 1
                 print(obj.id)
                 print(obj.product)
-            receipt_object['total'] = total
+                receipt_object['total'] = total
+                receipt_object['products'] = product_list
             # print(receipt_obj.created_at)
             # print(receipt_obj.user)
             return Response({'data': receipt_object, "status": HTTP_200_OK})
@@ -868,18 +876,10 @@ class GetUserTransactions(ListAPIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request, *args, **kwargs):
-
         user = self.request.user
-        # receipt_obj = ScannedData.objects.filter(user=user)
         receipt_obj = Receipt.objects.filter(user=user)
-        # print(receipt_obj)
-        # i = 1
-        # j = 1
         receipt_list = []
         for obj in receipt_obj:
-            # data['receipt_id_{}'.format(j)] = obj.id
-            # data['merchant_{}'.format(j)] = obj.merchant.email
-            # data['merchant_id_{}'.format(j)] = obj.merchant.id
             data = {}
             data['receipt_id'] = obj.id
             data['merchant'] = obj.merchant.email
@@ -889,20 +889,11 @@ class GetUserTransactions(ListAPIView):
             data['created_at'] = obj.created_at
             product_list = []
             for order_obj in obj.order.all():
-                # print(i)
-                # data.update({'receipt_id_{}_product_{}_name'.format(j, i): order_obj.product})
-                # data.update({'receipt_id_{}_product_{}_price'.format(j, i): order_obj.price})
-                # data.update({'receipt_id_{}_product_{}_quantity'.format(j, i): order_obj.quantity})
-                # data.update({'total_{}'.format('receipt_id_{}'.format(j)): order_obj.total})
-                # i += 1
                 product_list.append({'product_name': order_obj.product, 'product_price': order_obj.price,
                                      'product_quantity': order_obj.quantity})
                 data.update({'total': order_obj.total})
                 data.update({'products': product_list})
-            # print(obj.id)
             receipt_list.append(data)
-            # i = 1
-            # j += 1
         return Response({"data": receipt_list, "status": HTTP_200_OK})
 
 
@@ -1134,47 +1125,65 @@ class GetLatestTransactions(ListAPIView):
         # print(receipts[::-1])
         # print(receipts)
         if receipts.count() > 5:
-            data = {}
             # for receipt in receipts[:5:-1]:
             #     print(receipt.created_at)
-            i = 1
-            j = 1
+            # i = 1
+            # j = 1
+            receipt_list = []
             for x in receipts[:5:-1]:
-                data['receipt_id_{}'.format(j)] = x.id
-                data['merchant_id_{}'.format(j)] = x.merchant.id
-                data['merchant_email_{}'.format(j)] = x.merchant.email
-                data['created_at_{}'.format(j)] = x.created_at
+                data = {}
+                data['receipt_id'] = x.id
+                data['merchant_id'] = x.merchant.id
+                data['merchant_name'] = x.merchant.full_name
+                data['merchant_category'] = x.merchant.category.category_name
+                data['merchant_email'] = x.merchant.email
+                data['created_at'] = x.created_at
+                product_list = []
                 for order_obj in x.order.all():
                     # print(i)
-                    data.update({'receipt_id_{}_product_{}_name'.format(j, i): order_obj.product})
-                    data.update({'receipt_id_{}_product_{}_price'.format(j, i): order_obj.price})
-                    data.update({'receipt_id_{}_product_{}_quantity'.format(j, i): order_obj.quantity})
-                    data.update({'total_{}'.format('receipt_id_{}'.format(j)): order_obj.total})
-                    i += 1
-                i = 1
-                j += 1
+                    # data.update({'receipt_id_{}_product_{}_name'.format(j, i): order_obj.product})
+                    # data.update({'receipt_id_{}_product_{}_price'.format(j, i): order_obj.price})
+                    # data.update({'receipt_id_{}_product_{}_quantity'.format(j, i): order_obj.quantity})
+                    # data.update({'total_{}'.format('receipt_id_{}'.format(j)): order_obj.total})
+                    product_list.append({'product_name': order_obj.product, 'product_price': order_obj.price,
+                                         'product_quantity': order_obj.quantity})
+                    data.update({'total': order_obj.total})
+                    data.update({'products': product_list})
+                receipt_list.append(data)
+                    # i += 1
+                # i = 1
+                # j += 1
         else:
-            data = {}
             # print('inside else')
             # for receipt in receipts[:2:-1]:
             #     print(receipt.created_at)
-            i = 1
-            j = 1
+            # i = 1
+            # j = 1
+            receipt_list = []
             for x in receipts[::-1]:
-                data['receipt_id_{}'.format(j)] = x.id
-                data['merchant_id_{}'.format(j)] = x.merchant.id
-                data['merchant_email_{}'.format(j)] = x.merchant.email
-                data['created_at_{}'.format(j)] = x.created_at
+                data = {}
+                data['receipt_id'] = x.id
+                data['merchant_id'] = x.merchant.id
+                data['merchant_name'] = x.merchant.full_name
+                data['merchant_category'] = x.merchant.category.category_name
+                data['merchant_email'] = x.merchant.email
+                data['created_at'] = x.created_at
+                product_list = []
                 for order_obj in x.order.all():
                     # print(i)
-                    data.update({'receipt_id_{}_product_{}_name'.format(j, i): order_obj.product})
-                    data.update({'receipt_id_{}_product_{}_price'.format(j, i): order_obj.price})
-                    data.update({'receipt_id_{}_product_{}_quantity'.format(j, i): order_obj.quantity})
-                    data.update({'total_{}'.format('receipt_id_{}'.format(j)): order_obj.total})
-                    i += 1
-                i = 1
-                j += 1
-        return Response({"data": data, "status": HTTP_200_OK})
+                    # data.update({'receipt_id_{}_product_{}_name'.format(j, i): order_obj.product})
+                    # data.update({'receipt_id_{}_product_{}_price'.format(j, i): order_obj.price})
+                    # data.update({'receipt_id_{}_product_{}_quantity'.format(j, i): order_obj.quantity})
+                    # data.update({'total_{}'.format('receipt_id_{}'.format(j)): order_obj.total})
+                    product_list.append({'product_name': order_obj.product, 'product_price': order_obj.price,
+                                         'product_quantity': order_obj.quantity})
+                    data.update({'total': order_obj.total})
+                    data.update({'products': product_list})
+                receipt_list.append(data)
+                    # i += 1
+                # i = 1
+                # j += 1
+        return Response({"data": receipt_list, "status": HTTP_200_OK})
 
 
 class FAQApiView(ListAPIView):
