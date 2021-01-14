@@ -1,3 +1,4 @@
+from datetime import datetime
 from random import randint
 
 from django.core.mail import EmailMessage
@@ -894,7 +895,7 @@ class GetUserTransactions(ListAPIView):
                 data.update({'total': order_obj.total})
                 data.update({'products': product_list})
             receipt_list.append(data)
-        return Response({"data": receipt_list, "status": HTTP_200_OK})
+        return Response({"data": receipt_list, 'message': 'Receipts fetched successfully', "status": HTTP_200_OK})
 
 
 class ReceiptSearchView(ListAPIView):
@@ -992,7 +993,8 @@ class FilterByCategory(ListAPIView):
                         # j += 1
                 else:
                     pass
-            return Response({'data': receipt_list, "status": HTTP_200_OK})
+            return Response(
+                {'data': receipt_list, 'message': 'Receipts filtered successfully by category', "status": HTTP_200_OK})
         except Exception as e:
             print(e)
             return Response({"error": 'data not found', "status": HTTP_400_BAD_REQUEST})
@@ -1047,7 +1049,8 @@ class FilterByDate(ListAPIView):
                     # j += 1
             else:
                 pass
-            return Response({'data': receipt_list, "status": HTTP_200_OK})
+            return Response(
+                {'data': receipt_list, 'message': 'Receipts filtered successfully by date', "status": HTTP_200_OK})
         except Exception as e:
             print(e)
             return Response({'error': "data not found", "status": HTTP_400_BAD_REQUEST})
@@ -1074,7 +1077,7 @@ class AddToCart(CreateAPIView):
         category = self.request.data['category']
         date_of_purchase = self.request.data['date_of_purchase']
         time_of_purchase = self.request.data['time_of_purchase']
-        order_id = self.request.data['order_id']
+        # order_id = self.request.data['order_id']
         order_amount = self.request.data['order_amount']
         product_name = self.request.data['product_name']
         product_cost = self.request.data['product_cost']
@@ -1085,7 +1088,7 @@ class AddToCart(CreateAPIView):
             price=product_cost,
             quantity=product_quantity,
             total=order_amount,
-            order_id=order_id
+            # order_id=order_id
         )
         return Response({"message": "Item added successfully", "id": order_obj.id, "status": HTTP_200_OK})
 
@@ -1209,7 +1212,8 @@ class GetLatestTransactions(ListAPIView):
                 # i += 1
                 # i = 1
                 # j += 1
-        return Response({"data": receipt_list, "status": HTTP_200_OK})
+        return Response(
+            {"data": receipt_list, 'message': "Latest receipts fetched successfully", "status": HTTP_200_OK})
 
 
 class FAQApiView(ListAPIView):
@@ -1654,7 +1658,7 @@ class GetCartItemDetail(APIView):
                 'item_price': item_obj.price,
                 'item_quantity': item_obj.quantity,
             }
-            return Response({'data': data_dict, 'status': HTTP_200_OK})
+            return Response({'data': data_dict, 'message': 'Item details fetched successfully', 'status': HTTP_200_OK})
         except Exception as e:
             x = {'error': str(e)}
             return Response({'message': x['error'], 'status': HTTP_400_BAD_REQUEST})
@@ -1670,8 +1674,42 @@ class GetMerchantNameAndCategory(APIView):
         merchant_id = self.request.GET.get('merchant_id')
         try:
             merchant_obj = Merchant.objects.get(id=merchant_id)
-            return Response({'name': merchant_obj.full_name, 'category': merchant_obj.category.category_name,
+            return Response({'name': merchant_obj.full_name, 'category_id': merchant_obj.category.id,
+                             'category': merchant_obj.category.category_name,
                              'status': HTTP_200_OK})
         except Exception as e:
             x = {'error': str(e)}
             return Response({'message': x['error'], 'status': HTTP_400_BAD_REQUEST})
+
+
+class FilterDataByYear(APIView):
+    # authentication_classes = (TokenAuthentication,)
+    # permission_classes = (IsAuthenticated,)
+
+    def post(self, request, *args, **kwargs):
+        year = self.request.POST['year']
+        try:
+            # receipts = Receipt.objects.filter(created_at__icontains=year)
+            from django.db.models.functions import TruncMonth
+            receipts = Receipt.objects.filter(created_at__icontains=year).annotate(
+                month=TruncMonth('created_at')).values('month').order_by('created_at__month')
+            print(receipts.count())
+            data_list = []
+            result = {}
+            for receipt in receipts:
+                print('>>>', receipt['month'].month)
+                # print('>>>', datetime.strptime(str(receipt['month']), "%Y-%m-%d"))
+                # print('<<<<<', str(receipt.created_at))
+                # print('______', str(receipt.created_at.strftime("%B")))
+                # month = str(receipt.get('created_at').strftime("%B"))
+                month = receipt['month'].month
+                if month in result.keys():
+                    result[month] = result[month]
+                else:
+                    result[month] = receipt[month]
+            print('Result----------- ', result)
+            # receipt.created_at
+            return Response({'data': receipts.values(), 'status': HTTP_200_OK})
+        except Exception as e:
+            x = {'error': str(e)}
+            return Response({'data': x['error'], 'status': HTTP_400_BAD_REQUEST})

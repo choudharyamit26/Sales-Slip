@@ -8,7 +8,8 @@ from .views import UserCreateAPIView, LoginAPIView, ForgetPasswordAPIView, Chang
     UpdateNotification, UpdateUserNotificationSettingsApi, UpdateUserLanguageSettingApiView, GetUnreadMessageCount, \
     UserLanguageSettingApiView, GetUserNotificationSettingsApi, ChangeLanguageApiView, ChangeNotificationApiView, \
     PrivacyPolicyApiView, ContactUsApiView, TermsandConditionApiView, GetUserDetailApiView, CheckMobileOrPhoneNumber, \
-    FirstViewSet, AboutUsView, UpdateEmailView, AddToCart, GetCategoryList, POSOrder,GetCartItemDetail,GetMerchantNameAndCategory
+    FirstViewSet, AboutUsView, UpdateEmailView, AddToCart, GetCategoryList, POSOrder, GetCartItemDetail, \
+    GetMerchantNameAndCategory, FilterDataByYear
 
 app_name = 'src'
 # router = DefaultRouter()
@@ -37,6 +38,7 @@ urlpatterns = [
     path('search-scanned-data/', ReceiptSearchView.as_view(), name='search-scanned-data'),
     path('filter-by-category/', FilterByCategory.as_view(), name='filter-by-category'),
     path('filter-by-date/', FilterByDate.as_view(), name='filter-by-date'),
+    path('filter-by-year/', FilterDataByYear.as_view(), name='filter-by-year'),
     path('create-order/', CreateReceiptManually.as_view(), name='create-order'),
     path('pos-order/', POSOrder.as_view(), name='pos-order'),
     path('add-to-cart/', AddToCart.as_view(), name='add-to-cart'),
@@ -62,6 +64,7 @@ urlpatterns = [
          UpdateUserLanguageSettingApiView.as_view(), name='update-user-lang'),
     path('get-user-unread-message-count/', GetUnreadMessageCount.as_view(), name='get-user-unread-message-count'),
     path('check-mobile-or-phone-number/', CheckMobileOrPhoneNumber.as_view(), name='check-mobile-or-phone-number'),
-    path('get-merchant-name-and-category/', GetMerchantNameAndCategory.as_view(), name='get-merchant-name-and-category'),
+    path('get-merchant-name-and-category/', GetMerchantNameAndCategory.as_view(),
+         name='get-merchant-name-and-category'),
     path('about-us/', AboutUsView.as_view(), name='about-us')
 ]
