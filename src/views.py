@@ -1154,8 +1154,6 @@ class GetLatestTransactions(ListAPIView):
         user = self.request.user
         receipts = Receipt.objects.filter(user=user)
         # print(receipts[::-1])
-        print(receipts.count())
-        print((receipts.count()-2))
         if receipts.count() > 2:
             # for receipt in receipts[:5:-1]:
             #     print(receipt.created_at)
@@ -1163,8 +1161,7 @@ class GetLatestTransactions(ListAPIView):
             # j = 1
             receipt_list = []
             c = receipts.count()
-            print('>>>>>>>>>',len(receipts),c-2)
-            for x in receipts[(c-2):]:
+            for x in receipts[(c - 2):]:
                 data = {}
                 data['receipt_id'] = x.id
                 data['merchant_id'] = x.merchant.id
@@ -1702,7 +1699,10 @@ class FilterExpenseDataByMonth(APIView):
                 total = 0
                 for x in r:
                     if x.created_at.month is receipt.created_at.month:
-                        total += x.order.all()[0].total
+                        total += receipt.total
+                        print(total)
+                    else:
+                        pass
                 month.append({'month': receipt.created_at.month, 'total': total})
             return Response(
                 {'expense_data_by_month': list({v['month']: v for v in month}.values()), 'status': HTTP_200_OK})
@@ -1724,14 +1724,14 @@ class FilterExpenseDataByCategory(APIView):
             categories = []
             for receipt in receipts:
                 r = receipts.filter(created_at__month=receipt.created_at.month)
-                print(r)
+                total = 0
                 for x in r:
-                    print(x.merchant.category)
-                    print(x.merchant.category.category_name)
+                    # print(x.merchant.category.category_name)
                     if x.merchant.category.category_name in categories:
-                        pass
+                        total += receipt.total
                     else:
                         categories.append(x.merchant.category.category_name)
+                categories[0] = total
             return Response({'expense_data_by_category': categories, 'status': HTTP_200_OK})
         except Exception as e:
             print(e)
