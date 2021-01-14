@@ -90,6 +90,7 @@ class Receipt(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     merchant = models.ForeignKey(Merchant, on_delete=models.CASCADE)
     order = models.ManyToManyField(OrderItem)
+    total = models.FloatField()
     qr_code = models.ImageField(upload_to='QR')
     created_at = models.DateTimeField(auto_now_add=True)
 

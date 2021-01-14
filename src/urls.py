@@ -9,7 +9,7 @@ from .views import UserCreateAPIView, LoginAPIView, ForgetPasswordAPIView, Chang
     UserLanguageSettingApiView, GetUserNotificationSettingsApi, ChangeLanguageApiView, ChangeNotificationApiView, \
     PrivacyPolicyApiView, ContactUsApiView, TermsandConditionApiView, GetUserDetailApiView, CheckMobileOrPhoneNumber, \
     FirstViewSet, AboutUsView, UpdateEmailView, AddToCart, GetCategoryList, POSOrder, GetCartItemDetail, \
-    GetMerchantNameAndCategory, FilterDataByYear
+    GetMerchantNameAndCategory, FilterExpenseDataByMonth, FilterExpenseDataByCategory
 
 app_name = 'src'
 # router = DefaultRouter()
@@ -38,7 +38,8 @@ urlpatterns = [
     path('search-scanned-data/', ReceiptSearchView.as_view(), name='search-scanned-data'),
     path('filter-by-category/', FilterByCategory.as_view(), name='filter-by-category'),
     path('filter-by-date/', FilterByDate.as_view(), name='filter-by-date'),
-    path('filter-by-year/', FilterDataByYear.as_view(), name='filter-by-year'),
+    path('expense-by-month/', FilterExpenseDataByMonth.as_view(), name='expense-by-month'),
+    path('expense-by-category/', FilterExpenseDataByCategory.as_view(), name='expense-by-category'),
     path('create-order/', CreateReceiptManually.as_view(), name='create-order'),
     path('pos-order/', POSOrder.as_view(), name='pos-order'),
     path('add-to-cart/', AddToCart.as_view(), name='add-to-cart'),

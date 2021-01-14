@@ -892,8 +892,8 @@ class GetUserTransactions(ListAPIView):
             for order_obj in obj.order.all():
                 product_list.append({'product_name': order_obj.product, 'product_price': order_obj.price,
                                      'product_quantity': order_obj.quantity})
-                data.update({'total': order_obj.total})
                 data.update({'products': product_list})
+            data.update({'total': obj.total})
             receipt_list.append(data)
         return Response({"data": receipt_list, 'message': 'Receipts fetched successfully', "status": HTTP_200_OK})
 
@@ -1682,34 +1682,52 @@ class GetMerchantNameAndCategory(APIView):
             return Response({'message': x['error'], 'status': HTTP_400_BAD_REQUEST})
 
 
-class FilterDataByYear(APIView):
-    # authentication_classes = (TokenAuthentication,)
-    # permission_classes = (IsAuthenticated,)
+class FilterExpenseDataByMonth(APIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
 
     def post(self, request, *args, **kwargs):
         year = self.request.POST['year']
         try:
-            # receipts = Receipt.objects.filter(created_at__icontains=year)
-            from django.db.models.functions import TruncMonth
-            receipts = Receipt.objects.filter(created_at__icontains=year).annotate(
-                month=TruncMonth('created_at')).values('month').order_by('created_at__month')
-            print(receipts.count())
-            data_list = []
-            result = {}
+            receipts = Receipt.objects.filter(created_at__icontains=year).filter(user=self.request.user)
+            month = []
             for receipt in receipts:
-                print('>>>', receipt['month'].month)
-                # print('>>>', datetime.strptime(str(receipt['month']), "%Y-%m-%d"))
-                # print('<<<<<', str(receipt.created_at))
-                # print('______', str(receipt.created_at.strftime("%B")))
-                # month = str(receipt.get('created_at').strftime("%B"))
-                month = receipt['month'].month
-                if month in result.keys():
-                    result[month] = result[month]
-                else:
-                    result[month] = receipt[month]
-            print('Result----------- ', result)
-            # receipt.created_at
-            return Response({'data': receipts.values(), 'status': HTTP_200_OK})
+                r = receipts.filter(created_at__month=receipt.created_at.month)
+                total = 0
+                for x in r:
+                    if x.created_at.month is receipt.created_at.month:
+                        total += x.order.all()[0].total
+                month.append({'month': receipt.created_at.month, 'total': total})
+            return Response(
+                {'expense_data_by_month': list({v['month']: v for v in month}.values()), 'status': HTTP_200_OK})
         except Exception as e:
             x = {'error': str(e)}
-            return Response({'data': x['error'], 'status': HTTP_400_BAD_REQUEST})
+            return Response({'message': x['error'], 'status': HTTP_400_BAD_REQUEST})
+
+
+class FilterExpenseDataByCategory(APIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request, *args, **kwargs):
+        year = self.request.POST['year']
+        try:
+            print('inside try-----')
+            receipts = Receipt.objects.filter(created_at__icontains=year).filter(user=self.request.user)
+            print(receipts)
+            categories = []
+            for receipt in receipts:
+                r = receipts.filter(created_at__month=receipt.created_at.month)
+                print(r)
+                for x in r:
+                    print(x.merchant.category)
+                    print(x.merchant.category.category_name)
+                    if x.merchant.category.category_name in categories:
+                        pass
+                    else:
+                        categories.append(x.merchant.category.category_name)
+            return Response({'expense_data_by_category': categories, 'status': HTTP_200_OK})
+        except Exception as e:
+            print(e)
+            x = {'error': str(e)}
+            return Response({'message': x['error'], 'status': HTTP_400_BAD_REQUEST})
