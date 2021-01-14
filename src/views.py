@@ -930,7 +930,7 @@ class ReceiptSearchView(ListAPIView):
                 # data_list.append({'product_quantity': obj.quantity})
                 i += 1
                 c = i
-                total = obj.total
+                total = receipt_obj.total
                 # data.update({'total': obj.total})
             data.update({'total': total})
             # data_list.append(data)
@@ -981,8 +981,9 @@ class FilterByCategory(ListAPIView):
                             product_list = []
                             product_list.append({'product_name': order_obj.product, 'product_price': order_obj.price,
                                                  'product_quantity': order_obj.quantity})
-                            data.update({'total': order_obj.total})
+
                             data.update({'products': product_list})
+                        data.update({'total': x.total})
                         receipt_list.append(data)
                         #     data.update({'receipt_id_{}_product_{}_name'.format(j, i): order_obj.product})
                         #     data.update({'receipt_id_{}_product_{}_price'.format(j, i): order_obj.price})
@@ -1037,8 +1038,8 @@ class FilterByDate(ListAPIView):
                         # print(i)
                         product_list.append({'product_name': order_obj.product, 'product_price': order_obj.price,
                                              'product_quantity': order_obj.quantity})
-                        data.update({'total': order_obj.total})
                         data.update({'products': product_list})
+                    data.update({'total': x.total})
                     receipt_list.append(data)
                     #     data.update({'receipt_id_{}_product_{}_name'.format(j, i): order_obj.product})
                     #     data.update({'receipt_id_{}_product_{}_price'.format(j, i): order_obj.price})
@@ -1109,7 +1110,7 @@ class CreateReceiptManually(CreateAPIView):
         date_of_purchase = self.request.data['date_of_purchase']
         time_of_purchase = self.request.data['time_of_purchase']
         # order_id = self.request.data['order_id']
-        # order_amount = self.request.data['order_amount']
+        order_amount = self.request.data['order_amount']
         ordered_items = self.request.data['ordered_items']
         # customer_name = self.request.data['customer_name']
         # product_name = self.request.data['product_name']
@@ -1132,6 +1133,7 @@ class CreateReceiptManually(CreateAPIView):
         receipt_obj = Receipt.objects.create(
             user=self.request.user,
             merchant=merchant_obj,
+            total=order_amount
         )
         for item in ordered_items:
             receipt_obj.order.add(OrderItem.objects.get(id=item))
@@ -1152,14 +1154,17 @@ class GetLatestTransactions(ListAPIView):
         user = self.request.user
         receipts = Receipt.objects.filter(user=user)
         # print(receipts[::-1])
-        # print(receipts)
+        print(receipts.count())
+        print((receipts.count()-2))
         if receipts.count() > 2:
             # for receipt in receipts[:5:-1]:
             #     print(receipt.created_at)
             # i = 1
             # j = 1
             receipt_list = []
-            for x in receipts[:2:-1]:
+            c = receipts.count()
+            print('>>>>>>>>>',len(receipts),c-2)
+            for x in receipts[(c-2):]:
                 data = {}
                 data['receipt_id'] = x.id
                 data['merchant_id'] = x.merchant.id
@@ -1176,8 +1181,8 @@ class GetLatestTransactions(ListAPIView):
                     # data.update({'total_{}'.format('receipt_id_{}'.format(j)): order_obj.total})
                     product_list.append({'product_name': order_obj.product, 'product_price': order_obj.price,
                                          'product_quantity': order_obj.quantity})
-                    data.update({'total': order_obj.total})
                     data.update({'products': product_list})
+                data.update({'total': x.total})
                 receipt_list.append(data)
                 # i += 1
                 # i = 1
@@ -1206,8 +1211,9 @@ class GetLatestTransactions(ListAPIView):
                     # data.update({'total_{}'.format('receipt_id_{}'.format(j)): order_obj.total})
                     product_list.append({'product_name': order_obj.product, 'product_price': order_obj.price,
                                          'product_quantity': order_obj.quantity})
-                    data.update({'total': order_obj.total})
+
                     data.update({'products': product_list})
+                data.update({'total': x.total})
                 receipt_list.append(data)
                 # i += 1
                 # i = 1
