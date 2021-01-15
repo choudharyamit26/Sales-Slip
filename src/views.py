@@ -861,7 +861,7 @@ class GetScannedDataDetail(ListAPIView):
                 i += 1
                 print(obj.id)
                 print(obj.product)
-                receipt_object['total'] = total
+                receipt_object['total'] = receipt_obj.total
                 receipt_object['products'] = product_list
             # print(receipt_obj.created_at)
             # print(receipt_obj.user)
@@ -1142,7 +1142,7 @@ class CreateReceiptManually(CreateAPIView):
             merchant=merchant_obj,
             order=receipt_obj
         )
-        return Response({"message": "Order created successfully", "status": HTTP_200_OK})
+        return Response({"message": "Order created successfully", 'id': receipt_obj.id, "status": HTTP_200_OK})
 
 
 class GetLatestTransactions(ListAPIView):
