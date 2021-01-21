@@ -116,6 +116,11 @@
                 <span><i class="fa fa-building"></i></span>Branch List
             </a>
         </li>
+        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'adminpanel:banner-list' %}active{% endif %}">
+            <a href="{% url 'adminpanel:banner-list' %}">
+                <span><i class="fa fa-image"></i></span>Banner List
+            </a>
+        </li>
         <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'adminpanel:sub-admin-list' %}active{% endif %}">
             <a href="{% url 'adminpanel:sub-admin-list' %}">
                 <span><i class="fa fa-users"></i></span>Sub Admin Management

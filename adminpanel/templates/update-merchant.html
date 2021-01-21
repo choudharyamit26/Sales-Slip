@@ -1,0 +1,41 @@
+{% extends 'base-ereceipt.html' %}
+{% load crispy_forms_tags %}
+{% block body %}
+<div class="WrapperArea">
+    <div class="WrapperBox">
+        <div class="Small-Wrapper Small-Wrapper2">
+            <h4 class="Title">Update Merchant</h4>
+
+            <div class="HelpArea">
+                <div class="tab-content">
+                    <form method="post">
+                        {% csrf_token %}
+                        {{form|crispy}}
+<!--                        <div class="form-group">-->
+<!--                            <label>Full Name</label>-->
+<!--                            <input type="text" name="full_name" required class="form-control">-->
+<!--                        </div>-->
+<!--                        <div class="form-group">-->
+<!--                            <label>Category</label>-->
+<!--                            <input type="text" name="category" required class="form-control">-->
+<!--                        </div>-->
+<!--                        <div class="form-group">-->
+<!--                            <label>Commercial id</label>-->
+<!--                            <input type="text" name="full_name" required class="form-control">-->
+<!--                        </div>-->
+<!--                        <div class="form-group">-->
+<!--                            <label>Email</label>-->
+<!--                            <input type="email" name="email" required class="form-control">-->
+<!--                        </div>-->
+<!--                        <div class="form-group">-->
+<!--                            <label>Address</label>-->
+<!--                            <input type="text" name="full_name" required class="form-control">-->
+<!--                        </div>-->
+                        <button type="submit">Update</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}

@@ -19,13 +19,13 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
 from src.models import User, Merchant, Category, Receipt, Settings, UserNotification, TermsAndCondition, AboutUs, \
-    PrivacyPolicy, ContactUs, ScannedData, Branch,Banner
+    PrivacyPolicy, ContactUs, ScannedData, Branch, Banner
 from django.contrib.auth import get_user_model, login, authenticate, logout, update_session_auth_hash
 from django.views.generic import View, ListView, DetailView, UpdateView, CreateView, DeleteView, FormView, TemplateView
 from django.contrib.auth.password_validation import validate_password
 from .filters import UserFilter, MerchantFilter
 from .forms import LoginForm, MerchantForm, UserNotificationForm, UpdateAboutUsForm, UpdateContactusForm, \
-    UpdatePrivacyPolicyForm, UpdateTnCForm, CategoryForm, SubAdminForm, BranchForm, BannerForms
+    UpdatePrivacyPolicyForm, UpdateTnCForm, CategoryForm, SubAdminForm, BranchForm, BannerForms, MerchantUpdateForm
 
 from django.utils.translation import gettext_lazy as _
 from django.conf.global_settings import DEFAULT_FROM_EMAIL
@@ -866,12 +866,49 @@ class MerchantDelete(LoginRequiredMixin, DeleteView):
         return HttpResponseRedirect('/adminpanel/merchant-list/')
 
 
+class BannerList(LoginRequiredMixin, ListView):
+    login_url = 'adminpanel:login'
+    model = Banner
+    template_name = 'banner-list.html'
+
+    def get(self, request, *args, **kwargs):
+        banner_obj = Banner.objects.all()
+        return render(self.request, 'banner-list.html', {'banners': banner_obj})
+
+
 class BannerView(LoginRequiredMixin, CreateView):
     login_url = 'adminpanel:login'
     model = Banner
     form_class = BannerForms
     template_name = 'banner.html'
+    success_url = reverse_lazy('adminpanel:banner-list')
 
-    def post(self, request, *args, **kwargs):
-        print(self.request.POST)
-        return redirect('adminpanel:merchant-list')
+    # def post(self, request, *args, **kwargs):
+    #     print(self.request.POST)
+    #     return redirect('adminpanel:banner-list')
+
+
+class BannerDetail(LoginRequiredMixin, DetailView):
+    login_url = 'adminpanel:login'
+    model = Banner
+    template_name = 'banner-detail.html'
+
+
+class UpdateBanner(LoginRequiredMixin, UpdateView):
+    login_url = 'adminpanel:login'
+    model = Banner
+    form_class = BannerForms
+    template_name = 'banner.html'
+    success_url = reverse_lazy('adminpanel:banner-list')
+
+
+class UpdateMerchant(LoginRequiredMixin, UpdateView):
+    login_url = 'adminpanel:login'
+    model = Merchant
+    form_class = MerchantUpdateForm
+    template_name = 'update-merchant.html'
+    success_url = reverse_lazy('adminpanel:merchant-list')
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['form'] = self.form_class(instance=self.request.user, initial={'email': self.request.user.email})
+    #     return context

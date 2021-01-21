@@ -117,6 +117,9 @@
                                 <a class="Blue" href="{% url 'adminpanel:merchant-detail' object.id %}">
                                     <i class="fa fa-eye"></i>
                                 </a>
+                                <a class="Blue" href="{% url 'adminpanel:update-merchant' object.id %}">
+                                    <i class="fa fa-pencil"></i>
+                                </a>
                                 <button class="Red deleteButton" value="{{object.id}}" data-toggle="modal"
                                         data-target="#DeleteModal" style="border:none;box-shadow:none;
                                                                                 background:transparent;outline:0;">
@@ -159,6 +162,9 @@
                             <td>
                                 <a class="Blue" href="{% url 'adminpanel:merchant-detail' object.id %}">
                                     <i class="fa fa-eye"></i>
+                                </a>
+                                <a class="Blue" href="{% url 'adminpanel:update-merchant' object.id %}">
+                                    <i class="fa fa-pencil"></i>
                                 </a>
                                 <button class="Red deleteButton" value="{{object.id}}" data-toggle="modal"
                                         data-target="#DeleteModal" style="border:none;box-shadow:none;
@@ -252,5 +258,7 @@
         window.location.href = url
     });
 });
+
+
 </script>
 {% endblock body %}

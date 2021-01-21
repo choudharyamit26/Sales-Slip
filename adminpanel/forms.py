@@ -22,6 +22,15 @@ class MerchantForm(forms.ModelForm):
         fields = ('full_name', 'category', 'commercial_id', 'email', 'address', 'password', 'confirm_password')
 
 
+class MerchantUpdateForm(forms.ModelForm):
+    category = forms.ModelChoiceField(queryset=Category.objects.all(),
+                                      widget=forms.TextInput(attrs={'readonly': 'readonly'}))
+
+    class Meta:
+        model = Merchant
+        fields = ('full_name', 'category', 'commercial_id', 'email', 'address')
+
+
 class SubAdminForm(forms.ModelForm):
     class Meta:
         model = User
@@ -86,4 +95,4 @@ class CategoryForm(forms.ModelForm):
 class BannerForms(forms.ModelForm):
     class Meta:
         model = Banner
-        exclude = ('user',)
+        fields = '__all__'

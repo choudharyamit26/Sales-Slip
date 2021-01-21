@@ -1,0 +1,46 @@
+{% extends 'base-ereceipt.html' %}
+{% load crispy_forms_tags %}
+{% block body %}
+
+<div class="WrapperArea">
+    <div class="WrapperBox">
+        <div class="Small-Wrapper Small-Wrapper2">
+            <h4 class="Title">Banner List</h4>
+            <a href="{% url 'adminpanel:banner' %}" class="btn btn-primary"
+               style="margin-left:1000px;margin-top:-38px;">Add Image</a>
+            <div class="HelpArea">
+                <div class="tab-content">
+                    <div class="TableList">
+                        <div class="dragscroll">
+                            <table style="">
+                                <thead>
+                                <tr>
+                                    <th>S. No</th>
+                                    <th>Image</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                {% for obj in banners %}
+                                <tr>
+                                    <td>{{forloop.counter}}</td>
+                                    <td><img src="{{obj.image.url}}" style="height:10%"></td>
+                                    <td>
+                                        <a href="{% url 'adminpanel:banner-detail' obj.id %}">
+                                            <i class="fa fa-eye"></i>
+                                        </a>
+                                        <a href="{% url 'adminpanel:update-banner' obj.id %}">
+                                            <i class="fa fa-pencil"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}

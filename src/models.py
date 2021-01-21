@@ -175,17 +175,17 @@ class Branch(models.Model):
 
 
 class Banner(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    image_1 = models.ImageField()
-    image_2 = models.ImageField()
-    image_3 = models.ImageField()
-    image_4 = models.ImageField()
-    image_5 = models.ImageField()
-    image_6 = models.ImageField()
-    image_7 = models.ImageField()
-    image_8 = models.ImageField()
-    image_9 = models.ImageField()
-    image_10 = models.ImageField()
+    # user = models.ForeignKey(User, on_delete=models.CASCADE)
+    image = models.ImageField()
+    # image_2 = models.ImageField()
+    # image_3 = models.ImageField()
+    # image_4 = models.ImageField()
+    # image_5 = models.ImageField()
+    # image_6 = models.ImageField()
+    # image_7 = models.ImageField()
+    # image_8 = models.ImageField()
+    # image_9 = models.ImageField()
+    # image_10 = models.ImageField()
 
 
 @receiver(post_save, sender=User)

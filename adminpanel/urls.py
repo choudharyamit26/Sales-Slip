@@ -3,7 +3,7 @@ from .views import Login, Dashboard, NotificationView, UsersList, AddMerchant, M
     MerchantDetail, NotificationCount, ReadNotifications, SetAdminNotificationSetting, GetAdminNotificationSetting, \
     SendNotification, TermsAndConditionView, UpdateTermsAndCondition, UpdateContactUsView, UpdatePrivacyPolicyView, \
     UpdateAboutUsView, ReportView, CreateCategory, CategoryList, UserDelete, MerchantDelete, ReceiptDetail, AddSubAdmin, \
-    SubAdminList, AddBranch, BranchList,BannerView
+    SubAdminList, AddBranch, BranchList, BannerView, BannerList, UpdateMerchant, BannerDetail, UpdateBanner
 
 app_name = 'adminpanel'
 
@@ -43,8 +43,12 @@ urlpatterns = [
          UpdatePrivacyPolicyView.as_view(), name='update-privacy-policy'),
     path('update-about-us/<int:pk>/',
          UpdateAboutUsView.as_view(), name='update-about-us'),
+    path('update-merchant/<int:pk>/', UpdateMerchant.as_view(), name='update-merchant'),
     path('reports/', ReportView.as_view(), name='reports'),
     path('category/', CreateCategory.as_view(), name='category'),
     path('banner/', BannerView.as_view(), name='banner'),
+    path('banner-list/', BannerList.as_view(), name='banner-list'),
+    path('banner-detail/<int:pk>/', BannerDetail.as_view(), name='banner-detail'),
+    path('update-banner/<int:pk>/', UpdateBanner.as_view(), name='update-banner'),
     path('category-list/', CategoryList.as_view(), name='category-list'),
 ]

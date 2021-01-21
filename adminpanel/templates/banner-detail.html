@@ -1,0 +1,22 @@
+{% extends 'base-ereceipt.html' %}
+{% load crispy_forms_tags %}
+{% block body %}
+<div class="WrapperArea">
+    <div class="WrapperBox">
+        <div class="Small-Wrapper Small-Wrapper2">
+            <div class="HelpArea">
+                <div class="tab-content">
+                    <h2>
+                        Image
+                    </h2>
+                    <br>
+                    <br>
+                    <br>
+                    <img src="{{object.image.url}}">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}
