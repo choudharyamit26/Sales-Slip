@@ -2,7 +2,8 @@ from django.urls import path
 from .views import Login, Dashboard, NotificationView, UsersList, AddMerchant, MerchantList, ReceiptList, UserDetail, \
     MerchantDetail, NotificationCount, ReadNotifications, SetAdminNotificationSetting, GetAdminNotificationSetting, \
     SendNotification, TermsAndConditionView, UpdateTermsAndCondition, UpdateContactUsView, UpdatePrivacyPolicyView, \
-    UpdateAboutUsView, ReportView, CreateCategory, CategoryList, UserDelete, MerchantDelete, ReceiptDetail
+    UpdateAboutUsView, ReportView, CreateCategory, CategoryList, UserDelete, MerchantDelete, ReceiptDetail, AddSubAdmin, \
+    SubAdminList, AddBranch, BranchList,BannerView
 
 app_name = 'adminpanel'
 
@@ -13,6 +14,10 @@ urlpatterns = [
     path('users-list/', UsersList.as_view(), name='users-list'),
     path('user-delete/<int:pk>/', UserDelete.as_view(), name='user-delete'),
     path('add-merchant/', AddMerchant.as_view(), name='add-merchant'),
+    path('add-sub-admin/', AddSubAdmin.as_view(), name='add-sub-admin'),
+    path('add-branch/', AddBranch.as_view(), name='add-branch'),
+    path('branch-list/', BranchList.as_view(), name='branch-list'),
+    path('sub-admin-list/', SubAdminList.as_view(), name='sub-admin-list'),
     path('merchant-list/', MerchantList.as_view(), name='merchant-list'),
     path('merchant-delete/<int:pk>/', MerchantDelete.as_view(), name='merchnat-delete'),
     path('receipt-list/', ReceiptList.as_view(), name='receipt-list'),
@@ -40,5 +45,6 @@ urlpatterns = [
          UpdateAboutUsView.as_view(), name='update-about-us'),
     path('reports/', ReportView.as_view(), name='reports'),
     path('category/', CreateCategory.as_view(), name='category'),
+    path('banner/', BannerView.as_view(), name='banner'),
     path('category-list/', CategoryList.as_view(), name='category-list'),
 ]

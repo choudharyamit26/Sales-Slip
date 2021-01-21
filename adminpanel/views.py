@@ -12,20 +12,20 @@ from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.utils.decorators import method_decorator
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
 from src.models import User, Merchant, Category, Receipt, Settings, UserNotification, TermsAndCondition, AboutUs, \
-    PrivacyPolicy, ContactUs, ScannedData
+    PrivacyPolicy, ContactUs, ScannedData, Branch,Banner
 from django.contrib.auth import get_user_model, login, authenticate, logout, update_session_auth_hash
 from django.views.generic import View, ListView, DetailView, UpdateView, CreateView, DeleteView, FormView, TemplateView
 from django.contrib.auth.password_validation import validate_password
 from .filters import UserFilter, MerchantFilter
 from .forms import LoginForm, MerchantForm, UserNotificationForm, UpdateAboutUsForm, UpdateContactusForm, \
-    UpdatePrivacyPolicyForm, UpdateTnCForm, CategoryForm
+    UpdatePrivacyPolicyForm, UpdateTnCForm, CategoryForm, SubAdminForm, BranchForm, BannerForms
 
 from django.utils.translation import gettext_lazy as _
 from django.conf.global_settings import DEFAULT_FROM_EMAIL
@@ -330,6 +330,7 @@ class AddMerchant(View):
         commercial_id = self.request.POST['commercial_id']
         password = self.request.POST['password']
         confirm_password = self.request.POST['confirm_password']
+        address = self.request.POST['address']
         category = Category.objects.all()
         if password != confirm_password:
             messages.error(self.request, 'Password and Confirm password do not match')
@@ -354,6 +355,7 @@ class AddMerchant(View):
                         category=category_object,
                         email=email,
                         commercial_id=commercial_id,
+                        address=address,
                         password=password
                     )
                     merchant = User.objects.create(
@@ -405,6 +407,7 @@ class AddMerchant(View):
                             category=category_object,
                             email=email,
                             commercial_id=commercial_id,
+                            address=address,
                             password=password
                         )
                         merchant = User.objects.create(
@@ -444,6 +447,7 @@ class AddMerchant(View):
                         category=category_object,
                         email=email,
                         commercial_id=commercial_id,
+                        address=address,
                         password=password
                     )
                     merchant = User.objects.create(
@@ -475,7 +479,60 @@ class AddMerchant(View):
                     msg.content_subtype = "html"
                     msg.send()
                     messages.info(self.request, 'Merchant added successfully')
-                    return redirect("adminpanel:merchant-list")
+                    return redirect("adminpanel:add-branch")
+
+
+class AddSubAdmin(LoginRequiredMixin, CreateView):
+    login_url = 'adminpanel:login'
+    model = User
+    form_class = SubAdminForm
+    template_name = 'sub-admin.html'
+
+    def post(self, request, *args, **kwargs):
+        return redirect('adminpanel:sub-admin-list')
+
+
+class SubAdminList(LoginRequiredMixin, ListView):
+    login_url = 'adminpanel:login'
+    model = User
+    template_name = 'sub-admin-list.html'
+
+
+class AddBranch(LoginRequiredMixin, CreateView):
+    login_url = 'adminpanel:login'
+    model = Branch
+    form_class = BranchForm
+    template_name = 'branch.html'
+
+    # success_url = reverse('adminpanel:branch-list')
+    def get(self, request, *args, **kwargs):
+        return render(self.request, 'branch.html', {'merchants': Merchant.objects.all()})
+
+    def post(self, request, *args, **kwargs):
+        print(self.request.POST)
+        merchant_id = self.request.POST['merchant_name']
+        merchant_obj = Merchant.objects.get(id=merchant_id)
+        shop_no = self.request.POST['shop_no']
+        street = self.request.POST['street']
+        landmark = self.request.POST['landmark']
+        city = self.request.POST['city']
+        postal_code = self.request.POST['postal_code']
+        Branch.objects.create(
+            merchant_name=merchant_obj,
+            shop_no=shop_no,
+            street=street,
+            landmark=landmark,
+            city=city,
+            postal_code=postal_code
+        )
+        messages.info(self.request, 'Branch added successfully')
+        return redirect('adminpanel:branch-list')
+
+
+class BranchList(LoginRequiredMixin, ListView):
+    login_url = 'adminpanel:login'
+    model = Branch
+    template_name = 'branch-list.html'
 
 
 class MerchantList(LoginRequiredMixin, ListView):
@@ -807,3 +864,14 @@ class MerchantDelete(LoginRequiredMixin, DeleteView):
         print(UserObj.email)
         messages.success(self.request, "Merchant deleted successfully")
         return HttpResponseRedirect('/adminpanel/merchant-list/')
+
+
+class BannerView(LoginRequiredMixin, CreateView):
+    login_url = 'adminpanel:login'
+    model = Banner
+    form_class = BannerForms
+    template_name = 'banner.html'
+
+    def post(self, request, *args, **kwargs):
+        print(self.request.POST)
+        return redirect('adminpanel:merchant-list')

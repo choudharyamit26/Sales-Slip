@@ -1,5 +1,6 @@
 from django import forms
-from src.models import User, Merchant, UserNotification, TermsAndCondition, ContactUs, PrivacyPolicy, AboutUs, Category
+from src.models import User, Merchant, UserNotification, TermsAndCondition, ContactUs, PrivacyPolicy, AboutUs, Category, \
+    Branch, Banner
 from django.contrib.auth.password_validation import validate_password, MinimumLengthValidator
 from ckeditor.widgets import CKEditorWidget
 
@@ -18,7 +19,19 @@ class MerchantForm(forms.ModelForm):
 
     class Meta:
         model = Merchant
-        fields = ('full_name', 'category', 'commercial_id', 'email', 'password', 'confirm_password')
+        fields = ('full_name', 'category', 'commercial_id', 'email', 'address', 'password', 'confirm_password')
+
+
+class SubAdminForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'email', 'password', 'confirm_password')
+
+
+class BranchForm(forms.ModelForm):
+    class Meta:
+        model = Branch
+        fields = '__all__'
 
 
 class UserNotificationForm(forms.ModelForm):
@@ -68,3 +81,9 @@ class CategoryForm(forms.ModelForm):
     class Meta:
         model = Category
         fields = ('category_name',)
+
+
+class BannerForms(forms.ModelForm):
+    class Meta:
+        model = Banner
+        exclude = ('user',)

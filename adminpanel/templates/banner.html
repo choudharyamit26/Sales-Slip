@@ -1,0 +1,22 @@
+{% extends 'base-ereceipt.html' %}
+{% load crispy_forms_tags %}
+{% block body %}
+
+<div class="WrapperArea">
+    <div class="WrapperBox">
+        <div class="Small-Wrapper">
+            <h4 class="Title">Add Banner</h4>
+
+            <div class="NotificationArea">
+                <div class="NotificationForm">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{form|crispy}}
+                        <button type="submit" class="btn btn-primary">Upload</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}

@@ -1,0 +1,59 @@
+{% extends 'base-ereceipt.html' %}
+{% block body %}
+<div class="WrapperArea">
+    <div class="WrapperBox">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-info" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <div class="Small-Wrapper">
+            <h4 class="Title">Branch List</h4>
+            <div class="TableList">
+                <div class="dragscroll">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>S. No</th>
+                            <th>Merchant Name</th>
+                            <th>Merchant Email</th>
+                            <th>Shop Number</th>
+                            <th>Street</th>
+                            <th>Landmark</th>
+                            <th>City</th>
+                            <th>Postal Code</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for object in object_list %}
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td>{{object.merchant_name.full_name}}</td>
+                            <td>{{object.merchant_name.email}}</td>
+                            <td>{{object.shop_no}}</td>
+                            <td>{{object.street}}</td>
+                            <td>{{object.landmark}}</td>
+                            <td>{{object.city}}</td>
+                            <td>{{object.postal_code}}</td>
+                            <td>
+                                <a href="#"><i class="fa fa-eye"></i></a>
+                                <a href="#"><i class="fa fa-edit"></i></a>
+                                <a href="#"><i class="fa fa-trash"></i></a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}

@@ -1692,20 +1692,27 @@ class FilterExpenseDataByMonth(APIView):
     def post(self, request, *args, **kwargs):
         year = self.request.POST['year']
         try:
-            receipts = Receipt.objects.filter(created_at__icontains=year).filter(user=self.request.user)
-            month = []
+            receipts = Receipt.objects.filter(user=self.request.user).filter(created_at__icontains=year)
+            receipts_total = []
             for receipt in receipts:
-                r = receipts.filter(created_at__month=receipt.created_at.month)
-                total = 0
-                for x in r:
-                    if x.created_at.month is receipt.created_at.month:
-                        total += receipt.total
-                        print(total)
+                receipts_total.append({'month': receipt.created_at.month, 'total': receipt.total})
+            final = []
+            for y in receipts_total:
+                if len(final) > 0:
+                    i = -1
+                    for z in range(len(final)):
+                        if y['month'] == final[z]['month']:
+                            i = z
+                        else:
+                            pass
+                    if i == -1:
+                        final.append(y)
                     else:
-                        pass
-                month.append({'month': receipt.created_at.month, 'total': total})
-            return Response(
-                {'expense_data_by_month': list({v['month']: v for v in month}.values()), 'status': HTTP_200_OK})
+                        final[i]['total'] = final[i]['total'] + y['total']
+                else:
+                    final.append(y)
+            return Response({'expense_data_by_month': final, 'status': HTTP_200_OK})
+
         except Exception as e:
             x = {'error': str(e)}
             return Response({'message': x['error'], 'status': HTTP_400_BAD_REQUEST})
@@ -1718,21 +1725,26 @@ class FilterExpenseDataByCategory(APIView):
     def post(self, request, *args, **kwargs):
         year = self.request.POST['year']
         try:
-            print('inside try-----')
             receipts = Receipt.objects.filter(created_at__icontains=year).filter(user=self.request.user)
-            print(receipts)
-            categories = []
+            receipt_list = []
             for receipt in receipts:
-                r = receipts.filter(created_at__month=receipt.created_at.month)
-                total = 0
-                for x in r:
-                    # print(x.merchant.category.category_name)
-                    if x.merchant.category.category_name in categories:
-                        total += receipt.total
+                receipt_list.append({'category': receipt.merchant.category.category_name, 'total': receipt.total})
+            final = []
+            for y in receipt_list:
+                if len(final) > 0:
+                    i = -1
+                    for z in range(len(final)):
+                        if y['category'] == final[z]['category']:
+                            i = z
+                        else:
+                            pass
+                    if i == -1:
+                        final.append(y)
                     else:
-                        categories.append(x.merchant.category.category_name)
-                categories[0] = total
-            return Response({'expense_data_by_category': categories, 'status': HTTP_200_OK})
+                        final[i]['total'] = final[i]['total'] + y['total']
+                else:
+                    final.append(y)
+            return Response({'expense_data_by_category': final, 'status': HTTP_200_OK})
         except Exception as e:
             print(e)
             x = {'error': str(e)}

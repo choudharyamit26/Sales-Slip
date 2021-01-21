@@ -37,6 +37,7 @@
 
 
 
+
     </script>
 </head>
 
@@ -98,6 +99,26 @@
         <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'adminpanel:add-merchant' %}active{% endif %}">
             <a href="{% url 'adminpanel:add-merchant' %}">
                 <span><i class="fa fa-user-plus"></i></span> Add Merchant
+            </a>
+        </li>
+        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'adminpanel:add-sub-admin' %}active{% endif %}">
+            <a href="{% url 'adminpanel:add-sub-admin' %}">
+                <span><i class="fa fa-user-plus"></i></span> Add Sub Admin
+            </a>
+        </li>
+        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'adminpanel:add-branch' %}active{% endif %}">
+            <a href="{% url 'adminpanel:add-branch' %}">
+                <span><i class="fa fa-building-o"></i></span> Add Branch
+            </a>
+        </li>
+        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'adminpanel:branch-list' %}active{% endif %}">
+            <a href="{% url 'adminpanel:branch-list' %}">
+                <span><i class="fa fa-building"></i></span>Branch List
+            </a>
+        </li>
+        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'adminpanel:sub-admin-list' %}active{% endif %}">
+            <a href="{% url 'adminpanel:sub-admin-list' %}">
+                <span><i class="fa fa-users"></i></span>Sub Admin Management
             </a>
         </li>
         <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'adminpanel:merchant-list' %}active{% endif %}">

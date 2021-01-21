@@ -39,6 +39,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     password = models.CharField(default='', max_length=100)
     confirm_password = models.CharField(default='', max_length=100)
     is_merchant = models.BooleanField(default=False)
+    is_subadmin = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
@@ -63,6 +64,7 @@ class Merchant(models.Model):
     confirm_password = models.CharField(default='', max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
     commercial_id = models.CharField(default='', max_length=256)
+    address = models.CharField(default='', max_length=2000)
 
     def __str__(self):
         return self.email
@@ -161,6 +163,29 @@ class FAQ(models.Model):
     question_in_arabic = models.CharField(default='question', max_length=300)
     answer = models.TextField()
     answer_in_arabic = models.TextField(default='')
+
+
+class Branch(models.Model):
+    merchant_name = models.ForeignKey(Merchant, on_delete=models.CASCADE)
+    shop_no = models.CharField(default='', max_length=2000)
+    street = models.CharField(default='', max_length=2000)
+    landmark = models.CharField(default='', max_length=2000)
+    city = models.CharField(default='', max_length=2000)
+    postal_code = models.CharField(default='', max_length=2000)
+
+
+class Banner(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    image_1 = models.ImageField()
+    image_2 = models.ImageField()
+    image_3 = models.ImageField()
+    image_4 = models.ImageField()
+    image_5 = models.ImageField()
+    image_6 = models.ImageField()
+    image_7 = models.ImageField()
+    image_8 = models.ImageField()
+    image_9 = models.ImageField()
+    image_10 = models.ImageField()
 
 
 @receiver(post_save, sender=User)
