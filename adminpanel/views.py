@@ -19,7 +19,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
 from src.models import User, Merchant, Category, Receipt, Settings, UserNotification, TermsAndCondition, AboutUs, \
-    PrivacyPolicy, ContactUs, ScannedData, Branch, Banner
+    PrivacyPolicy, ContactUs, ScannedData, Branch, Banner, SubAdmin
 from django.contrib.auth import get_user_model, login, authenticate, logout, update_session_auth_hash
 from django.views.generic import View, ListView, DetailView, UpdateView, CreateView, DeleteView, FormView, TemplateView
 from django.contrib.auth.password_validation import validate_password
@@ -58,6 +58,23 @@ class Login(View):
             user_object = user.objects.get(email=email)
             if user_object.check_password(password):
                 if user_object.is_superuser:
+                    login(self.request, user_object)
+                    messages.success(self.request, 'Logged in successfully')
+                    # self.request.session['uid'] = self.request.POST['email']
+                    if remember_me:
+                        # print('inside remember me')
+                        cookie_age = 60 * 60 * 24
+                        self.request.session.set_expiry(1209600)
+                        response = HttpResponse()
+                        response.set_cookie('cid1', self.request.POST['email'], max_age=cookie_age)
+                        response.set_cookie('cid2', self.request.POST['password'], max_age=cookie_age)
+                        response.set_cookie('cid3', self.request.POST['remember_me'], max_age=cookie_age)
+                        # return HttpResponse(json.dumps('is_superuser'), status=200)
+                        return response
+                    else:
+                        self.request.session.set_expiry(0)
+                    return redirect('adminpanel:dashboard')
+                if user_object.is_subadmin:
                     login(self.request, user_object)
                     messages.success(self.request, 'Logged in successfully')
                     # self.request.session['uid'] = self.request.POST['email']
@@ -489,7 +506,63 @@ class AddSubAdmin(LoginRequiredMixin, CreateView):
     template_name = 'sub-admin.html'
 
     def post(self, request, *args, **kwargs):
-        return redirect('adminpanel:sub-admin-list')
+        print(self.request.POST)
+        permissions = self.request.POST.getlist('category')
+        first_name = self.request.POST['first_name']
+        email = self.request.POST['email']
+        password = self.request.POST['password']
+        confirm_password = self.request.POST['confirm_password']
+        if password != confirm_password:
+            messages.error(self.request, 'Password and Confirm password do not match')
+            return render(request, 'sub-admin.html', {'form': self.form_class})
+        elif len(password) < 8 or len(confirm_password) < 8:
+            messages.error(self.request, "Password must be atleast 8 characters long")
+            return render(request, 'sub-admin.html', {'form': self.form_class})
+        elif password.isdigit() or confirm_password.isdigit() or password.isalpha() or confirm_password.isalpha():
+            messages.error(self.request, "Passwords must have a mix of numbers and characters")
+            return render(request, 'sub-admin.html', {'form': self.form_class})
+        else:
+            user = User.objects.create(
+                email=email,
+                is_subadmin=True
+            )
+            user.set_password(password)
+            user.save()
+            for perm in permissions:
+                # print(perm.lower().split(' '))
+                print('_'.join(perm.lower().split()))
+                # print('_'.join(perm.lower()))
+                if '_'.join(perm.lower().split()) == 'can_manage_merchant':
+                    # User.objects.create(
+                    #     can_manage_merchant=True
+                    # )
+                    user.can_manage_merchant=True
+                    user.save()
+                elif '_'.join(perm.lower().split()) == 'can_manage_category':
+                    # User.objects.create(
+                    #     can_manage_category=True
+                    # )
+                    user.can_manage_category=True
+                    user.save()
+                elif '_'.join(perm.lower().split()) == 'can_manage_branch':
+                    # User.objects.create(
+                    #     can_manage_branch=True
+                    # )
+                    user.can_manage_branch=True
+                    user.save()
+                elif '_'.join(perm.lower().split()) == 'can_manage_dashboard':
+                    # User.objects.create(
+                    #     can_manage_dashboard=True
+                    # )
+                    user.can_manage_dashboard=True
+                    user.save()
+                else:
+                    # User.objects.create(
+                    #     can_manage_receipts=True
+                    # )
+                    user.can_manage_receipts=True
+                    user.save()
+            return redirect('adminpanel:sub-admin-list')
 
 
 class SubAdminList(LoginRequiredMixin, ListView):

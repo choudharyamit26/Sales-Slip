@@ -43,6 +43,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     created_at = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
+    can_manage_merchant = models.BooleanField(default=False)
+    can_manage_category = models.BooleanField(default=False)
+    can_manage_branch = models.BooleanField(default=False)
+    can_manage_receipts = models.BooleanField(default=False)
+    can_manage_dashboard = models.BooleanField(default=False)
 
     objects = UserManager()
     USERNAME_FIELD = 'email'
@@ -172,6 +177,15 @@ class Branch(models.Model):
     landmark = models.CharField(default='', max_length=2000)
     city = models.CharField(default='', max_length=2000)
     postal_code = models.CharField(default='', max_length=2000)
+
+
+class SubAdmin(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    can_manage_merchant = models.BooleanField(default=False)
+    can_manage_category = models.BooleanField(default=False)
+    can_manage_branch = models.BooleanField(default=False)
+    can_manage_receipts = models.BooleanField(default=False)
+    can_manage_dashboard = models.BooleanField(default=False)
 
 
 class Banner(models.Model):
