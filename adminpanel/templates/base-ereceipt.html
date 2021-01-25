@@ -186,8 +186,7 @@
             </a>
         </li>
         {% else %}
-        {% if user.is_subadmin and user.can_manage_dashboard and user.can_manage_merchant and user.can_manage_category
-        and user.can_manage_branch and user.can_manage_receipts %}
+        {% if user.is_subadmin and user.can_manage_dashboard and user.can_manage_merchant and user.can_manage_category and user.can_manage_branch and user.can_manage_receipts %}
         <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'adminpanel:dashboard' %}active{% endif %}">
             <a href="{% url 'adminpanel:dashboard'  %}">
                 <span><i class="fa fa-tachometer"></i></span> Dashboard
@@ -238,8 +237,7 @@
                 <p>Logout</p>
             </a>
         </li>
-        {% elif user.is_subadmin and user.can_manage_merchant and user.can_manage_category and user.can_manage_branch
-        and user.can_manage_receipts %}
+        {% elif user.is_subadmin and user.can_manage_merchant and user.can_manage_category and user.can_manage_branch and user.can_manage_receipts %}
         <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'adminpanel:add-merchant' %}active{% endif %}">
             <a href="{% url 'adminpanel:add-merchant' %}">
                 <span><i class="fa fa-user-plus"></i></span> Add Merchant
