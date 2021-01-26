@@ -31,28 +31,6 @@
       .catch(function (error) {
         console.log("Error: " + error);
       });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     </script>
 </head>
 
@@ -63,12 +41,14 @@
         <img src="{% static 'adminpanel/images/logo.jpg' %}">
     </div>
     <div class="Navigation">
+        {% if user.is_superuser %}
         <div class="header-notifications">
             <a href="{% url 'adminpanel:notification' %}">
                 <i class="fa fa-bell fa-2x" aria-hidden="true"></i>
                 <span class="badge" id="count"></span>
             </a>
         </div>
+        {% endif %}
 
         <div class="Avater">
             <a href="javascript:void(0);">
@@ -186,12 +166,12 @@
             </a>
         </li>
         {% else %}
-        {% if user.is_subadmin and user.can_manage_dashboard and user.can_manage_merchant and user.can_manage_category and user.can_manage_branch and user.can_manage_receipts %}
         <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'adminpanel:dashboard' %}active{% endif %}">
             <a href="{% url 'adminpanel:dashboard'  %}">
                 <span><i class="fa fa-tachometer"></i></span> Dashboard
             </a>
         </li>
+        {% if user.is_subadmin and user.can_manage_dashboard and user.can_manage_merchant and user.can_manage_category and user.can_manage_branch and user.can_manage_receipts %}
         <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'adminpanel:category' %}active{% endif %}">
             <a href="{% url 'adminpanel:category' %}">
                 <span><i class="fa fa-list"></i></span> Add Category
@@ -229,196 +209,62 @@
         <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'adminpanel:branch-list' %}active{% endif %}">
             <a href="{% url 'adminpanel:branch-list' %}">
                 <span><i class="fa fa-building"></i></span>Branch List
-            </a>
-        </li>
-        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'logout' %}active{% endif %}">
-            <a href="{% url 'logout' %}">
-                <span><i class="fa fa-sign-out"></i></span>
-                <p>Logout</p>
-            </a>
-        </li>
-        {% elif user.is_subadmin and user.can_manage_merchant and user.can_manage_category and user.can_manage_branch and user.can_manage_receipts %}
-        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'adminpanel:add-merchant' %}active{% endif %}">
-            <a href="{% url 'adminpanel:add-merchant' %}">
-                <span><i class="fa fa-user-plus"></i></span> Add Merchant
-            </a>
-        </li>
-        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'adminpanel:merchant-list' %}active{% endif %}">
-            <a href="{% url 'adminpanel:merchant-list' %}">
-                <span><i class="faImg"><img src="{% static 'adminpanel/images/profession.svg' %}" alt="paid"
-                                            class="img-fluid"></i></span>
-                <p>Merchant Management</p>
-            </a>
-        </li>
-        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'adminpanel:category' %}active{% endif %}">
-            <a href="{% url 'adminpanel:category' %}">
-                <span><i class="fa fa-list"></i></span> Add Category
-            </a>
-        </li>
-        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'adminpanel:category-list' %}active{% endif %}">
-            <a href="{% url 'adminpanel:category-list' %}">
-                <span><i class="fa fa-list-alt"></i></span>Category List
-            </a>
-        </li>
-        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'adminpanel:receipt-list' %}active{% endif %}">
-            <a href="{% url 'adminpanel:receipt-list' %}">
-                <span><i class="faImg"><img src="{% static 'adminpanel/images/transaction.svg' %}" alt="paid"
-                                            class="img-fluid"></i></span>
-                <p>Receipts Management</p>
-            </a>
-        </li>
-        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'adminpanel:add-branch' %}active{% endif %}">
-            <a href="{% url 'adminpanel:add-branch' %}">
-                <span><i class="fa fa-building-o"></i></span> Add Branch
-            </a>
-        </li>
-        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'adminpanel:branch-list' %}active{% endif %}">
-            <a href="{% url 'adminpanel:branch-list' %}">
-                <span><i class="fa fa-building"></i></span>Branch List
-            </a>
-        </li>
-        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'logout' %}active{% endif %}">
-            <a href="{% url 'logout' %}">
-                <span><i class="fa fa-sign-out"></i></span>
-                <p>Logout</p>
-            </a>
-        </li>
-        {% elif user.is_subadmin and user.can_manage_merchant and user.can_manage_category and user.can_manage_branch %}
-        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'adminpanel:add-merchant' %}active{% endif %}">
-            <a href="{% url 'adminpanel:add-merchant' %}">
-                <span><i class="fa fa-user-plus"></i></span> Add Merchant
-            </a>
-        </li>
-        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'adminpanel:merchant-list' %}active{% endif %}">
-            <a href="{% url 'adminpanel:merchant-list' %}">
-                <span><i class="faImg"><img src="{% static 'adminpanel/images/profession.svg' %}" alt="paid"
-                                            class="img-fluid"></i></span>
-                <p>Merchant Management</p>
-            </a>
-        </li>
-        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'adminpanel:category' %}active{% endif %}">
-            <a href="{% url 'adminpanel:category' %}">
-                <span><i class="fa fa-list"></i></span> Add Category
-            </a>
-        </li>
-        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'adminpanel:category-list' %}active{% endif %}">
-            <a href="{% url 'adminpanel:category-list' %}">
-                <span><i class="fa fa-list-alt"></i></span>Category List
-            </a>
-        </li>
-        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'adminpanel:add-branch' %}active{% endif %}">
-            <a href="{% url 'adminpanel:add-branch' %}">
-                <span><i class="fa fa-building-o"></i></span> Add Branch
-            </a>
-        </li>
-        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'adminpanel:branch-list' %}active{% endif %}">
-            <a href="{% url 'adminpanel:branch-list' %}">
-                <span><i class="fa fa-building"></i></span>Branch List
-            </a>
-        </li>
-        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'logout' %}active{% endif %}">
-            <a href="{% url 'logout' %}">
-                <span><i class="fa fa-sign-out"></i></span>
-                <p>Logout</p>
-            </a>
-        </li>
-        {% elif user.is_subadmin and user.can_manage_merchant and user.can_manage_category %}
-        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'adminpanel:add-merchant' %}active{% endif %}">
-            <a href="{% url 'adminpanel:add-merchant' %}">
-                <span><i class="fa fa-user-plus"></i></span> Add Merchant
-            </a>
-        </li>
-        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'adminpanel:merchant-list' %}active{% endif %}">
-            <a href="{% url 'adminpanel:merchant-list' %}">
-                <span><i class="faImg"><img src="{% static 'adminpanel/images/profession.svg' %}" alt="paid"
-                                            class="img-fluid"></i></span>
-                <p>Merchant Management</p>
-            </a>
-        </li>
-        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'adminpanel:category' %}active{% endif %}">
-            <a href="{% url 'adminpanel:category' %}">
-                <span><i class="fa fa-list"></i></span> Add Category
-            </a>
-        </li>
-        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'adminpanel:category-list' %}active{% endif %}">
-            <a href="{% url 'adminpanel:category-list' %}">
-                <span><i class="fa fa-list-alt"></i></span>Category List
-            </a>
-        </li>
-        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'logout' %}active{% endif %}">
-            <a href="{% url 'logout' %}">
-                <span><i class="fa fa-sign-out"></i></span>
-                <p>Logout</p>
-            </a>
-        </li>
-        {% elif user.is_subadmin and user.can_manage_merchant %}
-        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'adminpanel:add-merchant' %}active{% endif %}">
-            <a href="{% url 'adminpanel:add-merchant' %}">
-                <span><i class="fa fa-user-plus"></i></span> Add Merchant
-            </a>
-        </li>
-        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'adminpanel:merchant-list' %}active{% endif %}">
-            <a href="{% url 'adminpanel:merchant-list' %}">
-                <span><i class="faImg"><img src="{% static 'adminpanel/images/profession.svg' %}" alt="paid"
-                                            class="img-fluid"></i></span>
-                <p>Merchant Management</p>
-            </a>
-        </li>
-        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'logout' %}active{% endif %}">
-            <a href="{% url 'logout' %}">
-                <span><i class="fa fa-sign-out"></i></span>
-                <p>Logout</p>
-            </a>
-        </li>
-        {% elif user.is_subadmin and user.can_manage_category %}
-        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'adminpanel:category' %}active{% endif %}">
-            <a href="{% url 'adminpanel:category' %}">
-                <span><i class="fa fa-list"></i></span> Add Category
-            </a>
-        </li>
-        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'adminpanel:category-list' %}active{% endif %}">
-            <a href="{% url 'adminpanel:category-list' %}">
-                <span><i class="fa fa-list-alt"></i></span>Category List
-            </a>
-        </li>
-        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'logout' %}active{% endif %}">
-            <a href="{% url 'logout' %}">
-                <span><i class="fa fa-sign-out"></i></span>
-                <p>Logout</p>
-            </a>
-        </li>
-        {% elif user.is_subadmin and user.can_manage_branch %}
-        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'adminpanel:add-branch' %}active{% endif %}">
-            <a href="{% url 'adminpanel:add-branch' %}">
-                <span><i class="fa fa-building-o"></i></span> Add Branch
-            </a>
-        </li>
-        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'adminpanel:branch-list' %}active{% endif %}">
-            <a href="{% url 'adminpanel:branch-list' %}">
-                <span><i class="fa fa-building"></i></span>Branch List
-            </a>
-        </li>
-        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'logout' %}active{% endif %}">
-            <a href="{% url 'logout' %}">
-                <span><i class="fa fa-sign-out"></i></span>
-                <p>Logout</p>
-            </a>
-        </li>
-        {% elif user.is_subadmin and user.can_manage_receipts %}
-        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'adminpanel:receipt-list' %}active{% endif %}">
-            <a href="{% url 'adminpanel:receipt-list' %}">
-                <span><i class="faImg"><img src="{% static 'adminpanel/images/transaction.svg' %}" alt="paid"
-                                            class="img-fluid"></i></span>
-                <p>Receipts Management</p>
-            </a>
-        </li>
-        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'logout' %}active{% endif %}">
-            <a href="{% url 'logout' %}">
-                <span><i class="fa fa-sign-out"></i></span>
-                <p>Logout</p>
             </a>
         </li>
         {% endif %}
+        {% if user.is_subadmin and user.can_manage_merchant %}
+        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'adminpanel:add-merchant' %}active{% endif %}">
+            <a href="{% url 'adminpanel:add-merchant' %}">
+                <span><i class="fa fa-user-plus"></i></span> Add Merchant
+            </a>
+        </li>
+        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'adminpanel:merchant-list' %}active{% endif %}">
+            <a href="{% url 'adminpanel:merchant-list' %}">
+                <span><i class="faImg"><img src="{% static 'adminpanel/images/profession.svg' %}" alt="paid"
+                                            class="img-fluid"></i></span>
+                <p>Merchant Management</p>
+            </a>
+        </li>
+        {% endif %}
+        {% if user.is_subadmin and user.can_manage_category %}
+        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'adminpanel:category' %}active{% endif %}">
+            <a href="{% url 'adminpanel:category' %}">
+                <span><i class="fa fa-list"></i></span> Add Category
+            </a>
+        </li>
+        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'adminpanel:category-list' %}active{% endif %}">
+            <a href="{% url 'adminpanel:category-list' %}">
+                <span><i class="fa fa-list-alt"></i></span>Category List
+            </a>
+        </li>
+        {% endif %}
+        {% if user.is_subadmin and user.can_manage_branch %}
+        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'adminpanel:add-branch' %}active{% endif %}">
+            <a href="{% url 'adminpanel:add-branch' %}">
+                <span><i class="fa fa-building-o"></i></span> Add Branch
+            </a>
+        </li>
+        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'adminpanel:branch-list' %}active{% endif %}">
+            <a href="{% url 'adminpanel:branch-list' %}">
+                <span><i class="fa fa-building"></i></span>Branch List
+            </a>
+        </li>
+        {% endif %}
+        {% if user.is_subadmin and user.can_manage_receipts %}
+        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'adminpanel:receipt-list' %}active{% endif %}">
+            <a href="{% url 'adminpanel:receipt-list' %}">
+                <span><i class="faImg"><img src="{% static 'adminpanel/images/transaction.svg' %}" alt="paid"
+                                            class="img-fluid"></i></span>
+                <p>Receipts Management</p>
+            </a>
+        </li>
+        {% endif %}
+        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'logout' %}active{% endif %}">
+            <a href="{% url 'logout' %}">
+                <span><i class="fa fa-sign-out"></i></span>
+                <p>Logout</p>
+            </a>
+        </li>
         {% endif %}
     </ul>
 </div>
@@ -428,6 +274,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 <script>
             $('.select2').select2();
+
 
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
