@@ -726,7 +726,8 @@ class ReceiptList(LoginRequiredMixin, ListView):
         qs = self.request.GET.get('qs')
         receipts = Receipt.objects.all()
         context = {
-            'receipts': receipts
+            'receipts': receipts,
+            'merchants': Merchant.objects.all()
         }
         if qs:
             search = Receipt.objects.filter(Q(id__icontains=qs) |
@@ -739,6 +740,7 @@ class ReceiptList(LoginRequiredMixin, ListView):
             search_count = len(search)
             context = {
                 'search': search,
+                'merchants': Merchant.objects.all()
             }
             if search:
                 messages.success(self.request, str(search_count) + ' matches found')

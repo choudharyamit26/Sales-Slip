@@ -16,6 +16,8 @@
     <link type="text/css" rel="stylesheet" href="{% static 'adminpanel/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'adminpanel/css/media.css' %}">
     <script src="{% static 'adminpanel/js/delete-script.js' %}"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
     <script>
     var protocol = window.location.protocol
     var hostname = window.location.hostname
@@ -31,6 +33,8 @@
       .catch(function (error) {
         console.log("Error: " + error);
       });
+
+
     </script>
 </head>
 
@@ -274,9 +278,10 @@
 {% endblock body %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 <script>
-            $('.select2').select2();
-
-
+$('.select2').select2();
+</script>
+<script>
+$('select').selectpicker();
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="{% static 'adminpanel/js/bootstrap.min.js' %}"></script>

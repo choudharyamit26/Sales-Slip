@@ -18,7 +18,8 @@
             <div class="SearchBox">
                 <form action="" method="get">
                     <!--                    {% csrf_token %}-->
-                    <input type="text" name="qs" placeholder="Filter by receipt id/category/user email/merchant email" style="font-size:10x;">
+                    <input type="text" name="qs" placeholder="Filter by receipt id/category/user email/merchant email"
+                           style="font-size:10x;">
                     <button>Filter</button>
                 </form>
             </div>
@@ -54,6 +55,9 @@
                                     <td>
                                         <a class="Blue" href="{% url 'adminpanel:receipt-detail' object.id %}">
                                             <i class="fa fa-eye"></i>
+                                        </a>
+                                        <a>
+                                            <i class="fa fa-eye-slash"></i>
                                         </a>
                                     </td>
                                 </tr>
@@ -92,6 +96,9 @@
                                         <a class="Blue" href="{% url 'adminpanel:receipt-detail' object.id %}">
                                             <i class="fa fa-eye"></i>
                                         </a>
+                                        <button data-toggle="modal" value="{{object.id}}" data-target="#myModal">
+                                            <i class="fa fa-eye-slash"></i>
+                                        </button>
                                     </td>
                                 </tr>
                                 {% endfor %}
@@ -105,5 +112,33 @@
         </div>
     </div>
 </div>
-{% endblo
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Merchants</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="">Merchant</label>
+                    <select id="id_category" name="merchant">
+                        {% for object in merchants %}
+                        <option value="{{object.id}}">{{object.email}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Save</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
 {% endblock body%}

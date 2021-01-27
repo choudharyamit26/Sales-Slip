@@ -350,6 +350,7 @@ class CreateOrder(LoginRequiredMixin, CreateView):
             bill = Receipt.objects.create(
                 merchant=merchant_obj,
                 user=user_obj,
+                total=order_total
                 # qr_code=f'{receipt_id}.png',
             )
             for x in ordered_items:

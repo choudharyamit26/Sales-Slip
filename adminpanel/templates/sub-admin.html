@@ -1,6 +1,8 @@
 {% extends 'base-ereceipt.html' %}
 {% load crispy_forms_tags %}
 {% block body %}
+<script src='https://harvesthq.github.io/chosen/chosen.jquery.js'></script>
+<script src='https://harvesthq.github.io/chosen/chosen.jquery.js'></script>
 <div class="WrapperArea">
     <div class="WrapperBox">
         <div class="content-wrapper">
@@ -47,15 +49,21 @@
                             <input type="password" class="form-control" required placeholder="Confirm Password"
                                    name="confirm_password">
                         </div>
-                        <div class="form-group">
+                        <div class="form-group inputAdd">
                             <label for="">Access Rights</label>
-                            <select required name="category" class="form-control  select2" multiple="multiple">
+<!--                            <select required name="category" class="form-control  select2" multiple="multiple">-->
+<!--                                <option value="Can Manage Merchant">Can Manage Merchant</option>-->
+<!--                                <option value="Can Manage Category">Can Manage Category</option>-->
+<!--                                <option value="Can Manage Branch">Can Manage Branch</option>-->
+<!--                                <option value="Can Manage Receipts">Can Manage Receipts</option>-->
+<!--                                &lt;!&ndash;                                <option value="Can Manage Dashboard">Can Manage Dashboard</option>&ndash;&gt;-->
+<!--                                &lt;!&ndash;                                <option value="Can Delete Merchant">Can Add Merchant</option>&ndash;&gt;-->
+<!--                            </select>-->
+                            <select class="selectpicker" multiple data-live-search="true">
                                 <option value="Can Manage Merchant">Can Manage Merchant</option>
                                 <option value="Can Manage Category">Can Manage Category</option>
                                 <option value="Can Manage Branch">Can Manage Branch</option>
                                 <option value="Can Manage Receipts">Can Manage Receipts</option>
-<!--                                <option value="Can Manage Dashboard">Can Manage Dashboard</option>-->
-<!--                                <option value="Can Delete Merchant">Can Add Merchant</option>-->
                             </select>
                         </div>
                         <!--                            <div class="form-group">-->
