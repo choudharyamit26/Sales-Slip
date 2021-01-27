@@ -22,10 +22,10 @@ from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
-from django.views.generic import View, ListView, DetailView, CreateView, FormView, TemplateView, UpdateView
-from src.models import User, OrderItem, Receipt, Merchant, TermsAndCondition, UserNotification, Settings
+from django.views.generic import View, ListView, DetailView, CreateView, FormView, TemplateView, UpdateView, DeleteView
+from src.models import User, OrderItem, Receipt, Merchant, TermsAndCondition, UserNotification, Settings, Branch
 
-from .forms import MerchantLoginForm, OrderForm, OrderFormSet, MerchantUpdateForm, OnBoardMessageForm
+from .forms import MerchantLoginForm, OrderForm, OrderFormSet, MerchantUpdateForm, OnBoardMessageForm, BranchForm
 
 user = get_user_model()
 
@@ -614,3 +614,84 @@ class SendOnBoardMessage(LoginRequiredMixin, CreateView):
             #     print('inside except ------->>>>>')
             #     messages.info(self.request, 'Unable to send message')
             #     return redirect('merchant:order-list')
+
+
+class AddBranch(LoginRequiredMixin, CreateView):
+    login_url = 'adminpanel:login'
+    model = Branch
+    form_class = BranchForm
+    template_name = 'merchant_branch.html'
+
+    # success_url = reverse('adminpanel:branch-list')
+    def get(self, request, *args, **kwargs):
+        return render(self.request, 'merchant_branch.html')
+
+    def post(self, request, *args, **kwargs):
+        print(self.request.POST)
+        # merchant_id = self.request.POST['merchant_name']
+        # merchant_obj = Merchant.objects.get(id=merchant_id)
+        user = self.request.user
+        merchant_obj = Merchant.objects.get(email=user.email)
+        shop_no = self.request.POST['shop_no']
+        street = self.request.POST['street']
+        landmark = self.request.POST['landmark']
+        city = self.request.POST['city']
+        postal_code = self.request.POST['postal_code']
+        Branch.objects.create(
+            merchant_name=merchant_obj,
+            shop_no=shop_no,
+            street=street,
+            landmark=landmark,
+            city=city,
+            postal_code=postal_code
+        )
+        messages.info(self.request, 'Branch added successfully')
+        return redirect('merchant:branch-list')
+
+
+class BranchList(LoginRequiredMixin, ListView):
+    login_url = 'merchant:login'
+    model = Branch
+    template_name = 'merchant_branch_list.html'
+
+    def get(self, request, *args, **kwargs):
+        user = self.request.user
+        merchant_obj = Merchant.objects.get(email=user.email)
+        branches = Branch.objects.filter(merchant_name=merchant_obj)
+        return render(self.request, 'merchant_branch_list.html', {'object_list': branches})
+
+
+class UpdateBranch(LoginRequiredMixin, UpdateView):
+    login_url = 'merchant:login'
+    model = Branch
+    form_class = BranchForm
+    template_name = 'merchant_branch.html'
+
+    def post(self, request, *args, **kwargs):
+        shop_no = self.request.POST['shop_no']
+        street = self.request.POST['street']
+        landmark = self.request.POST['landmark']
+        city = self.request.POST['city']
+        postal_code = self.request.POST['postal_code']
+        branch = Branch.objects.get(id=kwargs['pk'])
+        branch.shop_no = shop_no
+        branch.street = street
+        branch.landmark = landmark
+        branch.city = city
+        branch.postal_code = postal_code
+        branch.save()
+        messages.info(self.request, 'Branch updated successfully')
+        return redirect('merchant:branch-list')
+
+
+class DeleteBranch(LoginRequiredMixin, DeleteView):
+    login_url = 'merchant:login'
+    model = Branch
+    template_name = 'delete_branch.html'
+    success_url = reverse_lazy('merchant:branch-list')
+
+    def post(self, request, *args, **kwargs):
+        branch = Branch.objects.get(id=kwargs['pk'])
+        branch.delete()
+        messages.info(self.request, 'Branch deleted')
+        return redirect('merchant:branch-list')

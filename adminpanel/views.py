@@ -516,7 +516,7 @@ class AddSubAdmin(LoginRequiredMixin, CreateView):
             messages.error(self.request, 'Password and Confirm password do not match')
             return render(request, 'sub-admin.html', {'form': self.form_class})
         elif len(password) < 8 or len(confirm_password) < 8:
-            messages.error(self.request, "Password must be atleast 8 characters long")
+            messages.error(self.request, "Password must be at least 8 characters long")
             return render(request, 'sub-admin.html', {'form': self.form_class})
         elif password.isdigit() or confirm_password.isdigit() or password.isalpha() or confirm_password.isalpha():
             messages.error(self.request, "Passwords must have a mix of numbers and characters")
@@ -529,39 +529,39 @@ class AddSubAdmin(LoginRequiredMixin, CreateView):
             user.set_password(password)
             user.save()
             for perm in permissions:
-                # print(perm.lower().split(' '))
                 print('_'.join(perm.lower().split()))
-                # print('_'.join(perm.lower()))
                 if '_'.join(perm.lower().split()) == 'can_manage_merchant':
-                    # User.objects.create(
-                    #     can_manage_merchant=True
-                    # )
-                    user.can_manage_merchant=True
+                    user.can_manage_merchant = True
                     user.save()
                 elif '_'.join(perm.lower().split()) == 'can_manage_category':
-                    # User.objects.create(
-                    #     can_manage_category=True
-                    # )
-                    user.can_manage_category=True
+                    user.can_manage_category = True
                     user.save()
                 elif '_'.join(perm.lower().split()) == 'can_manage_branch':
-                    # User.objects.create(
-                    #     can_manage_branch=True
-                    # )
-                    user.can_manage_branch=True
+                    user.can_manage_branch = True
                     user.save()
                 elif '_'.join(perm.lower().split()) == 'can_manage_dashboard':
-                    # User.objects.create(
-                    #     can_manage_dashboard=True
-                    # )
-                    user.can_manage_dashboard=True
+                    user.can_manage_dashboard = True
                     user.save()
                 else:
-                    # User.objects.create(
-                    #     can_manage_receipts=True
-                    # )
-                    user.can_manage_receipts=True
+                    user.can_manage_receipts = True
                     user.save()
+            if self.request.is_secure():
+                protocol = 'https'
+            else:
+                protocol = 'http'
+            context = {
+                'email': self.request.POST['email'],
+                'password': self.request.POST['password'],
+                'domain': self.request.get_host(),
+                'protocol': protocol
+            }
+            user_email = self.request.POST['email']
+            email_template = 'sub_admin_signup_email.html'
+            email = render_to_string(email_template, context)
+            msg = EmailMultiAlternatives("Sub Admin Creation", email, 'servacnt@fatortech.net',
+                                         [user_email])
+            msg.content_subtype = "html"
+            msg.send()
             return redirect('adminpanel:sub-admin-list')
 
 
@@ -569,6 +569,48 @@ class SubAdminList(LoginRequiredMixin, ListView):
     login_url = 'adminpanel:login'
     model = User
     template_name = 'sub-admin-list.html'
+
+    def get(self, request, *args, **kwargs):
+        user = User.objects.filter(is_subadmin=True)
+        return render(self.request, 'sub-admin-list.html', {'object_list': user})
+
+
+class SubAdminDetail(LoginRequiredMixin, DetailView):
+    login_url = 'adminpanel:login'
+    model = User
+    template_name = 'sub-admin-detail.html'
+
+    def get(self, request, *args, **kwargs):
+        user = User.objects.get(id=kwargs['pk'])
+        return render(self.request, 'sub-admin-detail.html', {'object': user})
+
+
+class UpdateSubAdminDetail(LoginRequiredMixin, UpdateView):
+    login_url = 'adminpanel:login'
+    model = User
+    form_class = SubAdminForm
+    template_name = 'update-sub-admin.html'
+
+
+class DeleteSubAdmin(LoginRequiredMixin, DeleteView):
+    login_url = 'adminpanel:login'
+    model = User
+    form_class = SubAdminForm
+    template_name = 'delete-sub-admin.html'
+    success_url = reverse_lazy('adminpanel:sub-admin-list')
+
+    def get(self, request, *args, **kwargs):
+        print(kwargs)
+        # user = User.objects.get(id=kwargs['pk'])
+        # user.delete()
+        return render(self.request, 'delete-sub-admin.html')
+
+    def post(self, request, *args, **kwargs):
+        print(kwargs)
+        user = User.objects.get(id=kwargs['pk'])
+        user.delete()
+        messages.info(self.request, 'Sub admin deleted successfully')
+        return redirect('adminpanel:sub-admin-list')
 
 
 class AddBranch(LoginRequiredMixin, CreateView):
@@ -606,6 +648,24 @@ class BranchList(LoginRequiredMixin, ListView):
     login_url = 'adminpanel:login'
     model = Branch
     template_name = 'branch-list.html'
+
+
+class UpdateBranch(LoginRequiredMixin, UpdateView):
+    login_url = 'adminpanel:login'
+    model = Branch
+    template_name = 'update-branch.html'
+    form_class = BranchForm
+    success_url = reverse_lazy('adminpanel:branch-list')
+
+    def get(self, request, *args, **kwargs):
+        return render(self.request, 'update-branch.html', {'merchants': Merchant.objects.all()})
+
+
+class DeleteBranch(LoginRequiredMixin, DeleteView):
+    login_url = 'adminpanel:login'
+    model = Branch
+    template_name = 'delete-branch.html'
+    success_url = reverse_lazy('adminpanel:branch-list')
 
 
 class MerchantList(LoginRequiredMixin, ListView):
@@ -985,3 +1045,10 @@ class UpdateMerchant(LoginRequiredMixin, UpdateView):
     #     context = super().get_context_data(**kwargs)
     #     context['form'] = self.form_class(instance=self.request.user, initial={'email': self.request.user.email})
     #     return context
+
+
+class DeleteBanner(LoginRequiredMixin, DeleteView):
+    login_url = 'adminpanel:login'
+    model = Banner
+    template_name = 'banner_confirm_delete.html'
+    success_url = reverse_lazy('adminpanel:banner-list')

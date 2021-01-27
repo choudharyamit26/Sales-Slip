@@ -1,4 +1,4 @@
-from src.models import User, OrderItem, Product, Merchant
+from src.models import User, OrderItem, Product, Merchant, Banner
 from django import forms
 from django.forms import modelformset_factory, inlineformset_factory
 
@@ -75,3 +75,10 @@ class OnBoardMessageForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('country_code', 'phone_number')
+
+
+class BranchForm(forms.ModelForm):
+    class Meta:
+        model = Banner
+        fields = '__all__'
+        exclude = ('merchant_name',)

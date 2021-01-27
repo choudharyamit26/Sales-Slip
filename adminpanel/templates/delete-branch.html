@@ -1,0 +1,24 @@
+{% extends 'base-merchant.html' %}
+{% block body %}
+<div class="WrapperArea">
+    <div class="WrapperBox">
+        <div class="Small-Wrapper Small-Wrapper2">
+            <div class="HelpArea">
+                <div class="tab-content">
+                    <div class="TableList">
+                        <div class="dragscroll">
+
+                            <form method="post" action=".">
+                                {% csrf_token %}
+                                <h2>Are you sure you want to delete this branch ?</h2><br>
+                                <button type="submit" class="fa fa-check fa-2x">Yes</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <a class="fa fa-close fa-2x" href="{% url 'adminpanel:branch-list'  %}">Cancel</a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}

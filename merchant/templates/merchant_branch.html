@@ -1,0 +1,69 @@
+{% extends 'base-merchant.html' %}
+{% load crispy_forms_tags %}
+{% block body %}
+<div class="WrapperArea">
+    <div class="WrapperBox">
+        <div class="content-wrapper">
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-warning alert-dismissible fade in" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+        <div class="Small-Wrapper">
+            <h4 class="Title">Add Branch</h4>
+
+            <div class="NotificationArea">
+                <div class="NotificationForm">
+                    <form method="post">
+                        {% csrf_token %}
+                        <!--                        <div class="form-group">-->
+                        <!--                            {{form|crispy}}-->
+                        <!--                        </div>-->
+<!--                        <div class="form-group">-->
+<!--                            <label for="">Merchant</label>-->
+<!--                            <select required id="id_merchant_name" name="merchant_name">-->
+<!--                                {% for merchant in merchants %}-->
+<!--                                <option value="{{merchant.pk}}">{{merchant.email}}</option>-->
+<!--                                {% endfor %}-->
+<!--                            </select>-->
+<!--                        </div>-->
+                        <div class="form-group">
+                            <label for="">Shop Number </label>
+                            <input type="text" class="form-control" required placeholder="Shop Number"
+                                   name="shop_no">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Street </label>
+                            <input type="text" class="form-control" required placeholder="Street Name"
+                                   name="street">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Landmark </label>
+                            <input type="text" class="form-control" required placeholder="Landmark"
+                                   name="landmark">
+                        </div>
+                        <div class="form-group">
+                            <label for="">City </label>
+                            <input type="text" class="form-control" required placeholder="City"
+                                   name="city">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Postal Code </label>
+                            <input type="number" class="form-control" required placeholder="Postal code"
+                                   name="postal_code">
+                        </div>
+                        <button class="Button apply_btn">Save</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}

@@ -31,6 +31,9 @@
                                         <a href="{% url 'adminpanel:update-banner' obj.id %}">
                                             <i class="fa fa-pencil"></i>
                                         </a>
+                                        <a href="{% url 'adminpanel:delete-banner' obj.id %}">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
                                     </td>
                                 </tr>
                                 {% endfor %}

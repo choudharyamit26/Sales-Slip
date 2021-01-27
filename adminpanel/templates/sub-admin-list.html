@@ -13,7 +13,7 @@
         {% endfor %}
         {% endif %}
         <div class="Small-Wrapper">
-            <h4 class="Title">Branch List</h4>
+            <h4 class="Title">Sub Admin List</h4>
             <a href="{% url 'adminpanel:add-sub-admin' %}" class="btn btn-info" style="margin-left:1000px;margin-top:-38px;">Create Sub Admin</a>
             <div class="TableList">
                 <div class="dragscroll">
@@ -21,13 +21,8 @@
                         <thead>
                         <tr>
                             <th>S. No</th>
-                            <th>Merchant Name</th>
-                            <th>Merchant Email</th>
-                            <th>Shop Number</th>
-                            <th>Street</th>
-                            <th>Landmark</th>
-                            <th>City</th>
-                            <th>Postal Code</th>
+                            <th>Name</th>
+                            <th>Email</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -35,17 +30,12 @@
                         {% for object in object_list %}
                         <tr>
                             <td>{{forloop.counter}}</td>
-                            <td>{{object.merchant_name.full_name}}</td>
-                            <td>{{object.merchant_name.email}}</td>
-                            <td>{{object.shop_no}}</td>
-                            <td>{{object.street}}</td>
-                            <td>{{object.landmark}}</td>
-                            <td>{{object.city}}</td>
-                            <td>{{object.postal_code}}</td>
+                            <td>{{object.first_name}} {{object.last_name}}</td>
+                            <td>{{object.email}}</td>
                             <td>
-                                <a href="#"><i class="fa fa-eye"></i></a>
-                                <a href="#"><i class="fa fa-edit"></i></a>
-                                <a href="#"><i class="fa fa-trash"></i></a>
+                                <a href="{% url 'adminpanel:sub-admin-detail' object.id %}"><i class="fa fa-eye"></i></a>
+                                <a href="{% url 'adminpanel:update-sub-admin' object.id %}"><i class="fa fa-edit"></i></a>
+                                <a href="{% url 'adminpanel:delete-sub-admin' object.id %}"><i class="fa fa-trash"></i></a>
                             </td>
                         </tr>
                         {% endfor %}

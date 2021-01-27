@@ -88,6 +88,16 @@
                 <span><i class="fa fa-list"></i></span> Receipt's Management
             </a>
         </li>
+        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'merchant:add-branch' %}active{% endif %}">
+            <a href="{% url 'merchant:add-branch'  %}">
+                <span><i class="fa fa-building"></i></span> Add Branch
+            </a>
+        </li>
+        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'merchant:branch-list' %}active{% endif %}">
+            <a href="{% url 'merchant:branch-list'  %}">
+                <span><i class="fa fa fa-list-alt"></i></span>Branch List
+            </a>
+        </li>
         <!--        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'merchant:api-tutorial' %}active{% endif %}">-->
         <!--            <a href="{% url 'merchant:api-tutorial'  %}">-->
         <!--                <span><i class="fa fa-book"></i></span> Api Tutorial-->

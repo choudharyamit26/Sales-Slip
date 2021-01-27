@@ -49,7 +49,7 @@
             </a>
         </div>
         {% endif %}
-
+        {% if user.is_authenticated %}
         <div class="Avater">
             <a href="javascript:void(0);">
                 <figure><img src="{% static 'adminpanel/images/profile.jpg' %}"></figure>
@@ -63,6 +63,7 @@
                 <li><a href="{% url 'logout' %}"><span><i class="fa fa-sign-out"></i></span> Logout</a></li>
             </ul>
         </div>
+        {% endif %}
         <div class="clear"></div>
     </div>
 </div>
@@ -171,7 +172,7 @@
                 <span><i class="fa fa-tachometer"></i></span> Dashboard
             </a>
         </li>
-        {% if user.is_subadmin and user.can_manage_dashboard and user.can_manage_merchant and user.can_manage_category and user.can_manage_branch and user.can_manage_receipts %}
+        {% if user.is_authenticated and user.is_subadmin and user.can_manage_dashboard and user.can_manage_merchant and user.can_manage_category and user.can_manage_branch and user.can_manage_receipts %}
         <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'adminpanel:category' %}active{% endif %}">
             <a href="{% url 'adminpanel:category' %}">
                 <span><i class="fa fa-list"></i></span> Add Category
@@ -212,7 +213,7 @@
             </a>
         </li>
         {% endif %}
-        {% if user.is_subadmin and user.can_manage_merchant %}
+        {% if user.is_authenticated and user.is_subadmin and user.can_manage_merchant %}
         <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'adminpanel:add-merchant' %}active{% endif %}">
             <a href="{% url 'adminpanel:add-merchant' %}">
                 <span><i class="fa fa-user-plus"></i></span> Add Merchant
@@ -226,7 +227,7 @@
             </a>
         </li>
         {% endif %}
-        {% if user.is_subadmin and user.can_manage_category %}
+        {% if user.is_authenticated and user.is_subadmin and user.can_manage_category %}
         <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'adminpanel:category' %}active{% endif %}">
             <a href="{% url 'adminpanel:category' %}">
                 <span><i class="fa fa-list"></i></span> Add Category
@@ -238,7 +239,7 @@
             </a>
         </li>
         {% endif %}
-        {% if user.is_subadmin and user.can_manage_branch %}
+        {% if user.is_authenticated and user.is_subadmin and user.can_manage_branch %}
         <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'adminpanel:add-branch' %}active{% endif %}">
             <a href="{% url 'adminpanel:add-branch' %}">
                 <span><i class="fa fa-building-o"></i></span> Add Branch
@@ -250,7 +251,7 @@
             </a>
         </li>
         {% endif %}
-        {% if user.is_subadmin and user.can_manage_receipts %}
+        {% if user.is_authenticated and user.is_subadmin and user.can_manage_receipts %}
         <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'adminpanel:receipt-list' %}active{% endif %}">
             <a href="{% url 'adminpanel:receipt-list' %}">
                 <span><i class="faImg"><img src="{% static 'adminpanel/images/transaction.svg' %}" alt="paid"

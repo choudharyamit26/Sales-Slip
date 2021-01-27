@@ -1,0 +1,70 @@
+{% extends 'base-ereceipt.html' %}
+{% block body %}
+<div class="WrapperArea">
+    <div class="WrapperBox">
+        <div class="Small-Wrapper">
+            <h4 class="Title">Sub Admin Details</h4>
+            <div class="DetailsArea">
+                {% if object.profile_pic %}
+                <div class="DetailsProfile">
+                    <figure><img width="200" src="{{object.profile_pic.url}}"></figure>
+                </div>
+                {% else %}
+                <div class="DetailsProfile">
+                    <figure><img src="https://snapic-bucket.s3.amazonaws.com/static/default_profile.png"
+                                 alt="Profile pic"></figure>
+                </div>
+                {% endif %}
+                <ul>
+                    <li>
+                        <span>Id </span>{{object.id}}
+                    </li>
+
+                    <li>
+                        <span>Name </span>{{object.first_name}} {{object.last_name}}
+                    </li>
+                    <li>
+                        <span>Email id </span>{{object.email}}
+                    </li>
+                    {% if object.can_manage_receipts %}
+                    <li>
+                        <span>Can Manage Receipts</span>Yes
+                    </li>
+                    {% else %}
+                    <li>
+                        <span>Can Manage Receipts</span>No
+                    </li>
+                    {% endif %}
+                    {% if object.can_manage_branch %}
+                    <li>
+                        <span>Can Manage Branch</span>Yes
+                    </li>
+                    {% else %}
+                    <li>
+                        <span>Can Manage Branch</span>No
+                    </li>
+                    {% endif %}
+                    {% if object.can_manage_category %}
+                    <li>
+                        <span>Can Manage Category</span>Yes
+                    </li>
+                    {% else %}
+                    <li>
+                        <span>Can Manage Category</span>No
+                    </li>
+                    {% endif %}
+                    {% if object.can_manage_merchant %}
+                    <li>
+                        <span>Can Manage Merchant</span>Yes
+                    </li>
+                    {% else %}
+                    <li>
+                        <span>Can Manage Merchant</span>No
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}

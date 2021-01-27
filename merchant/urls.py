@@ -4,7 +4,8 @@ from django.urls import path
 from .views import MerchantLogin, MerchantDashBoard, MerchantLogout, PasswordResetConfirmView, PasswordResetView, \
     CreateOrder, OrderDetail, OrderList, ApiIntegrationTutorial, StaticContent, MyProfile, PasswordChangeView, \
     PasswordChangeDoneView, NotificationCount, ReadNotifications, SetAdminNotificationSetting, \
-    GetAdminNotificationSetting, NotificationView, PrintQRCode, UpdateProfilePicView,SendOnBoardMessage
+    GetAdminNotificationSetting, NotificationView, PrintQRCode, UpdateProfilePicView, SendOnBoardMessage, AddBranch, \
+    BranchList, UpdateBranch, DeleteBranch
 
 app_name = 'merchant'
 
@@ -52,5 +53,9 @@ urlpatterns = [
     path('get-notification-setting/', GetAdminNotificationSetting.as_view(),
          name='get-notification-setting'),
     path('print-qr/<int:pk>/', PrintQRCode.as_view(), name='print-qr'),
-    path('update-profile/<int:pk>/', UpdateProfilePicView.as_view(), name='update-profile')
+    path('update-profile/<int:pk>/', UpdateProfilePicView.as_view(), name='update-profile'),
+    path('add-branch/', AddBranch.as_view(), name='add-branch'),
+    path('branch-list/', BranchList.as_view(), name='branch-list'),
+    path('update-branch/<int:pk>/', UpdateBranch.as_view(), name='update-branch'),
+    path('delete-branch/<int:pk>/', DeleteBranch.as_view(), name='delete-branch'),
 ]
