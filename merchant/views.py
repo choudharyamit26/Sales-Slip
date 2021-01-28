@@ -23,7 +23,8 @@ from django.utils.translation import gettext_lazy as _
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
 from django.views.generic import View, ListView, DetailView, CreateView, FormView, TemplateView, UpdateView, DeleteView
-from src.models import User, OrderItem, Receipt, Merchant, TermsAndCondition, UserNotification, Settings, Branch
+from src.models import User, OrderItem, Receipt, Merchant, TermsAndCondition, UserNotification, Settings, Branch, \
+    HiddenUsers
 
 from .forms import MerchantLoginForm, OrderForm, OrderFormSet, MerchantUpdateForm, OnBoardMessageForm, BranchForm
 
@@ -394,14 +395,21 @@ class OrderList(LoginRequiredMixin, ListView):
 
     def get(self, request, *args, **kwargs):
         merchant_obj = Merchant.objects.get(email=self.request.user.email)
+        hidden_users = HiddenUsers.objects.filter(merchant=merchant_obj)
+        print('>>>>', [x.user for x in hidden_users])
         receipts = Receipt.objects.filter(merchant=merchant_obj)
-        print([x.qr_code for x in receipts])
+        print('--------', [x.user for x in receipts])
         re = []
         for x in receipts:
-            if x.qr_code:
-                re.append(x)
-            else:
-                pass
+            for y in hidden_users:
+                if x.user == y.user:
+                    print('inside pass')
+                    pass
+                else:
+                    if x.qr_code:
+                        re.append(x)
+                    else:
+                        pass
         context = {
             'object_list': re,
         }

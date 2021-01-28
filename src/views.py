@@ -391,8 +391,8 @@ class VerifyEmailOtp(APIView):
         otp = self.request.data['otp']
         try:
             otpObj = Otp.objects.get(otp=otp)
-            email = otpObj.user.email
-            userObj = User.objects.get(email=email)
+            # email = otpObj.user.email
+            # userObj = User.objects.get(email=email)
             if int(otp) == otpObj.otp:
                 # token = Token.objects.get_or_create(user=userObj)
                 # token = token[0]

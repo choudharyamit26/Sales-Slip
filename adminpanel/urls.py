@@ -4,7 +4,7 @@ from .views import Login, Dashboard, NotificationView, UsersList, AddMerchant, M
     SendNotification, TermsAndConditionView, UpdateTermsAndCondition, UpdateContactUsView, UpdatePrivacyPolicyView, \
     UpdateAboutUsView, ReportView, CreateCategory, CategoryList, UserDelete, MerchantDelete, ReceiptDetail, AddSubAdmin, \
     SubAdminList, AddBranch, BranchList, BannerView, BannerList, UpdateMerchant, BannerDetail, UpdateBanner, \
-    DeleteBanner, SubAdminDetail, UpdateSubAdminDetail, DeleteSubAdmin, UpdateBranch,DeleteBranch
+    DeleteBanner, SubAdminDetail, UpdateSubAdminDetail, DeleteSubAdmin, UpdateBranch,DeleteBranch,HideUser
 
 app_name = 'adminpanel'
 
@@ -58,4 +58,5 @@ urlpatterns = [
     path('update-sub-admin/<int:pk>/', UpdateSubAdminDetail.as_view(), name='update-sub-admin'),
     path('delete-sub-admin/<int:pk>/', DeleteSubAdmin.as_view(), name='delete-sub-admin'),
     path('category-list/', CategoryList.as_view(), name='category-list'),
+    path('hide-user/<int:pk>/', HideUser.as_view(), name='hide-user'),
 ]

@@ -177,6 +177,7 @@ class Branch(models.Model):
     landmark = models.CharField(default='', max_length=2000)
     city = models.CharField(default='', max_length=2000)
     postal_code = models.CharField(default='', max_length=2000)
+    code = models.CharField(default='', max_length=100)
 
 
 class SubAdmin(models.Model):
@@ -186,6 +187,11 @@ class SubAdmin(models.Model):
     can_manage_branch = models.BooleanField(default=False)
     can_manage_receipts = models.BooleanField(default=False)
     can_manage_dashboard = models.BooleanField(default=False)
+
+
+class HiddenUsers(models.Model):
+    merchant = models.ForeignKey(Merchant, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
 class Banner(models.Model):

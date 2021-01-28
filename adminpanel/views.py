@@ -19,7 +19,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
 from src.models import User, Merchant, Category, Receipt, Settings, UserNotification, TermsAndCondition, AboutUs, \
-    PrivacyPolicy, ContactUs, ScannedData, Branch, Banner, SubAdmin
+    PrivacyPolicy, ContactUs, ScannedData, Branch, Banner, SubAdmin,HiddenUsers
 from django.contrib.auth import get_user_model, login, authenticate, logout, update_session_auth_hash
 from django.views.generic import View, ListView, DetailView, UpdateView, CreateView, DeleteView, FormView, TemplateView
 from django.contrib.auth.password_validation import validate_password
@@ -29,6 +29,7 @@ from .forms import LoginForm, MerchantForm, UserNotificationForm, UpdateAboutUsF
 
 from django.utils.translation import gettext_lazy as _
 from django.conf.global_settings import DEFAULT_FROM_EMAIL
+
 
 user = get_user_model()
 
@@ -632,14 +633,18 @@ class AddBranch(LoginRequiredMixin, CreateView):
         landmark = self.request.POST['landmark']
         city = self.request.POST['city']
         postal_code = self.request.POST['postal_code']
-        Branch.objects.create(
+        x=Branch.objects.create(
             merchant_name=merchant_obj,
             shop_no=shop_no,
             street=street,
             landmark=landmark,
             city=city,
-            postal_code=postal_code
+            postal_code=postal_code,
         )
+        # print(merchant_obj.full_name.replace(" ", ""))
+        # print((merchant_obj.full_name.replace(" ", "")).upper())
+        x.code = (merchant_obj.full_name.replace(" ", "")).upper() + str(x.id)
+        x.save()
         messages.info(self.request, 'Branch added successfully')
         return redirect('adminpanel:branch-list')
 
@@ -1054,3 +1059,22 @@ class DeleteBanner(LoginRequiredMixin, DeleteView):
     model = Banner
     template_name = 'banner_confirm_delete.html'
     success_url = reverse_lazy('adminpanel:banner-list')
+
+
+class HideUser(LoginRequiredMixin, View):
+    login_url = 'adminpanel:login'
+    model = HiddenUsers
+
+    def get(self, request, *args, **kwargs):
+        print(self.request.user)
+        print(kwargs)
+        receipt_obj = Receipt.objects.get(id=kwargs['pk'])
+        print(receipt_obj.merchant)
+        print(receipt_obj.user)
+        print(receipt_obj.merchant.email)
+        HiddenUsers.objects.create(
+            merchant=receipt_obj.merchant,
+            user=receipt_obj.user
+        )
+        messages.success(self.request, 'User has been hidden successfully')
+        return HttpResponseRedirect('/adminpanel/receipt-list/')

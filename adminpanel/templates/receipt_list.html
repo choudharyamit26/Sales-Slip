@@ -114,32 +114,92 @@
     </div>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Merchants</h4>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label for="">Merchant</label>
-                    <select id="id_category" name="merchant">
-                        {% for object in merchants %}
-                        <option value="{{object.id}}">{{object.email}}</option>
-                        {% endfor %}
-                    </select>
+<div class="ModalBox">
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="Decline">
+                        <a href="JavaScript:Void(0);" class="CloseModal" data-dismiss="modal">×</a>
+                        <h3>Hide User</h3>
+                        <p>Are you sure you want to hide this user ?</p>
+                        <div id="object_id_placeholder_div">
+                            <input hidden="true" id="object_id_placeholder_input" value="">
+                        </div>
+                        <h4>
+                            <a href="JavaScript:Void(0);" data-dismiss="modal" style="color:blue;">no</a>
+                            <button id="acceptButton" data-dismiss="modal" style="border:none;box-shadow:none;
+                                                                                background:transparent;outline:0;color:blue;margin-left:10px;">
+                                Yes
+                            </button>
+                        </h4>
+                    </div>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Save</button>
-            </div>
         </div>
-
     </div>
-</div>
+<!--&lt;!&ndash; Modal &ndash;&gt;-->
+<!--<div class="modal fade" id="myModal" role="dialog">-->
+<!--    <div class="modal-dialog">-->
 
+<!--        &lt;!&ndash; Modal content&ndash;&gt;-->
+<!--        <div class="modal-content">-->
+<!--            <div class="modal-header">-->
+<!--                <button type="button" class="close" data-dismiss="modal">&times;</button>-->
+<!--                <h4 class="modal-title">Hide User</h4>-->
+<!--            </div>-->
+<!--            <div class="modal-body">-->
+<!--                <div class="form-group">-->
+<!--                    &lt;!&ndash;                    <label for="">Merchant</label>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    <select id="id_category" name="merchant">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        {% for object in merchants %}&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <option value="{{object.id}}">{{object.email}}</option>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        {% endfor %}&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    </select>&ndash;&gt;-->
+<!--                    <p>Are you sure you want to hide this user?</p>-->
+<!--                    <div id="object_id_placeholder_div">-->
+<!--                        <input hidden="true" id="object_id_placeholder_input" value="">-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            &lt;!&ndash;            <div class="modal-footer">&ndash;&gt;-->
+<!--            <a href="JavaScript:Void(0);" data-dismiss="modal" style="color:blue;">no</a>-->
+<!--            <button type="button" id="acceptButton" class="btn btn-default" data-dismiss="modal" style="border:none;box-shadow:none;-->
+<!--                                                                                background:transparent;outline:0;color:blue;margin-left:10px;">-->
+<!--                Yes-->
+<!--            </button>-->
+<!--            &lt;!&ndash;            </div>&ndash;&gt;-->
+<!--        </div>-->
+
+<!--    </div>-->
+<!--</div>-->
+<script>
+    $(document).ready(function () {
+    $('.buttonDemo').click(function (e) {
+        console.log('clicked tick Button')
+        e.preventDefault();
+//      $('.modal').addClass('show');
+        var value = $(this).val();
+        console.log("value",value)
+        $("#object_id_placeholder_div").html(`<input hidden="true" id="object_id_placeholder_input" value="` + value + `">`)
+    });
+    $('.CloseModal').click(function (e) {
+        e.preventDefault();
+//        $('.modal').removeClass('show');
+    });
+
+    $("#acceptButton").click(function () {
+        var object_id = $("#object_id_placeholder_input").val();
+        console.log('Id ',object_id)
+        var protocol = window.location.protocol
+        var hostname = window.location.hostname
+        var port = window.location.port
+        var url = protocol + "//" + hostname + ":" + port + "/adminpanel/hide-user/"  + object_id + "/"
+        window.location.href = url
+    });
+});
+
+
+
+</script>
 {% endblock body%}
