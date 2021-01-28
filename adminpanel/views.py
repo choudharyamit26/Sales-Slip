@@ -640,6 +640,7 @@ class AddBranch(LoginRequiredMixin, CreateView):
             landmark=landmark,
             city=city,
             postal_code=postal_code,
+            code=0
         )
         # print(merchant_obj.full_name.replace(" ", ""))
         # print((merchant_obj.full_name.replace(" ", "")).upper())
