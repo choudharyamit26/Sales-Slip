@@ -400,19 +400,27 @@ class OrderList(LoginRequiredMixin, ListView):
         receipts = Receipt.objects.filter(merchant=merchant_obj)
         print('--------', [x.user for x in receipts])
         re = []
-        for x in receipts:
-            for y in hidden_users:
-                if x.user == y.user:
-                    print('inside pass')
-                    pass
-                else:
-                    if x.qr_code:
-                        re.append(x)
-                    else:
+        if len(hidden_users) > 0:
+            for x in receipts:
+                for y in hidden_users:
+                    if x.user == y.user:
+                        print('inside pass')
                         pass
+                    else:
+                        if x.qr_code:
+                            re.append(x)
+                        else:
+                            pass
+        else:
+            for x in receipts:
+                if x.qr_code:
+                    re.append(x)
+                else:
+                    pass
         context = {
             'object_list': re,
         }
+        print(re)
         return render(self.request, "order-list.html", context)
 
 
@@ -646,14 +654,17 @@ class AddBranch(LoginRequiredMixin, CreateView):
         landmark = self.request.POST['landmark']
         city = self.request.POST['city']
         postal_code = self.request.POST['postal_code']
-        Branch.objects.create(
+        x = Branch.objects.create(
             merchant_name=merchant_obj,
             shop_no=shop_no,
             street=street,
             landmark=landmark,
             city=city,
-            postal_code=postal_code
+            postal_code=postal_code,
+            code=0
         )
+        x.code = (merchant_obj.full_name.replace(" ", "")).upper() + str(x.id)
+        x.save()
         messages.info(self.request, 'Branch added successfully')
         return redirect('merchant:branch-list')
 

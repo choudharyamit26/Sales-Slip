@@ -19,7 +19,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
 from src.models import User, Merchant, Category, Receipt, Settings, UserNotification, TermsAndCondition, AboutUs, \
-    PrivacyPolicy, ContactUs, ScannedData, Branch, Banner, SubAdmin,HiddenUsers
+    PrivacyPolicy, ContactUs, ScannedData, Branch, Banner, SubAdmin, HiddenUsers
 from django.contrib.auth import get_user_model, login, authenticate, logout, update_session_auth_hash
 from django.views.generic import View, ListView, DetailView, UpdateView, CreateView, DeleteView, FormView, TemplateView
 from django.contrib.auth.password_validation import validate_password
@@ -29,7 +29,6 @@ from .forms import LoginForm, MerchantForm, UserNotificationForm, UpdateAboutUsF
 
 from django.utils.translation import gettext_lazy as _
 from django.conf.global_settings import DEFAULT_FROM_EMAIL
-
 
 user = get_user_model()
 
@@ -633,7 +632,7 @@ class AddBranch(LoginRequiredMixin, CreateView):
         landmark = self.request.POST['landmark']
         city = self.request.POST['city']
         postal_code = self.request.POST['postal_code']
-        x=Branch.objects.create(
+        x = Branch.objects.create(
             merchant_name=merchant_obj,
             shop_no=shop_no,
             street=street,
@@ -665,6 +664,19 @@ class UpdateBranch(LoginRequiredMixin, UpdateView):
 
     def get(self, request, *args, **kwargs):
         return render(self.request, 'update-branch.html', {'merchants': Merchant.objects.all()})
+
+    def post(self, request, *args, **kwargs):
+        merchant_obj = Merchant.objects.get(id=self.request.POST['merchant_name'])
+        branch_obj = Branch.objects.get(id=kwargs['pk'])
+        branch_obj.merchant = merchant_obj
+        branch_obj.shop_no = self.request.POST['shop_no']
+        branch_obj.street = self.request.POST['street']
+        branch_obj.landmark = self.request.POST['landmark']
+        branch_obj.city = self.request.POST['city']
+        branch_obj.postal_code = self.request.POST['postal_code']
+        branch_obj.save()
+        messages.info(self.request, 'Branch updated successfully')
+        return redirect('adminpanel:branch-list')
 
 
 class DeleteBranch(LoginRequiredMixin, DeleteView):
