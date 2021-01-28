@@ -1984,3 +1984,14 @@ width:100% !important;
 .selectTo select {
   width: 100%;
 }
+
+.buttonDemo {
+    border:none;
+    background:transparent
+}
+
+
+.buttonDemo:focus {
+    border:none;
+    background:transparent
+}

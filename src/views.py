@@ -408,12 +408,15 @@ class VerifyEmailOtp(APIView):
 
 
 class ResendOtp(APIView):
+    serializer_class = OtpSerializer
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
 
     def get(self, request, *args, **kwargs):
         otp = randint(100000, 999999)
         email = self.request.GET.get('email')
         try:
-            user = User.objects.get(email=email)
+            user = self.request.user
             if user:
                 otp = Otp.objects.create(user=user, otp=otp)
                 email = EmailMessage(
