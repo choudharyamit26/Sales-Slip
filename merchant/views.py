@@ -110,13 +110,29 @@ class MerchantDashBoard(LoginRequiredMixin, ListView):
     login_url = 'merchant:login'
 
     def get(self, request, *args, **kwargs):
-        users_count = User.objects.all().exclude(is_superuser=True).exclude(is_merchant=True).count()
+        # users_count = User.objects.all().exclude(is_superuser=True).exclude(is_merchant=True).count()
         merchant = Merchant.objects.get(email=self.request.user.email)
         receipts_count = Receipt.objects.filter(merchant=merchant).count()
-
+        users_count = []
+        for receipt in Receipt.objects.filter(merchant=merchant):
+            print(receipt.user.id)
+            if receipt.user.id not in users_count:
+                print('inside if')
+                users_count.append(receipt.user.id)
+            else:
+                print('inside else')
+                pass
+        print(users_count)
+        total = 0
+        vat = 0
+        for receipt in Receipt.objects.filter(merchant=merchant):
+            total += receipt.total
+            vat += receipt.vat
         context = {
-            'users_count': users_count,
+            'users_count': len(users_count),
             'receipts_count': receipts_count,
+            'total': total,
+            'vat': vat
         }
         return render(self.request, "merchant-dashboard.html", context)
 
@@ -715,3 +731,20 @@ class DeleteBranch(LoginRequiredMixin, DeleteView):
         branch.delete()
         messages.info(self.request, 'Branch deleted')
         return redirect('merchant:branch-list')
+
+
+class BranchPerformance(LoginRequiredMixin, View):
+    login_url = 'merchant:login'
+    model = Receipt
+    template_name = 'chart.html'
+
+    def get(self, request, *args, **kwargs):
+        labels = ['Meerut', 'Noida', 'Mirzapur', 'Jaunpur', 'Lucknow']
+        data = [133.3, 86.2, 52.2, 51.2, 50.2]
+        backgroundColor = ["#FF6384", "#63FF84", "#84FF63", "#8463FF", "#6384FF"]
+        context = {
+            'labels': labels,
+            'data': data,
+            'backgroundColor': backgroundColor
+        }
+        return render(self.request, 'chart.html', {'context': context})

@@ -859,7 +859,8 @@ class GetScannedDataDetail(ListAPIView):
                 # receipt_object.update({'product_{}_quantity'.format(i): obj.quantity})
 
                 product_list.append({'product_name': obj.product, 'product_price': obj.price,
-                                     'product_quantity': obj.quantity, 'product_vat': obj.vat})
+                                     'product_quantity': obj.quantity, 'product_vat': obj.vat,
+                                     'product_vat_percent': obj.vat_percent})
                 total = obj.total
                 i += 1
                 print(obj.id)
@@ -896,7 +897,8 @@ class GetUserTransactions(ListAPIView):
             product_list = []
             for order_obj in obj.order.all():
                 product_list.append({'product_name': order_obj.product, 'product_price': order_obj.price,
-                                     'product_quantity': order_obj.quantity, 'product_vat': order_obj.vat})
+                                     'product_quantity': order_obj.quantity, 'product_vat': order_obj.vat,
+                                     'product_vat_percent': order_obj.vat_percent})
                 data.update({'products': product_list})
             data.update({'total': obj.total})
             receipt_list.append(data)
@@ -931,7 +933,7 @@ class ReceiptSearchView(ListAPIView):
                 # data.update({'product_{}_quantity'.format(i): obj.quantity})
                 data_list.append(
                     {'product_name': obj.product, 'product_price': obj.price, 'product_quantity': obj.quantity,
-                     'product_vat': obj.vat})
+                     'product_vat': obj.vat, 'product_vat_percent': obj.vat_percent})
                 # data_list.append({'product_price': obj.price})
                 # data_list.append({'product_quantity': obj.quantity})
                 i += 1
@@ -986,7 +988,8 @@ class FilterByCategory(ListAPIView):
                             # print(i)
                             product_list = []
                             product_list.append({'product_name': order_obj.product, 'product_price': order_obj.price,
-                                                 'product_quantity': order_obj.quantity, 'product_vat': order_obj.vat})
+                                                 'product_quantity': order_obj.quantity, 'product_vat': order_obj.vat,
+                                                 'product_vat_percent': order_obj.vat_percent})
 
                             data.update({'products': product_list})
                         data.update({'total': x.total})
@@ -1043,7 +1046,8 @@ class FilterByDate(ListAPIView):
                     for order_obj in x.order.all():
                         # print(i)
                         product_list.append({'product_name': order_obj.product, 'product_price': order_obj.price,
-                                             'product_quantity': order_obj.quantity, 'product_vat': order_obj.vat})
+                                             'product_quantity': order_obj.quantity, 'product_vat': order_obj.vat,
+                                             'product_vat_percent': order_obj.vat_percent})
                         data.update({'products': product_list})
                     data.update({'total': x.total})
                     receipt_list.append(data)
@@ -1090,13 +1094,15 @@ class AddToCart(CreateAPIView):
         product_cost = self.request.data['product_cost']
         product_quantity = self.request.data['product_quantity']
         product_vat = self.request.data['product_vat']
+        product_vat_percent = self.request.data['product_vat_percent']
         order_obj = OrderItem.objects.create(
             user=user,
             product=product_name,
             price=product_cost,
             quantity=product_quantity,
             total=order_amount,
-            vat=product_vat
+            vat=product_vat,
+            vat_percent=product_vat_percent
             # order_id=order_id
         )
         return Response({"message": "Item added successfully", "id": order_obj.id, "status": HTTP_200_OK})
@@ -1189,7 +1195,8 @@ class GetLatestTransactions(ListAPIView):
                     # data.update({'receipt_id_{}_product_{}_quantity'.format(j, i): order_obj.quantity})
                     # data.update({'total_{}'.format('receipt_id_{}'.format(j)): order_obj.total})
                     product_list.append({'product_name': order_obj.product, 'product_price': order_obj.price,
-                                         'product_quantity': order_obj.quantity, 'product_vat': order_obj.vat})
+                                         'product_quantity': order_obj.quantity, 'product_vat': order_obj.vat,
+                                         'product_vat_percent': order_obj.vat_percent})
                     data.update({'products': product_list})
                 data.update({'total': x.total})
                 receipt_list.append(data)
@@ -1219,7 +1226,8 @@ class GetLatestTransactions(ListAPIView):
                     # data.update({'receipt_id_{}_product_{}_quantity'.format(j, i): order_obj.quantity})
                     # data.update({'total_{}'.format('receipt_id_{}'.format(j)): order_obj.total})
                     product_list.append({'product_name': order_obj.product, 'product_price': order_obj.price,
-                                         'product_quantity': order_obj.quantity,'product_vat': order_obj.vat})
+                                         'product_quantity': order_obj.quantity, 'product_vat': order_obj.vat,
+                                         'product_vat_percent': order_obj.vat_percent})
 
                     data.update({'products': product_list})
                 data.update({'total': x.total})
@@ -1673,6 +1681,7 @@ class GetCartItemDetail(APIView):
                 'item_price': item_obj.price,
                 'item_quantity': item_obj.quantity,
                 'item_vat': item_obj.vat,
+                'item_vat_percent': item_obj.vat_percent
             }
             return Response({'data': data_dict, 'message': 'Item details fetched successfully', 'status': HTTP_200_OK})
         except Exception as e:

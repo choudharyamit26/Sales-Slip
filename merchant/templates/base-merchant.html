@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" href="{% static 'adminpanel/images/logo.jpg' %}" type="image/ico" sizes="16x16">
     <link type="text/css" rel="stylesheet" href="{% static 'adminpanel/css/style.css' %}">
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato'>
     <link rel="stylesheet" href="{% static 'adminpanel/css/media.css' %}">
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
     <script>
@@ -23,6 +24,7 @@
       .catch(function (error) {
         console.log("Error: " + error);
       });
+
 
 
 
@@ -78,11 +80,11 @@
                 <span><i class="fa fa-first-order"></i></span>Generate QR Code
             </a>
         </li>
-<!--        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'merchant:on-board' %}active{% endif %}">-->
-<!--            <a href="{% url 'merchant:on-board'  %}">-->
-<!--                <span><i class="fa fa-group"></i></span>On Board User-->
-<!--            </a>-->
-<!--        </li>-->
+        <!--        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'merchant:on-board' %}active{% endif %}">-->
+        <!--            <a href="{% url 'merchant:on-board'  %}">-->
+        <!--                <span><i class="fa fa-group"></i></span>On Board User-->
+        <!--            </a>-->
+        <!--        </li>-->
         <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'merchant:order-list' %}active{% endif %}">
             <a href="{% url 'merchant:order-list'  %}">
                 <span><i class="fa fa-list"></i></span> Receipt's Management
@@ -111,6 +113,11 @@
         <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'merchant:profile' %}active{% endif %}">
             <a href="{% url 'merchant:profile'  %}">
                 <span><i class="fa fa-flag"></i></span> My Profile
+            </a>
+        </li>
+        <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'merchant:branch-performance' %}active{% endif %}">
+            <a href="{% url 'merchant:branch-performance'  %}">
+                <span><i class="fa fa-pie-chart"></i></span> Branch Performance
             </a>
         </li>
 
@@ -171,7 +178,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="{% static 'adminpanel/js/bootstrap.min.js' %}"></script>
 <script src="{% static 'adminpanel/js/app.js' %}"></script>
-
+<script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js'></script>
+<script src="{% static 'adminpanel/js/script.js' %}"></script>
+<script src="{% static 'adminpanel/js/chart.js' %}"></script>
 </body>
 
 </html>

@@ -1,0 +1,25 @@
+{% extends 'base-merchant.html' %}
+{% block body %}
+<!-- partial -->
+
+<div class="WrapperArea">
+    <div class="WrapperBox">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-info" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <div class="Small-Wrapper">
+            <h4 class="Title" style="text-align: center; padding-bottom: 20px;">Branch Performance</h4>
+            <div class="DashboardArea">
+                <canvas id="oilChart" width="300" height="100"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}

@@ -5,7 +5,7 @@ from .views import MerchantLogin, MerchantDashBoard, MerchantLogout, PasswordRes
     CreateOrder, OrderDetail, OrderList, ApiIntegrationTutorial, StaticContent, MyProfile, PasswordChangeView, \
     PasswordChangeDoneView, NotificationCount, ReadNotifications, SetAdminNotificationSetting, \
     GetAdminNotificationSetting, NotificationView, PrintQRCode, UpdateProfilePicView, SendOnBoardMessage, AddBranch, \
-    BranchList, UpdateBranch, DeleteBranch
+    BranchList, UpdateBranch, DeleteBranch, BranchPerformance
 
 app_name = 'merchant'
 
@@ -58,4 +58,5 @@ urlpatterns = [
     path('branch-list/', BranchList.as_view(), name='branch-list'),
     path('update-branch/<int:pk>/', UpdateBranch.as_view(), name='update-branch'),
     path('delete-branch/<int:pk>/', DeleteBranch.as_view(), name='delete-branch'),
+    path('branch-performance/', BranchPerformance.as_view(), name='branch-performance'),
 ]
