@@ -1213,7 +1213,7 @@ class GetLatestTransactions(ListAPIView):
                     # data.update({'receipt_id_{}_product_{}_quantity'.format(j, i): order_obj.quantity})
                     # data.update({'total_{}'.format('receipt_id_{}'.format(j)): order_obj.total})
                     product_list.append({'product_name': order_obj.product, 'product_price': order_obj.price,
-                                         'product_quantity': order_obj.quantity})
+                                         'product_quantity': order_obj.quantity,'product_vat': order_obj.vat})
 
                     data.update({'products': product_list})
                 data.update({'total': x.total})
