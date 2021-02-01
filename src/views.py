@@ -928,7 +928,8 @@ class ReceiptSearchView(ListAPIView):
                 # data.update({'product_{}_price'.format(i): obj.price})
                 # data.update({'product_{}_quantity'.format(i): obj.quantity})
                 data_list.append(
-                    {'product_name': obj.product, 'product_price': obj.price, 'product_quantity': obj.quantity})
+                    {'product_name': obj.product, 'product_price': obj.price, 'product_quantity': obj.quantity,
+                     'product_vat': obj.vat})
                 # data_list.append({'product_price': obj.price})
                 # data_list.append({'product_quantity': obj.quantity})
                 i += 1
