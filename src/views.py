@@ -865,6 +865,8 @@ class GetScannedDataDetail(ListAPIView):
                 print(obj.id)
                 print(obj.product)
                 receipt_object['total'] = receipt_obj.total
+                receipt_object['vat'] = receipt_obj.vat
+                receipt_object['order_amount'] = receipt_obj.amount
                 receipt_object['products'] = product_list
             # print(receipt_obj.created_at)
             # print(receipt_obj.user)
@@ -1117,6 +1119,8 @@ class CreateReceiptManually(CreateAPIView):
         time_of_purchase = self.request.data['time_of_purchase']
         # order_id = self.request.data['order_id']
         order_amount = self.request.data['order_amount']
+        vat_amount = self.request.data['vat_amount']
+        total_amount = self.request.data['total_amount']
         ordered_items = self.request.data['ordered_items']
         # customer_name = self.request.data['customer_name']
         # product_name = self.request.data['product_name']
@@ -1139,7 +1143,9 @@ class CreateReceiptManually(CreateAPIView):
         receipt_obj = Receipt.objects.create(
             user=self.request.user,
             merchant=merchant_obj,
-            total=order_amount
+            total=total_amount,
+            vat=vat_amount,
+            amount=order_amount
         )
         for item in ordered_items:
             receipt_obj.order.add(OrderItem.objects.get(id=item))
