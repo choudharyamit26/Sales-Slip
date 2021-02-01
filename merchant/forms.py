@@ -37,7 +37,7 @@ class OrderForm(forms.ModelForm):
         fields = ['user']
 
 
-OrderFormSet = modelformset_factory(OrderItem, fields=('product', 'quantity', 'price'), widgets={
+OrderFormSet = modelformset_factory(OrderItem, fields=('product', 'quantity', 'vat_percent', 'price'), widgets={
     'product': forms.TextInput(
         attrs={
             # 'class': 'form-control',
@@ -47,16 +47,26 @@ OrderFormSet = modelformset_factory(OrderItem, fields=('product', 'quantity', 'p
     ),
     'quantity': forms.TextInput(
         attrs={
+            # 'width': '200px',
             # 'class': 'form-control',
-            'required': 'required'
+            'required': 'required',
+            'style': 'width:180px'
+        }
+    ),
+    'vat_percent': forms.TextInput(
+        attrs={
+            # 'class': 'form-control',
+            'required': 'required',
+            'style': 'width:180px'
         }
     ),
     'price': forms.TextInput(
         attrs={
             # 'class': 'form-control',
-            'required': 'required'
+            'required': 'required',
         }
     )
+
 })
 
 

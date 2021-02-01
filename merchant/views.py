@@ -328,30 +328,35 @@ class CreateOrder(LoginRequiredMixin, CreateView):
         instances = formset.save(commit=False)
         user_obj = User.objects.get(id=user.id)
         order_total = 0
+        order_amount = 0
+        order_vat = 0
         for instance in instances:
             quantity = instance.quantity
             price = instance.price
             amount = quantity * price
-            order_total += amount
+            order_amount += quantity * price
+            order_total += (amount + ((instance.vat_percent / 100) * price) * quantity)
+            order_vat += (((instance.vat_percent / 100) * price) * quantity)
             instance.user = user
             instance.order_id = order_id
-            instance.vat_percent = 10
+            instance.vat = ((instance.vat_percent / 100) * price) * quantity
+            vat_percent = instance.vat_percent
             instance.save()
-        if instance:
-            order = instance.order_id
+            if instance:
+                order = instance.order_id
             ordered_items = OrderItem.objects.filter(order_id=order)
             x = []
             i = 1
             for item in ordered_items:
                 item.total = order_total
-                item.save()
-                product_string = 'product_' + str(i) + ':' + item.product
-                x.append(product_string)
-                price_string = 'price_' + str(i) + ':' + str(item.price)
-                x.append(price_string)
-                quantity_string = 'quantity_' + str(i) + ':' + str(item.quantity)
-                x.append(quantity_string)
-                i += 1
+            item.save()
+            product_string = 'product_' + str(i) + ':' + item.product
+            x.append(product_string)
+            price_string = 'price_' + str(i) + ':' + str(item.price)
+            x.append(price_string)
+            quantity_string = 'quantity_' + str(i) + ':' + str(item.quantity)
+            x.append(quantity_string)
+            i += 1
             item_string = ','.join(x)
             total_string = ',Total : ' + str(order_total) + ', '
             item_string += total_string
@@ -364,36 +369,37 @@ class CreateOrder(LoginRequiredMixin, CreateView):
             item_string += merchant_string + ', '
             item_string += user_string
             receipt_id = 0
-            try:
-                receipt_obj = Receipt.objects.last()
-                receipt_id = receipt_obj.id + 1
-            except Exception as e:
-                print(e)
-                receipt_id += 1
-            print(receipt_id)
-            bill = Receipt.objects.create(
-                merchant=merchant_obj,
-                user=user_obj,
-                total=order_total,
-                amount=order_total,
-                vat=10
-                # qr_code=f'{receipt_id}.png',
-            )
-            for x in ordered_items:
-                print(x)
-                bill.order.add(x)
-            item_string += ', Order Id : ' + str(bill.id)
-            url = pyqrcode.create(item_string, encoding='utf-8')
-            url.png(f'media/{receipt_id}.png', scale=6)
-            qr = os.path.basename(f'{receipt_id}.png'), File(open(f'media/{receipt_id}.png', 'rb'))
-            bill.qr_code = qr[1]
-            bill.save(update_fields=['qr_code'])
-            return HttpResponseRedirect(reverse('merchant:order-detail', args=(bill.id,)))
+        try:
+            receipt_obj = Receipt.objects.last()
+            receipt_id = receipt_obj.id + 1
+        except Exception as e:
+            print(e)
+            receipt_id += 1
+        print(receipt_id)
+        bill = Receipt.objects.create(
+            merchant=merchant_obj,
+            user=user_obj,
+            total=order_total,
+            amount=order_amount,
+            vat=order_vat
+            # qr_code=f'{receipt_id}.png',
+        )
+        for x in ordered_items:
+            print(x)
+            bill.order.add(x)
+        item_string += ', Order Id : ' + str(bill.id)
+        url = pyqrcode.create(item_string, encoding='utf-8')
+        url.png(f'media/{receipt_id}.png', scale=6)
+        qr = os.path.basename(f'{receipt_id}.png'), File(open(f'media/{receipt_id}.png', 'rb'))
+        bill.qr_code = qr[1]
+        bill.save(update_fields=['qr_code'])
+        return HttpResponseRedirect(reverse('merchant:order-detail', args=(bill.id,)))
 
-    def form_invalid(self, form):
-        print('Form Invalid ---->>> ', self.request)
-        messages.error(self.request, 'Some error occurred please check.')
-        return self.render_to_response(self.get_context_data(form=form))
+
+def form_invalid(self, form):
+    print('Form Invalid ---->>> ', self.request)
+    messages.error(self.request, 'Some error occurred please check.')
+    return self.render_to_response(self.get_context_data(form=form))
 
 
 class OrderDetail(LoginRequiredMixin, DetailView):
@@ -406,7 +412,9 @@ class OrderDetail(LoginRequiredMixin, DetailView):
         receipt = Receipt.objects.get(id=self.kwargs.get('pk'))
         print(receipt.order.all()[0].total)
         try:
-            context['total_amount'] = receipt.order.all()[0].total
+            context['vat'] = receipt.vat
+            context['amount'] = receipt.amount
+            context['total'] = receipt.total
         except Exception as e:
             print(e)
         return context

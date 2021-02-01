@@ -13,23 +13,29 @@
                             <span>Order id </span>{{object.id}}
                         </li>
 
-<!--                        <li>-->
-<!--                            <span>Name of the user</span>{{object.user.first_name}} {{object.user.last_name}}-->
-<!--                        </li>-->
+                        <!--                        <li>-->
+                        <!--                            <span>Name of the user</span>{{object.user.first_name}} {{object.user.last_name}}-->
+                        <!--                        </li>-->
 
-<!--                        <li>-->
-<!--                            <span>Phone Number</span>{{object.user.phone_number}}-->
-<!--                        </li>-->
+                        <!--                        <li>-->
+                        <!--                            <span>Phone Number</span>{{object.user.phone_number}}-->
+                        <!--                        </li>-->
 
-<!--                        <li>-->
-<!--                            <span>Email id </span>{{object.user.email}}-->
-<!--                        </li>-->
+                        <!--                        <li>-->
+                        <!--                            <span>Email id </span>{{object.user.email}}-->
+                        <!--                        </li>-->
 
                         <li>
                             <span>Created at</span>{{object.created_at|date:'M. d, Y'}}
                         </li>
                         <li>
-                            <span>Total Order Amount</span>{{total_amount}}
+                            <span>Vat</span>{{vat}}
+                        </li>
+                        <li>
+                            <span>Amount</span>{{amount}}
+                        </li>
+                        <li>
+                            <span>Total</span>{{total}}
                         </li>
                     </ul>
                     <div>
@@ -49,6 +55,8 @@
                             <tr>
                                 <th>S.No</th>
                                 <th>Name of item</th>
+                                <th>Vat Percent</th>
+                                <th>Vat Amount</th>
                                 <th>Price of item</th>
                                 <th>Quantity of item</th>
 
@@ -59,6 +67,8 @@
                             <tr>
                                 <td>{{forloop.counter}}</td>
                                 <td>{{obj.product}}</td>
+                                <td>{{obj.vat_percent}}</td>
+                                <td>{{obj.vat}}</td>
                                 <td>{{obj.price}}</td>
                                 <td>{{obj.quantity}}</td>
                             </tr>
