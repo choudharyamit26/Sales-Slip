@@ -91,6 +91,7 @@ class OrderItem(models.Model):
     order_id = models.CharField(default='', max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
     vat = models.FloatField(null=True, blank=True)
+    vat_percent = models.FloatField()
 
 
 class Receipt(models.Model):
@@ -98,7 +99,6 @@ class Receipt(models.Model):
     merchant = models.ForeignKey(Merchant, on_delete=models.CASCADE)
     order = models.ManyToManyField(OrderItem)
     vat = models.FloatField()
-    vat_percent = models.FloatField()
     amount = models.FloatField()
     total = models.FloatField()
     qr_code = models.ImageField(upload_to='QR')
