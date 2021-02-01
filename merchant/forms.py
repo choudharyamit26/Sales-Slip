@@ -30,6 +30,7 @@ class OrderForm(forms.ModelForm):
         user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
         self.fields['user'].queryset = User.objects.all().exclude(is_merchant=True).exclude(is_superuser=True)
+        print('from forms----', [x.phone_number for x in self.fields['user'].queryset])
 
     class Meta:
         model = OrderItem

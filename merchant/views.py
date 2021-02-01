@@ -310,6 +310,11 @@ class CreateOrder(LoginRequiredMixin, CreateView):
     template_name = 'order-new.html'
     form_class = OrderForm
 
+    def get(self, request, *args, **kwargs):
+        users = User.objects.all().exclude(is_merchant=True).exclude(is_superuser=True)
+        return render(self.request, 'order-new.html',
+                      {'users': users, 'formset': OrderFormSet(queryset=OrderItem.objects.none())})
+
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
         context['formset'] = OrderFormSet(queryset=OrderItem.objects.none())
@@ -317,6 +322,7 @@ class CreateOrder(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         formset = OrderFormSet(self.request.POST)
+        print('Cleaned data---->', form.cleaned_data)
         user = form.cleaned_data['user']
         order_id = get_random_string(16)
         instances = formset.save(commit=False)
@@ -329,6 +335,7 @@ class CreateOrder(LoginRequiredMixin, CreateView):
             order_total += amount
             instance.user = user
             instance.order_id = order_id
+            instance.vat_percent = 10
             instance.save()
         if instance:
             order = instance.order_id
@@ -367,7 +374,9 @@ class CreateOrder(LoginRequiredMixin, CreateView):
             bill = Receipt.objects.create(
                 merchant=merchant_obj,
                 user=user_obj,
-                total=order_total
+                total=order_total,
+                amount=order_total,
+                vat=10
                 # qr_code=f'{receipt_id}.png',
             )
             for x in ordered_items:

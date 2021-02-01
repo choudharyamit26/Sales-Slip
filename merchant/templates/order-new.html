@@ -23,14 +23,21 @@
                         </div>
                         {% endfor %}
                         {% endif %}
-                        <form method="POST" >
+                        <form method="POST">
                             {% csrf_token %}
                             <div class="row">
                                 <div class="col-sm-6">
-                                    {{ form|crispy }}
+                                    <!--                                    {{ form|crispy }}-->
+                                    <div class="form-group">
+                                        <label for="">User</label>
+                                        <select id="id_category" name="user">
+                                            {% for user in users %}
+                                            <option value="{{user.pk}}">{{user.phone_number}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-
                             {{ formset.management_form }}
                             {% for form in formset %}
                             <div class="contentAll">
@@ -46,8 +53,8 @@
                                 <button class="btn btn-success B" type="submit">Create Order</button>
                                 <a class="btn btn-info add-form-row" type="submit" id="myBtn"
                                    data-toggle="modal">Add item</a>
-<!--                                <a class="btn btn-info add-Row" type="submit" id="myBtn"-->
-<!--                                   data-toggle="modal">Add item</a>-->
+                                <!--                                <a class="btn btn-info add-Row" type="submit" id="myBtn"-->
+                                <!--                                   data-toggle="modal">Add item</a>-->
                             </div>
                         </form>
                     </div>
@@ -129,6 +136,9 @@
 $(document).on('click','.closed',function(){
     $(this).parent('.closed-pos').hide();
 });
+
+
+
 
 
 </script>
