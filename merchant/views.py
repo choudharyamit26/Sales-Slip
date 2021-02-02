@@ -771,8 +771,9 @@ class BranchPerformance(LoginRequiredMixin, View):
         for branch in branches:
             print(branch.id)
             for x in Receipt.objects.filter(branch=branch.id):
-                receipts.append({'branch': x.branch.code, 'amount': x.total})
+                receipts.append({'branch': x.branch.code, 'amount': x.total, 'vat': x.vat})
         amount_list = []
+        vat_list = []
         for y in receipts:
             if len(amount_list) > 0:
                 i = -1
@@ -784,9 +785,24 @@ class BranchPerformance(LoginRequiredMixin, View):
                 if i == -1:
                     amount_list.append(y)
                 else:
-                    amount_list[i]['amount'] = amount_list[i]['amount'] + y['amount']
+                    amount_list[i]['vat'] = amount_list[i]['vat'] + y['vat']
             else:
                 amount_list.append(y)
+        for y in receipts:
+            if len(vat_list) > 0:
+                i = -1
+                for z in range(len(vat_list)):
+                    if y['branch'] == vat_list[z]['branch']:
+                        i = z
+                    else:
+                        pass
+                if i == -1:
+                    vat_list.append(y)
+                else:
+                    vat_list[i]['vat'] = vat_list[i]['vat'] + y['vat']
+            else:
+                vat_list.append(y)
+        print(vat_list)
         backgroundColor = ["#FF6384", "#63FF84", "#84FF63", "#8463FF", "#6384FF", "#DA70D6", "#BA55D3", " #663399",
                            "#FA8072", "#F08080", "#DC143C", "#FF7F50", "#FF6347", "#FFD700", "#FFFF00", "#00FA9A",
                            "#00FF7F", "#00c5cd", "#ffc000", "#e50038", "#ffe4e1", "#ffdab9", "#ff7373", "#4000ff",
@@ -797,11 +813,21 @@ class BranchPerformance(LoginRequiredMixin, View):
                            "#c4eed9", "#b2fdff", "#00c5cd", "#ffc000", "#e50038", "#ffe4e1", "#ffdab9", "#ff7373"]
         colors = []
         l = len(amount_list)
+        print(l)
+        for x in range(5):
+            print(x)
         for x in range(l):
+            print('inside loop', x)
+            print(x)
+            print(backgroundColor[x])
             colors.append(backgroundColor[x])
+        print('-----------------------------', colors)
         context = {
             'labels': [x['branch'] for x in amount_list],
             'data': [x['amount'] for x in amount_list],
+            'vat': [x['vat'] for x in amount_list],
+            'amount_total': sum([x['amount'] for x in amount_list]),
+            'vat_total': sum([x['vat'] for x in amount_list]),
             'backgroundColor': colors
         }
         return render(self.request, 'chart.html', {'context': context})

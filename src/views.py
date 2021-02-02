@@ -840,7 +840,9 @@ class GetScannedDataDetail(ListAPIView):
         try:
             receipt_object = {}
             receipt_obj = Receipt.objects.get(id=receipt_id)
-            receipt_object['merchant'] = receipt_obj.merchant.email
+            receipt_object['merchant'] = str(receipt_obj.branch.shop_no) + ',' + str(
+                receipt_obj.branch.street) + ',' + str(receipt_obj.branch.landmark) + ',' + str(
+                receipt_obj.branch.city) + ',' + str(receipt_obj.branch.postal_code)
             receipt_object['merchant_id'] = receipt_obj.merchant.id
             receipt_object['receipt_id'] = receipt_obj.id
             receipt_object['merchant_name'] = receipt_obj.merchant.full_name

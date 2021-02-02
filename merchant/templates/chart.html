@@ -1,14 +1,99 @@
 {% extends 'base-merchant.html' %}
 {% block body %}
+<style>
+    .tableBord th{
+    border-top:1px solid #ddd !important;
+    }
+
+
+
+</style>
 <!-- partial -->
 
 <div class="WrapperArea">
     <div class="WrapperBox">
         <div class="Small-Wrapper">
-            <h4 class="Title" style="text-align: center; padding-bottom: 20px;">Branch Performance</h4>
-            <div class="DashboardArea">
-                <div id="container" style="width: 75%;">
-                    <canvas id="pie-chart"></canvas>
+            <h1 class="Title" style="text-align: center; padding-bottom: 20px;">Branch Performance</h1>
+            <br>
+            <br>
+            <h2>
+                <center>Amount</center>
+            </h2>
+            <br>
+            <br>
+            <br>
+            <br>
+            <div class="demoTable">
+                <table id="example" class="table table-striped table-bordered table-responsive tableBord"
+                       style="width:50%;display:inline-block;float:left;border:none;">
+                    <thead>
+                    <tr>
+                        <th>Branch Name</th>
+                        <th>Amount</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for x in context.labels|slice:":1" %}
+                    {% for y in context.data %}
+                    <tr>
+                        <td>{{x}}</td>
+                        <td>{{y}}</td>
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                        <th>Total</th>
+                        <th>{{context.amount_total}}</th>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <div class="DashboardArea" style="width:50%;display:inline-block;">
+                    <div id="container" style="width: 300px; height:300px;margin:0 auto;">
+                        <canvas id="pie-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <h2>
+                <center>Vat Amount</center>
+            </h2>
+            <br>
+            <br>
+            <br>
+            <br>
+
+            <div class="demoTable">
+                <table id="example2" class="table table-striped table-bordered table-responsive tableBord"
+                       style="width:50%;display:inline-block;float:left;border:none;">
+                    <thead>
+                    <tr>
+                        <th>Branch Name</th>
+                        <th>Vat</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for x in context.labels|slice:":1" %}
+                    {% for y in context.vat %}
+                    <tr>
+                        <td>{{x}}</td>
+                        <td>{{y}}</td>
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                        <th>Total</th>
+                        <th>{{context.vat_total}}</th>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <div class="DashboardArea" style="width:50%;display:inline-block;">
+                    <div id="container3" style="width: 300px; height:300px;margin:0 auto;">
+                        <canvas id="pie-chart2"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
@@ -22,14 +107,29 @@
       data: {
         datasets: [{
           data: {{ context.data|safe }},
-          backgroundColor: [
-                "#FF6384",
-                "#63FF84",
-                "#84FF63",
-                "#8463FF",
-                "#6384FF"
-          ],
-          label: 'Population'
+          backgroundColor: {{ context.backgroundColor|safe }}
+        }],
+        labels: {{ context.labels|safe }}
+      },
+      options: {
+        responsive: true
+      }
+    };
+
+<!--    window.onload = function() {-->
+<!--      var ctx = document.getElementById('pie-chart').getContext('2d');-->
+<!--      window.myPie = new Chart(ctx, config);-->
+<!--    };-->
+
+</script>
+<script>
+
+    var config2 = {
+      type: 'pie',
+      data: {
+        datasets: [{
+          data: {{ context.vat|safe }},
+          backgroundColor: {{ context.backgroundColor|safe }}
         }],
         labels: {{ context.labels|safe }}
       },
@@ -39,11 +139,11 @@
     };
 
     window.onload = function() {
+      var ctx2 = document.getElementById('pie-chart2').getContext('2d');
+      window.myPie = new Chart(ctx2, config2);
       var ctx = document.getElementById('pie-chart').getContext('2d');
       window.myPie = new Chart(ctx, config);
     };
-
-
 
 </script>
 <!--<script>-->
