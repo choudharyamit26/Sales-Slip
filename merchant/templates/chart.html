@@ -4,22 +4,79 @@
 
 <div class="WrapperArea">
     <div class="WrapperBox">
-        {% if messages %}
-        {% for message in messages %}
-        <div class="alert alert-info" role="alert">
-            {{ message }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        {% endfor %}
-        {% endif %}
         <div class="Small-Wrapper">
             <h4 class="Title" style="text-align: center; padding-bottom: 20px;">Branch Performance</h4>
             <div class="DashboardArea">
-                <canvas id="oilChart" width="300" height="100"></canvas>
+                <div id="container" style="width: 75%;">
+                    <canvas id="pie-chart"></canvas>
+                </div>
             </div>
         </div>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+<script>
+
+    var config = {
+      type: 'pie',
+      data: {
+        datasets: [{
+          data: {{ context.data|safe }},
+          backgroundColor: [
+                "#FF6384",
+                "#63FF84",
+                "#84FF63",
+                "#8463FF",
+                "#6384FF"
+          ],
+          label: 'Population'
+        }],
+        labels: {{ context.labels|safe }}
+      },
+      options: {
+        responsive: true
+      }
+    };
+
+    window.onload = function() {
+      var ctx = document.getElementById('pie-chart').getContext('2d');
+      window.myPie = new Chart(ctx, config);
+    };
+
+
+
+</script>
+<!--<script>-->
+
+<!--var oilCanvas = document.getElementById("oilChart");-->
+<!--Chart.defaults.global.defaultFontFamily = "Lato";-->
+<!--Chart.defaults.global.defaultFontSize = 18;-->
+
+<!--var oilData = {-->
+<!--    labels: [-->
+<!--        "Meerut",-->
+<!--        "Noida",-->
+<!--        "Mirzapur",-->
+<!--        "Gzb",-->
+<!--        "Lucknow"-->
+<!--    ],-->
+<!--    datasets: [-->
+<!--        {-->
+<!--            data: [133.3, 86.2, 52.2, 51.2, 50.2],-->
+<!--            backgroundColor: [-->
+<!--                "#FF6384",-->
+<!--                "#63FF84",-->
+<!--                "#84FF63",-->
+<!--                "#8463FF",-->
+<!--                "#6384FF"-->
+<!--            ]-->
+<!--        }]-->
+<!--};-->
+<!--var pieChart = new Chart(oilCanvas, {-->
+<!--  type: 'pie',-->
+<!--  data: oilData-->
+<!--});-->
+
+
+<!--</script>-->
 {% endblock body %}

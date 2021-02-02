@@ -922,6 +922,8 @@ class ReceiptSearchView(ListAPIView):
                     'merchant_category': receipt_obj.merchant.category.category_name,
                     'created_at': receipt_obj.created_at}
             total = 0
+            vat = 0
+            amount = 0
             i = 1
             c = 0
             for obj in receipt_obj.order.all():
@@ -939,7 +941,11 @@ class ReceiptSearchView(ListAPIView):
                 i += 1
                 c = i
                 total = receipt_obj.total
+                vat = receipt_obj.vat
+                amount = receipt_obj.amount
                 # data.update({'total': obj.total})
+            data.update({'order_amount': amount})
+            data.update({'vat': vat})
             data.update({'total': total})
             # data_list.append(data)
             # data_list.append(data)
