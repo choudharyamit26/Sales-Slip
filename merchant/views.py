@@ -312,8 +312,13 @@ class CreateOrder(LoginRequiredMixin, CreateView):
 
     def get(self, request, *args, **kwargs):
         users = User.objects.all().exclude(is_merchant=True).exclude(is_superuser=True)
+        print(users)
+        merchant_obj = Merchant.objects.get(email=self.request.user.email)
+        print(merchant_obj)
+        branches = Branch.objects.filter(merchant_name=merchant_obj)
         return render(self.request, 'order-new.html',
-                      {'users': users, 'formset': OrderFormSet(queryset=OrderItem.objects.none())})
+                      {'users': users, 'branches': branches,
+                       'formset': OrderFormSet(queryset=OrderItem.objects.none())})
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -324,6 +329,7 @@ class CreateOrder(LoginRequiredMixin, CreateView):
         formset = OrderFormSet(self.request.POST)
         print('Cleaned data---->', form.cleaned_data)
         user = form.cleaned_data['user']
+        branch = form.cleaned_data['product']
         order_id = get_random_string(16)
         instances = formset.save(commit=False)
         user_obj = User.objects.get(id=user.id)
@@ -361,6 +367,7 @@ class CreateOrder(LoginRequiredMixin, CreateView):
             total_string = ',Total : ' + str(order_total) + ', '
             item_string += total_string
             merchant_obj = Merchant.objects.get(email=self.request.user.email)
+            branch_obj = Branch.objects.get(id=branch)
             user_string = 'User ID:{},Name of the user:{} {}, User Contact Number:{}'.format(user.id,
                                                                                              user_obj.first_name,
                                                                                              user_obj.last_name,
@@ -381,7 +388,8 @@ class CreateOrder(LoginRequiredMixin, CreateView):
             user=user_obj,
             total=order_total,
             amount=order_amount,
-            vat=order_vat
+            vat=order_vat,
+            branch=branch_obj
             # qr_code=f'{receipt_id}.png',
         )
         for x in ordered_items:
@@ -756,12 +764,44 @@ class BranchPerformance(LoginRequiredMixin, View):
     template_name = 'chart.html'
 
     def get(self, request, *args, **kwargs):
-        labels = ['Meerut', 'Noida', 'Mirzapur', 'Jaunpur', 'Lucknow']
-        data = [133.3, 86.2, 52.2, 51.2, 50.2]
-        backgroundColor = ["#FF6384", "#63FF84", "#84FF63", "#8463FF", "#6384FF"]
+        user = self.request.user
+        merchant_obj = Merchant.objects.get(email=user.email)
+        branches = Branch.objects.filter(merchant_name=merchant_obj)
+        receipts = []
+        for branch in branches:
+            print(branch.id)
+            for x in Receipt.objects.filter(branch=branch.id):
+                receipts.append({'branch': x.branch.code, 'amount': x.total})
+        amount_list = []
+        for y in receipts:
+            if len(amount_list) > 0:
+                i = -1
+                for z in range(len(amount_list)):
+                    if y['branch'] == amount_list[z]['branch']:
+                        i = z
+                    else:
+                        pass
+                if i == -1:
+                    amount_list.append(y)
+                else:
+                    amount_list[i]['amount'] = amount_list[i]['amount'] + y['amount']
+            else:
+                amount_list.append(y)
+        backgroundColor = ["#FF6384", "#63FF84", "#84FF63", "#8463FF", "#6384FF", "#DA70D6", "#BA55D3", " #663399",
+                           "#FA8072", "#F08080", "#DC143C", "#FF7F50", "#FF6347", "#FFD700", "#FFFF00", "#00FA9A",
+                           "#00FF7F", "#00c5cd", "#ffc000", "#e50038", "#ffe4e1", "#ffdab9", "#ff7373", "#4000ff",
+                           "#fedbf0", "#f7e1eb", "#fc4d3", "#ffd3ed", "#d3fffb", "#fff6d3", "#646e90", "#514c6e",
+                           "#614b61", "#ffca93", "#b2fdff", "#97bcb0", "#c4eed9", "#af9e91", "", "#d3fffb", "#f7e1eb",
+                           "#fedbf0", "#aad6fd", "#0f9890", "#91288e", "#c0449e", "#49f1c0", "#9fa6ed", "#81a581",
+                           "#ffdab9", "#00c5cd", "#fedbf0", "#f7e1eb", "#ffc4d3", "#ffd3ed", "#d3fffb", "#fff6d3",
+                           "#c4eed9", "#b2fdff", "#00c5cd", "#ffc000", "#e50038", "#ffe4e1", "#ffdab9", "#ff7373"]
+        colors = []
+        l = len(amount_list)
+        for x in range(l):
+            colors.append(backgroundColor[x])
         context = {
-            'labels': labels,
-            'data': data,
-            'backgroundColor': backgroundColor
+            'labels': [x['branch'] for x in amount_list],
+            'data': [x['amount'] for x in amount_list],
+            'backgroundColor': colors
         }
         return render(self.request, 'chart.html', {'context': context})

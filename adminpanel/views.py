@@ -347,7 +347,12 @@ class AddMerchant(View):
         commercial_id = self.request.POST['commercial_id']
         password = self.request.POST['password']
         confirm_password = self.request.POST['confirm_password']
-        address = self.request.POST['address']
+        # address = self.request.POST['address']
+        shop_no = self.request.POST['shop_no']
+        street = self.request.POST['street']
+        landmark = self.request.POST['landmark']
+        city = self.request.POST['city']
+        postal_code = self.request.POST['postal_code']
         category = Category.objects.all()
         if password != confirm_password:
             messages.error(self.request, 'Password and Confirm password do not match')
@@ -367,12 +372,12 @@ class AddMerchant(View):
                     return render(request, 'merchant.html', {'form': self.form_class, 'category': category})
                 else:
                     category_object = Category.objects.get(id=categories)
-                    Merchant.objects.create(
+                    merchant_obj=Merchant.objects.create(
                         full_name=full_name,
                         category=category_object,
                         email=email,
                         commercial_id=commercial_id,
-                        address=address,
+                        address=str(shop_no) + str(street) + str(landmark) + str(city) + str(postal_code),
                         password=password
                     )
                     merchant = User.objects.create(
@@ -381,6 +386,17 @@ class AddMerchant(View):
                     )
                     merchant.set_password(password)
                     merchant.save()
+                    x = Branch.objects.create(
+                        merchant_name=merchant_obj,
+                        shop_no=shop_no,
+                        street=street,
+                        landmark=landmark,
+                        city=city,
+                        postal_code=postal_code,
+                        code=0
+                    )
+                    x.code = (merchant_obj.full_name.replace(" ", "")).upper() + str(x.id)
+                    x.save()
                     Settings.objects.create(
                         user=merchant
                     )
@@ -419,12 +435,12 @@ class AddMerchant(View):
                         return render(request, 'merchant.html', {'form': self.form_class, 'category': category})
                     else:
                         category_object = Category.objects.get(id=categories)
-                        Merchant.objects.create(
+                        merchant_obj=Merchant.objects.create(
                             full_name=full_name,
                             category=category_object,
                             email=email,
                             commercial_id=commercial_id,
-                            address=address,
+                            address=str(shop_no) + str(street) + str(landmark) + str(city) + str(postal_code),
                             password=password
                         )
                         merchant = User.objects.create(
@@ -434,6 +450,22 @@ class AddMerchant(View):
                         print(email)
                         merchant.set_password(password)
                         merchant.save()
+                        shop_no = self.request.POST['shop_no']
+                        street = self.request.POST['street']
+                        landmark = self.request.POST['landmark']
+                        city = self.request.POST['city']
+                        postal_code = self.request.POST['postal_code']
+                        x = Branch.objects.create(
+                            merchant_name=merchant_obj,
+                            shop_no=shop_no,
+                            street=street,
+                            landmark=landmark,
+                            city=city,
+                            postal_code=postal_code,
+                            code=0
+                        )
+                        x.code = (merchant_obj.full_name.replace(" ", "")).upper() + str(x.id)
+                        x.save()
                         Settings.objects.create(
                             user=merchant
                         )
@@ -459,12 +491,12 @@ class AddMerchant(View):
                         return redirect("adminpanel:merchant-list")
                 except Exception as e:
                     category_object = Category.objects.get(id=categories)
-                    Merchant.objects.create(
+                    merchant_obj=Merchant.objects.create(
                         full_name=full_name,
                         category=category_object,
                         email=email,
                         commercial_id=commercial_id,
-                        address=address,
+                        address=str(shop_no) + str(street) + str(landmark) + str(city) + str(postal_code),
                         password=password
                     )
                     merchant = User.objects.create(
@@ -474,6 +506,22 @@ class AddMerchant(View):
                     print(email)
                     merchant.set_password(password)
                     merchant.save()
+                    shop_no = self.request.POST['shop_no']
+                    street = self.request.POST['street']
+                    landmark = self.request.POST['landmark']
+                    city = self.request.POST['city']
+                    postal_code = self.request.POST['postal_code']
+                    x = Branch.objects.create(
+                        merchant_name=merchant_obj,
+                        shop_no=shop_no,
+                        street=street,
+                        landmark=landmark,
+                        city=city,
+                        postal_code=postal_code,
+                        code=0
+                    )
+                    x.code = (merchant_obj.full_name.replace(" ", "")).upper() + str(x.id)
+                    x.save()
                     Settings.objects.create(
                         user=merchant
                     )
@@ -496,7 +544,7 @@ class AddMerchant(View):
                     msg.content_subtype = "html"
                     msg.send()
                     messages.info(self.request, 'Merchant added successfully')
-                    return redirect("adminpanel:add-branch")
+                    return redirect("adminpanel:merchant-list")
 
 
 class AddSubAdmin(LoginRequiredMixin, CreateView):

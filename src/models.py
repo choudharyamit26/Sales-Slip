@@ -75,6 +75,19 @@ class Merchant(models.Model):
         return self.email
 
 
+class Branch(models.Model):
+    merchant_name = models.ForeignKey(Merchant, on_delete=models.CASCADE)
+    shop_no = models.CharField(default='', max_length=2000)
+    street = models.CharField(default='', max_length=2000)
+    landmark = models.CharField(default='', max_length=2000)
+    city = models.CharField(default='', max_length=2000)
+    postal_code = models.CharField(default='', max_length=2000)
+    code = models.CharField(default='', max_length=100)
+
+    def __str__(self):
+        return self.code
+
+
 class Product(models.Model):
     item_name = models.CharField(default='', max_length=100)
     # price = models.FloatField()
@@ -97,6 +110,7 @@ class OrderItem(models.Model):
 class Receipt(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     merchant = models.ForeignKey(Merchant, on_delete=models.CASCADE)
+    branch = models.ForeignKey(Branch, on_delete=models.CASCADE)
     order = models.ManyToManyField(OrderItem)
     vat = models.FloatField()
     amount = models.FloatField()
@@ -171,16 +185,6 @@ class FAQ(models.Model):
     question_in_arabic = models.CharField(default='question', max_length=300)
     answer = models.TextField()
     answer_in_arabic = models.TextField(default='')
-
-
-class Branch(models.Model):
-    merchant_name = models.ForeignKey(Merchant, on_delete=models.CASCADE)
-    shop_no = models.CharField(default='', max_length=2000)
-    street = models.CharField(default='', max_length=2000)
-    landmark = models.CharField(default='', max_length=2000)
-    city = models.CharField(default='', max_length=2000)
-    postal_code = models.CharField(default='', max_length=2000)
-    code = models.CharField(default='', max_length=100)
 
 
 class SubAdmin(models.Model):

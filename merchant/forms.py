@@ -34,7 +34,7 @@ class OrderForm(forms.ModelForm):
 
     class Meta:
         model = OrderItem
-        fields = ['user']
+        fields = ['user', 'product']
 
 
 OrderFormSet = modelformset_factory(OrderItem, fields=('product', 'quantity', 'vat_percent', 'price'), widgets={

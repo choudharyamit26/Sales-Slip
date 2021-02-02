@@ -19,7 +19,7 @@ from rest_framework.views import APIView
 from django.utils.crypto import get_random_string
 from .fcm_notification import send_another, send_to_one
 from .models import User, Settings, UserNotification, Otp, ScannedData, Merchant, Receipt, Category, OrderItem, FAQ, \
-    TermsAndCondition, ContactUs, PrivacyPolicy, AboutUs
+    TermsAndCondition, ContactUs, PrivacyPolicy, AboutUs, Branch
 from .serializers import UserCreateSerializer, AuthTokenSerializer, ForgetPasswordSerializer, ChangePasswordSerializer, \
     UpdateNotificationSerializer, NotificationSerializer, OtpSerializer, UpdatePhoneSerializer, ScannedDataSerializer, \
     TermsandConditionSerializer, ContactUsSerializer, PrivacyPolicySerializer, LanguageSettingSerializer, \
@@ -1134,12 +1134,15 @@ class CreateReceiptManually(CreateAPIView):
         vat_amount = self.request.data['vat_amount']
         total_amount = self.request.data['total_amount']
         ordered_items = self.request.data['ordered_items']
+        branch = self.request.data['branch']
         # customer_name = self.request.data['customer_name']
         # product_name = self.request.data['product_name']
         # product_cost = self.request.data['product_cost']
         # product_quantity = self.request.data['product_quantity']
         merchant_obj = Merchant.objects.get(id=merchant_id)
         category_obj = Category.objects.get(id=category)
+        branch_obj = Branch.objects.get(code=branch)
+        print('branch-----------------', branch_obj)
         # final_item = zip(product_name, product_cost, product_quantity)
         # order_id = get_random_string(16)
         # for item in final_item:
@@ -1157,7 +1160,8 @@ class CreateReceiptManually(CreateAPIView):
             merchant=merchant_obj,
             total=total_amount,
             vat=vat_amount,
-            amount=order_amount
+            amount=order_amount,
+            branch=branch_obj
         )
         for item in ordered_items:
             receipt_obj.order.add(OrderItem.objects.get(id=item))
@@ -1542,6 +1546,7 @@ class POSOrder(CreateAPIView):
         user_mobile_no = self.request.data['user_mobile_no']
         merchant_id = self.request.data['merchant_id']
         merchant_name = self.request.data['merchant_name']
+        branch = self.request.data['branch']
         category = self.request.data['category']
         date_of_purchase = self.request.data['date_of_purchase']
         time_of_purchase = self.request.data['time_of_purchase']
@@ -1573,6 +1578,7 @@ class POSOrder(CreateAPIView):
                 receipt_obj = Receipt.objects.create(
                     user=user,
                     merchant=merchant_obj,
+                    branch=Branch.objects.get(code=branch)
                 )
                 for item in ordered_items:
                     receipt_obj.order.add(item)
@@ -1615,6 +1621,7 @@ class POSOrder(CreateAPIView):
                 receipt_obj = Receipt.objects.create(
                     user=user,
                     merchant=merchant_obj,
+                    branch=Branch.objects.get(code=branch)
                 )
                 for item in ordered_items:
                     receipt_obj.order.add(item)
@@ -1657,6 +1664,7 @@ class POSOrder(CreateAPIView):
             receipt_obj = Receipt.objects.create(
                 user=user,
                 merchant=merchant_obj,
+                branch=Branch.objects.get(code=branch)
             )
             for item in ordered_items:
                 receipt_obj.order.add(item)
@@ -1705,8 +1713,12 @@ class GetMerchantNameAndCategory(APIView):
         merchant_id = self.request.GET.get('merchant_id')
         try:
             merchant_obj = Merchant.objects.get(id=merchant_id)
+            branch_obj = Branch.objects.filter(merchant_name=merchant_obj)
+            branches = []
+            for branch in branch_obj:
+                branches.append({'branch_id': branch.id, 'branch_code': branch.code})
             return Response({'name': merchant_obj.full_name, 'category_id': merchant_obj.category.id,
-                             'category': merchant_obj.category.category_name,
+                             'category': merchant_obj.category.category_name, 'branches': branches,
                              'status': HTTP_200_OK})
         except Exception as e:
             x = {'error': str(e)}
