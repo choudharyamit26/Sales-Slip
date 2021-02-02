@@ -43,9 +43,15 @@
                             <!--                            <td>{{object.user.phone_number}}</td>-->
                             <td>{{object.id}}</td>
                             <td>{{object.created_at}}</td>
+                            {% if object.qr_code.url %}
                             <td>
                                 <figure><img src="{{object.qr_code.url}}"></figure>
                             </td>
+                            {% else %}
+                            <td>
+                                <figure><img src="" alt="qr"></figure>
+                            </td>
+                            {% endif %}
                             <td><a href="{% url 'merchant:order-detail' object.id %}"><i class="fa fa-eye"></i></a></td>
                         </tr>
                         {% endfor %}

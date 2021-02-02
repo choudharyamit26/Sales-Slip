@@ -45,9 +45,15 @@
                         </li>
                     </ul>
                     <div>
+                        {% if object.qr_code.url %}
                         <div class="DetailsProfile">
                             <figure><img width="200" src="{{object.qr_code.url}}"></figure>
                         </div>
+                        {% else %}
+                        <div class="DetailsProfile">
+                            <figure><img width="200" src="" alt="qr"></figure>
+                        </div>
+                        {% endif %}
                         <div class="btnCommon">
                             <a class="btn btn-info" href="{% url 'merchant:print-qr' object.id %}">Print QR Code</a>
                         </div>
