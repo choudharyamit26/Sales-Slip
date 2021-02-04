@@ -82,7 +82,6 @@
 <script type="text/javascript">
 
 function remember(){
-<!--        var remember_me = document.getElementById("remember").checked;-->
         var remember_me = {{cookie3}};
         console.log('On load function --->>>> ',remember_me,typeof(remember_me))
         if (remember_me){
@@ -90,9 +89,6 @@ function remember(){
         $("#remember").prop("checked",true);
         }
     }
-
-
-
 function login() {
     var email = $("#email").val();
     var password = $("#password").val();

@@ -57,17 +57,30 @@ class MerchantLogin(View):
         form = MerchantLoginForm()
         print('inside merchant login')
         try:
-            return render(self.request, 'merchant-login.html',
-                          {'form': form, 'cookie1': self.request.COOKIES.get('cid1'),
-                           'cookie2': self.request.COOKIES.get('cid2'),
-                           'cookie3': self.request.COOKIES.get('cid3')})
-        except:
+            # if self.request.COOKIES.get('cid1') and self.request.COOKIES.get('cid2') and self.request.COOKIES.get('cid3'):
+            #     return render(self.request, 'merchant-login.html',
+            #                   {'form': form, 'cookie1': self.request.COOKIES.get('cid1'),
+            #                    'cookie2': self.request.COOKIES.get('cid2'),
+            #                    'cookie3': self.request.COOKIES.get('cid3')})
+            # else:
+            #     return render(self.request, 'merchant-login.html', {'form': form})
+            if self.request.COOKIES.get('cid1') and self.request.COOKIES.get('cid2') and self.request.COOKIES.get('cid3'):
+                return render(self.request, 'merchant-login.html',
+                              {'form': form, 'cookie1': self.request.COOKIES.get('cid1'),
+                               'cookie2': self.request.COOKIES.get('cid2'),
+                               'cookie3': self.request.COOKIES.get('cid3')})
+            else:
+                return render(self.request, 'merchant-login.html', {'form': form})
+        except Exception as e:
+            print(e)
             return render(self.request, 'merchant-login.html', {'form': form})
 
     def post(self, request, *args, **kwargs):
         email = self.request.POST['email']
         password = self.request.POST['password']
         remember_me = self.request.POST.get('remember_me' or None)
+        print('inside post method merchant login')
+        print(self.request.POST['csrfmiddlewaretoken'])
         try:
             user_object = user.objects.get(email=email)
             if user_object.check_password(password):
@@ -309,6 +322,7 @@ class CreateOrder(LoginRequiredMixin, CreateView):
     model = OrderItem
     template_name = 'order-new.html'
     form_class = OrderForm
+    login_url = 'merchant:login'
 
     def get(self, request, *args, **kwargs):
         users = User.objects.all().exclude(is_merchant=True).exclude(is_superuser=True)
@@ -468,6 +482,7 @@ class OrderList(LoginRequiredMixin, ListView):
 class ApiIntegrationTutorial(LoginRequiredMixin, View):
     model = Receipt
     template_name = 'api-tutorial.html'
+    login_url = 'merchant:login'
 
     def get(self, request, *args, **kwargs):
         return render(self.request, 'api-tutorial.html')
@@ -476,6 +491,7 @@ class ApiIntegrationTutorial(LoginRequiredMixin, View):
 class StaticContent(LoginRequiredMixin, View):
     model = TermsAndCondition
     template_name = 'static-content-management.html'
+    login_url = 'merchant:login'
 
     def get(self, request, *args, **kwargs):
         return render(self.request, 'static-content-management.html')
@@ -484,6 +500,7 @@ class StaticContent(LoginRequiredMixin, View):
 class MyProfile(LoginRequiredMixin, View):
     model = User
     template_name = 'myprofile.html'
+    login_url = 'merchant:login'
 
     def get(self, request, *args, **kwargs):
         user = self.request.user
@@ -675,7 +692,7 @@ class SendOnBoardMessage(LoginRequiredMixin, CreateView):
 
 
 class AddBranch(LoginRequiredMixin, CreateView):
-    login_url = 'adminpanel:login'
+    login_url = 'merchant:login'
     model = Branch
     form_class = BranchForm
     template_name = 'merchant_branch.html'

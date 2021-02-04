@@ -3,6 +3,7 @@ from random import randint
 
 from django.core.mail import EmailMessage
 from django.shortcuts import render
+from django.utils import timezone
 from rest_framework.generics import CreateAPIView, UpdateAPIView, ListAPIView
 from django.utils.decorators import method_decorator
 
@@ -1791,3 +1792,51 @@ class FilterExpenseDataByCategory(APIView):
             print(e)
             x = {'error': str(e)}
             return Response({'message': x['error'], 'status': HTTP_400_BAD_REQUEST})
+
+
+class AutoOrderCreation(APIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request, *args, **kwargs):
+        print(self.request.data)
+        # print(self.request)
+        user = self.request.user
+        merchant_id = self.request.data['merchant_id']
+        merchant_name = self.request.data['merchant_name']
+        category = self.request.data['category']
+        date_of_purchase = self.request.data['date_of_purchase']
+        time_of_purchase = self.request.data['time_of_purchase']
+        # order_id = self.request.data['order_id']
+        order_amount = self.request.data['order_amount']
+        vat_amount = self.request.data['vat_amount']
+        total_amount = self.request.data['total_amount']
+        ordered_items = self.request.data['ordered_items']
+        branch = self.request.data['branch']
+        # month = self.request.data['month']
+        merchant_obj = Merchant.objects.get(id=merchant_id)
+        category_obj = Category.objects.get(id=category)
+        branch_obj = Branch.objects.get(code=branch)
+        today = timezone.now()
+        print(today)
+        date_time_str = (date_of_purchase + ' ' + time_of_purchase)
+        print('---------->>>>',date_time_str)
+        from datetime import datetime
+        r = receipt_obj = Receipt.objects.create(
+            user=self.request.user,
+            merchant=merchant_obj,
+            total=total_amount,
+            vat=vat_amount,
+            amount=order_amount,
+            branch=branch_obj,
+            created_at=datetime.strptime(date_time_str, '%Y-%m-%d %H:%M:%S')
+        )
+        for item in ordered_items:
+            receipt_obj.order.add(OrderItem.objects.get(id=item))
+        print('----------------------------------', r.created_at)
+        scanned_data_obj = ScannedData.objects.create(
+            user=self.request.user,
+            merchant=merchant_obj,
+            order=receipt_obj
+        )
+        return Response({'message': 'order created successfully', 'status': HTTP_200_OK})

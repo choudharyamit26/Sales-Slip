@@ -40,10 +40,17 @@ class Login(View):
     def get(self, request, *args, **kwargs):
         form = LoginForm()
         try:
-            return render(self.request, 'login.html',
-                          {'form': form, 'cookie1': self.request.COOKIES.get('cid1'),
-                           'cookie2': self.request.COOKIES.get('cid2'),
-                           'cookie3': self.request.COOKIES.get('cid3')})
+            # return render(self.request, 'login.html',
+            #               {'form': form, 'cookie1': self.request.COOKIES.get('cid1'),
+            #                'cookie2': self.request.COOKIES.get('cid2'),
+            #                'cookie3': self.request.COOKIES.get('cid3')})
+            if self.request.COOKIES.get('cid1') and self.request.COOKIES.get('cid2') and self.request.COOKIES.get('cid3'):
+                return render(self.request, 'login.html',
+                              {'form': form, 'cookie1': self.request.COOKIES.get('cid1'),
+                               'cookie2': self.request.COOKIES.get('cid2'),
+                               'cookie3': self.request.COOKIES.get('cid3')})
+            else:
+                return render(self.request, 'login.html', {'form': form})
         except:
             return render(self.request, 'login.html', {'form': form})
 
