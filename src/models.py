@@ -108,8 +108,8 @@ class OrderItem(models.Model):
 
 
 class Receipt(models.Model):
-    user = models.ForeignKey(User, on_delete=models.SET_NULL)
-    merchant = models.ForeignKey(Merchant, on_delete=models.SET_NULL)
+    user = models.ForeignKey(User,null=True, on_delete=models.SET_NULL)
+    merchant = models.ForeignKey(Merchant,null=True, on_delete=models.SET_NULL)
     branch = models.ForeignKey(Branch, on_delete=models.CASCADE)
     order = models.ManyToManyField(OrderItem)
     vat = models.FloatField()
