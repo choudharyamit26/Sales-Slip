@@ -13,7 +13,7 @@
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 </head>
 
-<body onload="remember()">
+<body onload="rememberMe()">
 <div class="LoginArea" style="background-image: url('images/pattern.png');">
     <!--    <div class="content-wrapper">-->
     <!--        {% if messages %}-->
@@ -30,13 +30,9 @@
     <!--        {% endblock content %}-->
     <!--    </div>-->
     <div class="LoginBox">
-        <figure>
-            <div class="logoMainImg">
-                <img src="{% static 'adminpanel/images/logo.jpg' %}">
-            </div>
-        </figure>
-<!--        <h5>Let's Started Snapic</h5>-->
-        <h6>To keep connected wit us please login .</h6>
+        <figure><img src="{% static 'adminpanel/images/logo.jpg' %}"></figure>
+        <h5>Let's Start Quizlok</h5>
+        <h6>To keep connected please login .</h6>
         <div class="content-wrapper">
             {% if messages %}
             {% for message in messages %}
@@ -67,7 +63,7 @@
             </div>
 
             <div class="Checkboxs">
-                <a href="{% url 'merchant:password_reset' %}">Forgot password?</a>
+                <a href="{% url 'password_reset' %}">Forgot password?</a>
                 <label class="CheckBox" id="check">Remember Me
                     <input name="remember_me" class="remember_me" id='remember' type="checkbox" value="{{cookie3}}">
                     <span class="checkmark"></span>
@@ -81,9 +77,8 @@
 </div>
 <script type="text/javascript">
 
-function remember(){
-<!--        var remember_me = document.getElementById("remember").checked;-->
-        var remember_me = {{cookie3}};
+function rememberMe(){
+        var remember_me = '{{cookie3}}';
         console.log('On load function --->>>> ',remember_me,typeof(remember_me))
         if (remember_me){
         console.log('inside remember me checked true or false')
@@ -97,7 +92,8 @@ function login() {
     var email = $("#email").val();
     var password = $("#password").val();
     var remember_me = document.getElementById("remember").checked;
-    console.log(remember_me)
+    //alert(remember_me)
+    console.log(email,password,remember_me)
 
     console.log(email,password,remember_me)
     var url = "{% url 'merchant:login' %}";
@@ -121,7 +117,7 @@ function login() {
         var protocol = window.location.protocol
         var hostname = window.location.hostname
         var port = window.location.port
-        var url = protocol + "//" + hostname + ":" + port + "/merchant"  + "/login" + "/"
+        var url = protocol + "//" + hostname + ":" + port + "/merchant/" + "login" + "/"
         window.location.href = url
         }
     });
