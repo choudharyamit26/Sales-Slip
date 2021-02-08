@@ -20,7 +20,7 @@ from rest_framework.views import APIView
 from django.utils.crypto import get_random_string
 from .fcm_notification import send_another, send_to_one
 from .models import User, Settings, UserNotification, Otp, ScannedData, Merchant, Receipt, Category, OrderItem, FAQ, \
-    TermsAndCondition, ContactUs, PrivacyPolicy, AboutUs, Branch
+    TermsAndCondition, ContactUs, PrivacyPolicy, AboutUs, Branch, Banner
 from .serializers import UserCreateSerializer, AuthTokenSerializer, ForgetPasswordSerializer, ChangePasswordSerializer, \
     UpdateNotificationSerializer, NotificationSerializer, OtpSerializer, UpdatePhoneSerializer, ScannedDataSerializer, \
     TermsandConditionSerializer, ContactUsSerializer, PrivacyPolicySerializer, LanguageSettingSerializer, \
@@ -1820,7 +1820,7 @@ class AutoOrderCreation(APIView):
         today = timezone.now()
         print(today)
         date_time_str = (date_of_purchase + ' ' + time_of_purchase)
-        print('---------->>>>',date_time_str)
+        print('---------->>>>', date_time_str)
         from datetime import datetime
         r = receipt_obj = Receipt.objects.create(
             user=self.request.user,
@@ -1840,3 +1840,19 @@ class AutoOrderCreation(APIView):
             order=receipt_obj
         )
         return Response({'message': 'order created successfully', 'status': HTTP_200_OK})
+
+
+class GetBannersView(APIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, *args, **kwargs):
+        try:
+            banners = Banner.objects.all()
+            images = []
+            for banner in banners:
+                images.append(banner.image.url)
+            return Response({'banners': images, 'status': HTTP_200_OK})
+        except Exception as e:
+            x = {'error': str(e)}
+            return Response({'message': x['error'], 'status': HTTP_400_BAD_REQUEST})
