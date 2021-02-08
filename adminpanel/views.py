@@ -301,6 +301,7 @@ class UsersList(LoginRequiredMixin, ListView):
             search = User.objects.filter(Q(first_name__icontains=qs) |
                                          Q(last_name__icontains=qs) |
                                          Q(email__icontains=qs) |
+                                         Q(phone_number__icontains=qs) |
                                          Q(id__icontains=qs))
 
             search_count = len(search)

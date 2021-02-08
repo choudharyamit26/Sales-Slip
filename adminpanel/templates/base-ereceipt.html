@@ -54,15 +54,20 @@
         {% if user.is_authenticated %}
         <div class="Avater">
             <a href="javascript:void(0);">
-                <figure><img src="{% static 'adminpanel/images/profile.jpg' %}"></figure>
+<!--                <figure><img src="{% static 'adminpanel/images/profile.jpg' %}"></figure>-->
                 {{user}} </a>
             <ul>
                 <li>
-                    <figure><img src="{% static 'adminpanel/images/profile.jpg' %}"></figure>
+<!--                    <figure><img src="{% static 'adminpanel/images/profile.jpg' %}"></figure>-->
                     <h4> {{user}} <span>Administrator</span></h4>
                 </li>
-                <li><a href="{% url 'change_password' %}"><span><i class="fa fa-cog"></i></span> Setting</a></li>
+                <li><a href="{% url 'change_password' %}"><span><i class="fa fa-cog"></i></span>Settings</a></li>
                 <li><a href="{% url 'logout' %}"><span><i class="fa fa-sign-out"></i></span> Logout</a></li>
+                <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'adminpanel:add-sub-admin' %}active{% endif %}">
+                    <a href="{% url 'adminpanel:add-sub-admin' %}">
+                        <span><i class="fa fa-user-plus"></i></span> Add Sub Admin
+                    </a>
+                </li>
             </ul>
         </div>
         {% endif %}
