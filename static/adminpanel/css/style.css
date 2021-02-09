@@ -717,7 +717,8 @@ h4.Title {
     font-weight: 600;
     color: #000;
     text-transform: capitalize;
-    font-size: 22px
+    font-size: 22px;
+    display:inline-block;
 }
 
 h4.Title a {

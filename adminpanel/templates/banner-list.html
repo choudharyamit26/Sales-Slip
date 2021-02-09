@@ -7,7 +7,7 @@
         <div class="Small-Wrapper Small-Wrapper2">
             <h4 class="Title">Banner List</h4>
             <a href="{% url 'adminpanel:banner' %}" class="btn btn-primary"
-               style="margin-left:1000px;margin-top:-38px;">Add Image</a>
+               style="float:right;text-align:right;">Add Image</a>
             <div class="HelpArea">
                 <div class="tab-content">
                     <div class="TableList">
@@ -23,7 +23,7 @@
                                 {% for obj in banners %}
                                 <tr>
                                     <td>{{forloop.counter}}</td>
-                                    <td><img src="{{obj.image.url}}" style="height:10%"></td>
+                                    <td><img src="{{obj.image.url}}" style="height:150px;width:200px;"></td>
                                     <td>
                                         <a href="{% url 'adminpanel:banner-detail' obj.id %}">
                                             <i class="fa fa-eye"></i>

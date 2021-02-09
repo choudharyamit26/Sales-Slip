@@ -42,6 +42,7 @@ OrderFormSet = modelformset_factory(OrderItem, fields=('product', 'quantity', 'v
         attrs={
             # 'class': 'form-control',
             'required': 'required',
+            'style': 'width:200px'
             # 'remove':'remove'
         },
     ),
@@ -50,20 +51,21 @@ OrderFormSet = modelformset_factory(OrderItem, fields=('product', 'quantity', 'v
             # 'width': '200px',
             # 'class': 'form-control',
             'required': 'required',
-            'style': 'width:180px'
+            'style': 'width:100px'
         }
     ),
     'vat_percent': forms.TextInput(
         attrs={
             # 'class': 'form-control',
             'required': 'required',
-            'style': 'width:180px'
+            'style': 'width:100px'
         }
     ),
     'price': forms.TextInput(
         attrs={
             # 'class': 'form-control',
             'required': 'required',
+            'style': 'width:100px'
         }
     )
 
