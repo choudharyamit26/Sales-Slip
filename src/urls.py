@@ -9,7 +9,8 @@ from .views import UserCreateAPIView, LoginAPIView, ForgetPasswordAPIView, Chang
     UserLanguageSettingApiView, GetUserNotificationSettingsApi, ChangeLanguageApiView, ChangeNotificationApiView, \
     PrivacyPolicyApiView, ContactUsApiView, TermsandConditionApiView, GetUserDetailApiView, CheckMobileOrPhoneNumber, \
     FirstViewSet, AboutUsView, UpdateEmailView, AddToCart, GetCategoryList, POSOrder, GetCartItemDetail, \
-    GetMerchantNameAndCategory, FilterExpenseDataByMonth, FilterExpenseDataByCategory,AutoOrderCreation,GetBannersView
+    GetMerchantNameAndCategory, FilterExpenseDataByMonth, FilterExpenseDataByCategory, AutoOrderCreation, \
+    GetBannersView, SignUpTermsandConditionApiView
 
 app_name = 'src'
 # router = DefaultRouter()
@@ -49,6 +50,7 @@ urlpatterns = [
     path('category-list/', GetCategoryList.as_view(), name='category-list'),
     path('terms-and-condition/', TermsandConditionApiView.as_view(),
          name='terms-and-condition'),
+    path('signup-terms-condition/', SignUpTermsandConditionApiView.as_view(), name='signup-terms-condition'),
     path('privacy-policy/', PrivacyPolicyApiView.as_view(), name='privacy-policy'),
     path('user-notification/', GetNotificationList.as_view(),
          name='user-notification'),

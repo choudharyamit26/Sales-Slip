@@ -1406,6 +1406,7 @@ class PrivacyPolicyApiView(APIView):
     model = PrivacyPolicy
     serializer_class = PrivacyPolicySerializer
     queryset = PrivacyPolicy.objects.all()
+
     # authentication_classes = (TokenAuthentication,)
     # permission_classes = (IsAuthenticated,)
 
@@ -1449,8 +1450,8 @@ class TermsandConditionApiView(APIView):
     model = TermsAndCondition
     serializer_class = TermsandConditionSerializer
     queryset = TermsAndCondition.objects.all()
-    # authentication_classes = (TokenAuthentication,)
-    # permission_classes = (IsAuthenticated,)
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
 
     def get(self, request, *args, **kwargs):
         user = self.request.user
@@ -1469,6 +1470,21 @@ class TermsandConditionApiView(APIView):
                     "terms_condition": remove_html_tags(x.conditions_in_arabic)
                 }
             return Response({"data": data, "status": HTTP_200_OK})
+
+
+class SignUpTermsandConditionApiView(APIView):
+    model = TermsAndCondition
+    serializer_class = TermsandConditionSerializer
+    queryset = TermsAndCondition.objects.all()
+
+    def get(self, request, *args, **kwargs):
+        terms_condition = TermsAndCondition.objects.all()
+        data = ''
+        for x in terms_condition:
+            data = {
+                "terms_condition": remove_html_tags(x.conditions)
+            }
+        return Response({'data': data, 'status': HTTP_200_OK})
 
 
 class GetUnreadMessageCount(APIView):
