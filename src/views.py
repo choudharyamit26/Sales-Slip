@@ -1406,8 +1406,8 @@ class PrivacyPolicyApiView(APIView):
     model = PrivacyPolicy
     serializer_class = PrivacyPolicySerializer
     queryset = PrivacyPolicy.objects.all()
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    # authentication_classes = (TokenAuthentication,)
+    # permission_classes = (IsAuthenticated,)
 
     def get(self, request, *args, **kwargs):
         user = self.request.user
@@ -1449,8 +1449,8 @@ class TermsandConditionApiView(APIView):
     model = TermsAndCondition
     serializer_class = TermsandConditionSerializer
     queryset = TermsAndCondition.objects.all()
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    # authentication_classes = (TokenAuthentication,)
+    # permission_classes = (IsAuthenticated,)
 
     def get(self, request, *args, **kwargs):
         user = self.request.user
