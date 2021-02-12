@@ -85,22 +85,28 @@ class MerchantLogin(View):
             user_object = user.objects.get(email=email)
             if user_object.check_password(password):
                 if user_object.is_merchant:
-                    login(self.request, user_object)
-                    messages.success(self.request, 'Logged in successfully')
-                    # self.request.session['uid'] = self.request.POST['email']
-                    if remember_me:
-                        # print('inside remember me')
-                        cookie_age = 60 * 60 * 24
-                        self.request.session.set_expiry(1209600)
-                        response = HttpResponse()
-                        response.set_cookie('cid1', self.request.POST['email'], max_age=cookie_age)
-                        response.set_cookie('cid2', self.request.POST['password'], max_age=cookie_age)
-                        response.set_cookie('cid3', self.request.POST['remember_me'], max_age=cookie_age)
-                        # return HttpResponse(json.dumps('is_superuser'), status=200)
-                        return response
+                    merchant = Merchant.objects.get(email=email)
+                    if merchant.blocked:
+                        messages.error(self.request, "Email doesn't exists")
+                        # return render(self.request, 'login.html', {"status": 400})
+                        return HttpResponseRedirect(self.request.path_info, status=403)
                     else:
-                        self.request.session.set_expiry(0)
-                    return redirect('merchant:dashboard')
+                        login(self.request, user_object)
+                        messages.success(self.request, 'Logged in successfully')
+                        # self.request.session['uid'] = self.request.POST['email']
+                        if remember_me:
+                            # print('inside remember me')
+                            cookie_age = 60 * 60 * 24
+                            self.request.session.set_expiry(1209600)
+                            response = HttpResponse()
+                            response.set_cookie('cid1', self.request.POST['email'], max_age=cookie_age)
+                            response.set_cookie('cid2', self.request.POST['password'], max_age=cookie_age)
+                            response.set_cookie('cid3', self.request.POST['remember_me'], max_age=cookie_age)
+                            # return HttpResponse(json.dumps('is_superuser'), status=200)
+                            return response
+                        else:
+                            self.request.session.set_expiry(0)
+                        return redirect('merchant:dashboard')
                 else:
                     messages.error(self.request, "You are not authorised")
                     # return render(self.request, 'login.html', {"status": 400})

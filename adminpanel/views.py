@@ -762,7 +762,7 @@ class MerchantList(LoginRequiredMixin, ListView):
                                              Q(category__category_name__icontains=qs) |
                                              Q(email__icontains=qs) |
                                              Q(id__icontains=qs) |
-                                             Q(commercial_id__icontains=qs))
+                                             Q(commercial_id__icontains=qs)).exclude(blocked=True)
 
             search_count = len(search)
             context = {
@@ -775,7 +775,7 @@ class MerchantList(LoginRequiredMixin, ListView):
                 messages.info(self.request, 'No results found')
                 return render(self.request, 'merchant_list.html', context)
         else:
-            users = Merchant.objects.all()
+            users = Merchant.objects.filter(blocked=False)
             myfilter = MerchantFilter(self.request.GET, queryset=users)
             users = myfilter.qs
             print(users.count())
@@ -1067,10 +1067,13 @@ class MerchantDelete(LoginRequiredMixin, DeleteView):
         request_kwargs = kwargs
         object_id = request_kwargs['pk']
         merchant_obj = Merchant.objects.get(id=object_id)
-        merchant_obj.delete()
+        merchant_obj.blocked = True
+        merchant_obj.save()
+        # user = User.objects.get(email=merchant_obj.email)
+        # logout(user)
         UserObj = User.objects.get(email=merchant_obj.email)
         UserObj.delete()
-        print(UserObj.email)
+        # print(UserObj.email)
         messages.success(self.request, "Merchant deleted successfully")
         return HttpResponseRedirect('/adminpanel/merchant-list/')
 

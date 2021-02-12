@@ -70,6 +70,7 @@ class Merchant(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     commercial_id = models.CharField(default='', max_length=256)
     address = models.CharField(default='', max_length=2000)
+    blocked = models.BooleanField(default=False)
 
     def __str__(self):
         return self.email
@@ -110,7 +111,7 @@ class OrderItem(models.Model):
 class Receipt(models.Model):
     user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     merchant = models.ForeignKey(Merchant, null=True, on_delete=models.SET_NULL)
-    branch = models.ForeignKey(Branch, on_delete=models.CASCADE)
+    branch = models.ForeignKey(Branch, null=True, on_delete=models.SET_NULL)
     order = models.ManyToManyField(OrderItem)
     vat = models.FloatField()
     amount = models.FloatField()
