@@ -1143,37 +1143,40 @@ class CreateReceiptManually(CreateAPIView):
         # product_cost = self.request.data['product_cost']
         # product_quantity = self.request.data['product_quantity']
         merchant_obj = Merchant.objects.get(id=merchant_id)
-        category_obj = Category.objects.get(id=category)
-        branch_obj = Branch.objects.get(code=branch)
-        print('branch-----------------', branch_obj)
-        # final_item = zip(product_name, product_cost, product_quantity)
-        # order_id = get_random_string(16)
-        # for item in final_item:
-        #     order_obj = OrderItem.objects.create(
-        #         user=user,
-        #         product=item[0],
-        #         price=item[1],
-        #         quantity=item[2],
-        #         total=order_amount,
-        #         order_id=order_id
-        #     )
-        # ordered_items = OrderItem.objects.filter(order_id=order_id)
-        receipt_obj = Receipt.objects.create(
-            user=self.request.user,
-            merchant=merchant_obj,
-            total=total_amount,
-            vat=vat_amount,
-            amount=order_amount,
-            branch=branch_obj
-        )
-        for item in ordered_items:
-            receipt_obj.order.add(OrderItem.objects.get(id=item))
-        scanned_data_obj = ScannedData.objects.create(
-            user=self.request.user,
-            merchant=merchant_obj,
-            order=receipt_obj
-        )
-        return Response({"message": "Order created successfully", 'id': receipt_obj.id, "status": HTTP_200_OK})
+        if merchant_obj.blocked:
+            return Response({'message': "Merchant with this id does not exists", 'status': HTTP_400_BAD_REQUEST})
+        else:
+            category_obj = Category.objects.get(id=category)
+            branch_obj = Branch.objects.get(code=branch)
+            print('branch-----------------', branch_obj)
+            # final_item = zip(product_name, product_cost, product_quantity)
+            # order_id = get_random_string(16)
+            # for item in final_item:
+            #     order_obj = OrderItem.objects.create(
+            #         user=user,
+            #         product=item[0],
+            #         price=item[1],
+            #         quantity=item[2],
+            #         total=order_amount,
+            #         order_id=order_id
+            #     )
+            # ordered_items = OrderItem.objects.filter(order_id=order_id)
+            receipt_obj = Receipt.objects.create(
+                user=self.request.user,
+                merchant=merchant_obj,
+                total=total_amount,
+                vat=vat_amount,
+                amount=order_amount,
+                branch=branch_obj
+            )
+            for item in ordered_items:
+                receipt_obj.order.add(OrderItem.objects.get(id=item))
+            scanned_data_obj = ScannedData.objects.create(
+                user=self.request.user,
+                merchant=merchant_obj,
+                order=receipt_obj
+            )
+            return Response({"message": "Order created successfully", 'id': receipt_obj.id, "status": HTTP_200_OK})
 
 
 class GetLatestTransactions(ListAPIView):
@@ -1732,13 +1735,16 @@ class GetMerchantNameAndCategory(APIView):
         merchant_id = self.request.GET.get('merchant_id')
         try:
             merchant_obj = Merchant.objects.get(id=merchant_id)
-            branch_obj = Branch.objects.filter(merchant_name=merchant_obj)
-            branches = []
-            for branch in branch_obj:
-                branches.append({'branch_id': branch.id, 'branch_code': branch.code})
-            return Response({'name': merchant_obj.full_name, 'category_id': merchant_obj.category.id,
-                             'category': merchant_obj.category.category_name, 'branches': branches,
-                             'status': HTTP_200_OK})
+            if merchant_obj.blocked:
+                return Response({'message': 'Merchant does not exists', 'status': HTTP_400_BAD_REQUEST})
+            else:
+                branch_obj = Branch.objects.filter(merchant_name=merchant_obj)
+                branches = []
+                for branch in branch_obj:
+                    branches.append({'branch_id': branch.id, 'branch_code': branch.code})
+                return Response({'name': merchant_obj.full_name, 'category_id': merchant_obj.category.id,
+                                 'category': merchant_obj.category.category_name, 'branches': branches,
+                                 'status': HTTP_200_OK})
         except Exception as e:
             x = {'error': str(e)}
             return Response({'message': x['error'], 'status': HTTP_400_BAD_REQUEST})
