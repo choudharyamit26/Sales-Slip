@@ -985,7 +985,7 @@ class SendNotification(LoginRequiredMixin, View):
     login_url = 'adminpanel:login'
 
     def get(self, request, *args, **kwargs):
-        users = User.objects.all().exclude(is_superuser=True)
+        users = User.objects.all().exclude(is_superuser=True).exclude(is_merchant=True)
         context = {
             "users": users
         }
