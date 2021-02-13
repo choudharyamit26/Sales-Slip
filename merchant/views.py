@@ -794,7 +794,7 @@ class BranchPerformance(LoginRequiredMixin, View):
         for branch in branches:
             print(branch.id)
             for x in Receipt.objects.filter(branch=branch.id):
-                receipts.append({'branch': x.branch.code, 'amount': x.total, 'vat': x.vat})
+                receipts.append({'branch': x.branch.code + ',' + x.branch.shop_no, 'amount': x.total, 'vat': x.vat})
         amount_list = []
         vat_list = []
         for y in receipts:

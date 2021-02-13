@@ -44,7 +44,8 @@ class Login(View):
             #               {'form': form, 'cookie1': self.request.COOKIES.get('cid1'),
             #                'cookie2': self.request.COOKIES.get('cid2'),
             #                'cookie3': self.request.COOKIES.get('cid3')})
-            if self.request.COOKIES.get('cid1') and self.request.COOKIES.get('cid2') and self.request.COOKIES.get('cid3'):
+            if self.request.COOKIES.get('cid1') and self.request.COOKIES.get('cid2') and self.request.COOKIES.get(
+                    'cid3'):
                 return render(self.request, 'login.html',
                               {'form': form, 'cookie1': self.request.COOKIES.get('cid1'),
                                'cookie2': self.request.COOKIES.get('cid2'),
@@ -380,7 +381,7 @@ class AddMerchant(View):
                     return render(request, 'merchant.html', {'form': self.form_class, 'category': category})
                 else:
                     category_object = Category.objects.get(id=categories)
-                    merchant_obj=Merchant.objects.create(
+                    merchant_obj = Merchant.objects.create(
                         full_name=full_name,
                         category=category_object,
                         email=email,
@@ -443,7 +444,7 @@ class AddMerchant(View):
                         return render(request, 'merchant.html', {'form': self.form_class, 'category': category})
                     else:
                         category_object = Category.objects.get(id=categories)
-                        merchant_obj=Merchant.objects.create(
+                        merchant_obj = Merchant.objects.create(
                             full_name=full_name,
                             category=category_object,
                             email=email,
@@ -499,7 +500,7 @@ class AddMerchant(View):
                         return redirect("adminpanel:merchant-list")
                 except Exception as e:
                     category_object = Category.objects.get(id=categories)
-                    merchant_obj=Merchant.objects.create(
+                    merchant_obj = Merchant.objects.create(
                         full_name=full_name,
                         category=category_object,
                         email=email,
@@ -646,6 +647,55 @@ class UpdateSubAdminDetail(LoginRequiredMixin, UpdateView):
     model = User
     form_class = SubAdminForm
     template_name = 'update-sub-admin.html'
+    success_url = reverse_lazy('adminpanel:sub-admin-list')
+
+    def get(self, request, *args, **kwargs):
+        print('GET METHOD',kwargs['pk'])
+        email = User.objects.get(id=kwargs['pk'])
+        return render(self.request, 'update-sub-admin.html', {'email': email})
+
+    def post(self, request, *args, **kwargs):
+        print(self.request.POST)
+        print(kwargs['pk'])
+        sub_admin = User.objects.get(id=kwargs['pk'])
+        print(sub_admin)
+        sub_admin.first_name = self.request.POST['first_name']
+        sub_admin.last_name = self.request.POST['last_name']
+        # sub_admin.email = self.request.POST['email']
+        sub_admin.password = self.request.POST['password']
+        sub_admin.confirm_password = self.request.POST['confirm_password']
+        sub_admin.category = self.request.POST.getlist('category')
+        if self.request.POST['password'] != self.request.POST['confirm_password']:
+            messages.error(self.request, 'Password and Confirm password do not match')
+            return render(request, 'sub-admin.html', {'form': self.form_class})
+        elif len(self.request.POST['password']) < 8 or len(self.request.POST['confirm_password']) < 8:
+            messages.error(self.request, "Password must be at least 8 characters long")
+            return render(request, 'sub-admin.html', {'form': self.form_class})
+        elif self.request.POST['password'].isdigit() or self.request.POST['confirm_password'].isdigit() or self.request.POST['password'].isalpha() or self.request.POST['confirm_password'].isalpha():
+            messages.error(self.request, "Passwords must have a mix of numbers and characters")
+            return render(request, 'sub-admin.html', {'form': self.form_class})
+        else:
+            sub_admin.set_password(self.request.POST['password'])
+            sub_admin.save()
+            for perm in self.request.POST.getlist('category'):
+                print('_'.join(perm.lower().split()))
+                if '_'.join(perm.lower().split()) == 'can_manage_merchant':
+                    sub_admin.can_manage_merchant = True
+                    sub_admin.save()
+                elif '_'.join(perm.lower().split()) == 'can_manage_category':
+                    sub_admin.can_manage_category = True
+                    sub_admin.save()
+                elif '_'.join(perm.lower().split()) == 'can_manage_branch':
+                    sub_admin.can_manage_branch = True
+                    sub_admin.save()
+                elif '_'.join(perm.lower().split()) == 'can_manage_dashboard':
+                    sub_admin.can_manage_dashboard = True
+                    sub_admin.save()
+                else:
+                    sub_admin.can_manage_receipts = True
+                    sub_admin.save()
+        messages.info(self.request, 'Sub admin updated successfully')
+        return redirect('adminpanel:sub-admin-list')
 
 
 class DeleteSubAdmin(LoginRequiredMixin, DeleteView):

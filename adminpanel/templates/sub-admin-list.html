@@ -21,7 +21,8 @@
                         <thead>
                         <tr>
                             <th>S. No</th>
-                            <th>Name</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
                             <th>Email</th>
                             <th>Action</th>
                         </tr>
@@ -30,7 +31,8 @@
                         {% for object in object_list %}
                         <tr>
                             <td>{{forloop.counter}}</td>
-                            <td>{{object.first_name}} {{object.last_name}}</td>
+                            <td>{{object.first_name}}</td>
+                            <td>{{object.last_name}}</td>
                             <td>{{object.email}}</td>
                             <td>
                                 <a href="{% url 'adminpanel:sub-admin-detail' object.id %}"><i class="fa fa-eye"></i></a>
