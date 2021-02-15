@@ -1,6 +1,18 @@
 {% extends 'base-ereceipt.html' %}
 {% load crispy_forms_tags %}
 {% block body %}
+<style>
+    .bootstrap-select > .dropdown-toggle{
+ padding: 20px;
+    background: #fff;
+    border: 1px solid #ccc;
+    }
+    .bootstrap-select .dropdown-toggle .filter-option{
+    padding:10px;
+    }
+    .bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn){
+    width:100%;}
+</style>
 <script src='https://harvesthq.github.io/chosen/chosen.jquery.js'></script>
 <script src='https://harvesthq.github.io/chosen/chosen.jquery.js'></script>
 <div class="WrapperArea">
@@ -51,14 +63,15 @@
                         </div>
                         <div class="form-group inputAdd">
                             <label for="">Access Rights</label>
-<!--                            <select required name="category" class="form-control  select2" multiple="multiple">-->
-<!--                                <option value="Can Manage Merchant">Can Manage Merchant</option>-->
-<!--                                <option value="Can Manage Category">Can Manage Category</option>-->
-<!--                                <option value="Can Manage Branch">Can Manage Branch</option>-->
-<!--                                <option value="Can Manage Receipts">Can Manage Receipts</option>-->
-<!--                                &lt;!&ndash;                                <option value="Can Manage Dashboard">Can Manage Dashboard</option>&ndash;&gt;-->
-<!--                                &lt;!&ndash;                                <option value="Can Delete Merchant">Can Add Merchant</option>&ndash;&gt;-->
-<!--                            </select>-->
+                            <!--                            <select required name="category" class="form-control  select2" multiple="multiple">-->
+                            <!--                                <option value="Can Manage Merchant">Can Manage Merchant</option>-->
+                            <!--                                <option value="Can Manage Category">Can Manage Category</option>-->
+                            <!--                                <option value="Can Manage Branch">Can Manage Branch</option>-->
+                            <!--                                <option value="Can Manage Receipts">Can Manage Receipts</option>-->
+                            <!--                                &lt;!&ndash;                                <option value="Can Manage Dashboard">Can Manage Dashboard</option>&ndash;&gt;-->
+                            <!--                                &lt;!&ndash;                                <option value="Can Delete Merchant">Can Add Merchant</option>&ndash;&gt;-->
+                            <!--                            </select>-->
+
                             <select class="selectpicker" required multiple data-live-search="true">
                                 <option value="Can Manage Merchant">Can Manage Merchant</option>
                                 <option value="Can Manage Category">Can Manage Category</option>
@@ -109,5 +122,9 @@
         </div>
     </div>
 </div>
+<script>
+    $('select').selectpicker();
 
+
+</script>
 {% endblock body %}
