@@ -64,7 +64,8 @@ class MerchantLogin(View):
             #                    'cookie3': self.request.COOKIES.get('cid3')})
             # else:
             #     return render(self.request, 'merchant-login.html', {'form': form})
-            if self.request.COOKIES.get('cid1') and self.request.COOKIES.get('cid2') and self.request.COOKIES.get('cid3'):
+            if self.request.COOKIES.get('cid1') and self.request.COOKIES.get('cid2') and self.request.COOKIES.get(
+                    'cid3'):
                 return render(self.request, 'merchant-login.html',
                               {'form': form, 'cookie1': self.request.COOKIES.get('cid1'),
                                'cookie2': self.request.COOKIES.get('cid2'),
@@ -80,9 +81,11 @@ class MerchantLogin(View):
         password = self.request.POST['password']
         remember_me = self.request.POST.get('remember_me' or None)
         print('inside post method merchant login')
+        print('inside post method merchant login email',email)
         print(self.request.POST['csrfmiddlewaretoken'])
         try:
             user_object = user.objects.get(email=email)
+            print(user_object)
             if user_object.check_password(password):
                 if user_object.is_merchant:
                     merchant = Merchant.objects.get(email=email)
@@ -216,6 +219,7 @@ class PasswordResetConfirmView(View):
             uid = urlsafe_base64_decode(user_id_b64).decode()
             user_object = user.objects.get(id=uid)
             user_object.set_password(password1)
+            print('------------------------', user_object)
             user_object.save()
             return HttpResponseRedirect('/merchant/password-reset-complete/')
 
