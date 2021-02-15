@@ -28,23 +28,27 @@
                        style="width:50%;display:inline-block;float:left;border:none;">
                     <thead>
                     <tr>
-                        <th>Branch Name</th>
+                        <th>Branch ID</th>
+                        <th>Shop No</th>
                         <th>Amount</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {% for x in context.labels|slice:":1" %}
-                    {% for y in context.data %}
+                    {% for x in context.qwer %}
                     <tr>
-                        <td>{{x}}</td>
-                        <td>{{y}}</td>
+                        <td>{{x.branch}}</td>
+                        <td>{{x.shop_no}}</td>
+                        <td>{{x.amount}}</td>
                     </tr>
-                    {% endfor %}
                     <tr>
+                        {% if forloop.last %}
                         <th>Total</th>
+                        <th></th>
                         <th>{{context.amount_total}}</th>
+                        {% endif %}
                     </tr>
                     {% endfor %}
+
                     </tbody>
                 </table>
                 <div class="DashboardArea" style="width:50%;display:inline-block;">
@@ -71,21 +75,24 @@
                        style="width:50%;display:inline-block;float:left;border:none;">
                     <thead>
                     <tr>
-                        <th>Branch Name</th>
+                        <th>Branch ID</th>
+                        <th>Shop No</th>
                         <th>Vat</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {% for x in context.labels|slice:":1" %}
-                    {% for y in context.vat %}
+                    {% for x in context.qwer %}
                     <tr>
-                        <td>{{x}}</td>
-                        <td>{{y}}</td>
+                        <td>{{x.branch}}</td>
+                        <td>{{x.shop_no}}</td>
+                        <td>{{x.vat}}</td>
                     </tr>
-                    {% endfor %}
                     <tr>
+                        {% if forloop.last %}
                         <th>Total</th>
+                        <th></th>
                         <th>{{context.vat_total}}</th>
+                        {% endif %}
                     </tr>
                     {% endfor %}
                     </tbody>

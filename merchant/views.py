@@ -121,7 +121,7 @@ class MerchantLogin(View):
                 return HttpResponseRedirect(self.request.path_info, status=403)
                 # return HttpResponseBadRequest()
         except Exception as e:
-            print('Exception---->>',e)
+            print('Exception---->>', e)
             messages.error(self.request, "Email doesn't exists")
             # return render(self.request, 'login.html', {"status": 400})
             return HttpResponseRedirect(self.request.path_info, status=403)
@@ -805,9 +805,24 @@ class BranchPerformance(LoginRequiredMixin, View):
         for branch in branches:
             print(branch.id)
             for x in Receipt.objects.filter(branch=branch.id):
-                receipts.append({'branch': x.branch.code + ',' + x.branch.shop_no, 'amount': x.total, 'vat': x.vat})
+                receipts.append({'branch': x.branch.code, 'shop_no': x.branch.shop_no, 'amount': x.total, 'vat': x.vat})
         amount_list = []
         vat_list = []
+        branch_list = []
+        for y in receipts:
+            if len(branch_list) > 0:
+                i = -1
+                for z in range(len(branch_list)):
+                    if y['shop_no'] == branch_list[z]['shop_no']:
+                        i = z
+                    else:
+                        pass
+                if i == -1:
+                    branch_list.append(y)
+                else:
+                    branch_list[i]['vat'] = branch_list[i]['vat'] + y['vat']
+            else:
+                branch_list.append(y)
         for y in receipts:
             if len(amount_list) > 0:
                 i = -1
@@ -859,9 +874,11 @@ class BranchPerformance(LoginRequiredMixin, View):
         context = {
             'labels': [x['branch'] for x in amount_list],
             'data': [x['amount'] for x in amount_list],
+            'qwer': amount_list,
             'vat': [x['vat'] for x in amount_list],
             'amount_total': sum([x['amount'] for x in amount_list]),
             'vat_total': sum([x['vat'] for x in amount_list]),
             'backgroundColor': colors
         }
+        print(context)
         return render(self.request, 'chart.html', {'context': context})
