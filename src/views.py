@@ -1890,4 +1890,4 @@ class UpdateProfilePic(APIView):
         profile_pic = self.request.data['profile_pic']
         user.profile_pic = profile_pic
         user.save()
-        return Response({'message': "Profile pic updated successfully "})
+        return Response({'message': "Profile pic updated successfully ",'status':HTTP_200_OK})
