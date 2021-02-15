@@ -133,6 +133,7 @@ class MerchantDashBoard(LoginRequiredMixin, ListView):
         merchant = Merchant.objects.get(email=self.request.user.email)
         receipts_count = Receipt.objects.filter(merchant=merchant).count()
         users_count = []
+        print(len(Receipt.objects.filter(merchant=merchant)))
         for receipt in Receipt.objects.filter(merchant=merchant):
             # print(receipt.user.id)
             if receipt is not None:
