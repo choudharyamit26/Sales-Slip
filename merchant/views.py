@@ -134,17 +134,18 @@ class MerchantDashBoard(LoginRequiredMixin, ListView):
         receipts_count = Receipt.objects.filter(merchant=merchant).count()
         users_count = []
         print(len(Receipt.objects.filter(merchant=merchant)))
-        for receipt in Receipt.objects.filter(merchant=merchant):
-            # print(receipt.user.id)
-            if receipt is not None:
+        if len(Receipt.objects.filter(merchant=merchant)) > 0:
+            for receipt in Receipt.objects.filter(merchant=merchant):
+                # print(receipt.user.id)
+                # if receipt is not None:
                 if receipt.user.id not in users_count:
                     print('inside if')
                     users_count.append(receipt.user.id)
                 else:
                     print('inside else')
                     pass
-            else:
-                pass
+        else:
+            pass
         print(users_count)
         total = 0
         vat = 0
