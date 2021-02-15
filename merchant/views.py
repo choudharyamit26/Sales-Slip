@@ -756,7 +756,8 @@ class BranchList(LoginRequiredMixin, ListView):
         merchant_obj = Merchant.objects.get(email=user.email)
         branches = Branch.objects.filter(merchant_name=merchant_obj)
         if qs:
-            search = Branch.objects.filter(merchant_name=merchant_obj).filter(Q(code__icontains=qs) | Q(shop_no__icontains=qs))
+            search = Branch.objects.filter(merchant_name=merchant_obj).filter(
+                Q(code__icontains=qs) | Q(shop_no__icontains=qs))
             search_count = len(search)
             # context = {'search': search}
             # print(context)
@@ -775,6 +776,14 @@ class UpdateBranch(LoginRequiredMixin, UpdateView):
     model = Branch
     form_class = BranchForm
     template_name = 'merchant_branch.html'
+
+    def get(self, request, *args, **kwargs):
+        return render(self.request, 'merchant_branch_update.html',
+                      {'shop_no': Branch.objects.get(id=kwargs['pk']).shop_no,
+                       'street': Branch.objects.get(id=kwargs['pk']).street,
+                       'landmark': Branch.objects.get(id=kwargs['pk']).landmark,
+                       'city': Branch.objects.get(id=kwargs['pk']).city,
+                       'postal_code': Branch.objects.get(id=kwargs['pk']).postal_code})
 
     def post(self, request, *args, **kwargs):
         shop_no = self.request.POST['shop_no']

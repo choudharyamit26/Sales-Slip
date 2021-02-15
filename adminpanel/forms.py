@@ -38,6 +38,13 @@ class SubAdminForm(forms.ModelForm):
 
 
 class BranchForm(forms.ModelForm):
+    # def __init__(self, *args, **kwargs):
+    #     super().__init__(*args, **kwargs)
+    #     print(kwargs)
+    #     print(args)
+        # self.fields['Responsable'].queryset =
+        # self.fields['InformationsInstitution'].initial = user_initial
+
     class Meta:
         model = Branch
         fields = '__all__'

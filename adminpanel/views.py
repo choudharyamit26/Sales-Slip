@@ -30,7 +30,7 @@ from .forms import LoginForm, MerchantForm, UserNotificationForm, UpdateAboutUsF
 from django.utils.translation import gettext_lazy as _
 from django.conf.global_settings import DEFAULT_FROM_EMAIL
 
-from src.fcm_notification import send_to_one,send_another
+from src.fcm_notification import send_to_one, send_another
 
 user = get_user_model()
 
@@ -660,7 +660,8 @@ class UpdateSubAdminDetail(LoginRequiredMixin, UpdateView):
     def get(self, request, *args, **kwargs):
         print('GET METHOD', kwargs['pk'])
         email = User.objects.get(id=kwargs['pk'])
-        return render(self.request, 'update-sub-admin.html', {'email': email})
+        return render(self.request, 'update-sub-admin.html',
+                      {'email': email, 'first_name': email.first_name, 'last_name': email.last_name})
 
     def post(self, request, *args, **kwargs):
         print(self.request.POST)
@@ -791,7 +792,13 @@ class UpdateBranch(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy('adminpanel:branch-list')
 
     def get(self, request, *args, **kwargs):
-        return render(self.request, 'update-branch.html', {'merchants': Merchant.objects.all()})
+        print(kwargs['pk'])
+        return render(self.request, 'update-branch.html',
+                      {'merchants': Merchant.objects.all(), 'shop_number': Branch.objects.get(id=kwargs['pk']).shop_no,
+                       'postal_code': Branch.objects.get(id=kwargs['pk']).postal_code,
+                       'city': Branch.objects.get(id=kwargs['pk']).city,
+                       'landmark': Branch.objects.get(id=kwargs['pk']).landmark,
+                       'street': Branch.objects.get(id=kwargs['pk']).street })
 
     def post(self, request, *args, **kwargs):
         merchant_obj = Merchant.objects.get(id=self.request.POST['merchant_name'])

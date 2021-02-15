@@ -1,4 +1,4 @@
-{% extends 'base-ereceipt.html' %}
+{% extends 'base-merchant.html' %}
 {% load crispy_forms_tags %}
 {% block body %}
 <div class="WrapperArea">
@@ -25,18 +25,18 @@
                         <!--                        <div class="form-group">-->
                         <!--                            {{form|crispy}}-->
                         <!--                        </div>-->
-                        <div class="form-group">
-                            <label for="">Merchant</label>
-                            <select required id="id_merchant_name" name="merchant_name">
-                                {% for merchant in merchants %}
-                                <option value="{{merchant.pk}}">{{merchant.email}}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
+<!--                        <div class="form-group">-->
+<!--                            <label for="">Merchant</label>-->
+<!--                            <select required id="id_merchant_name" name="merchant_name">-->
+<!--                                {% for merchant in merchants %}-->
+<!--                                <option value="{{merchant.pk}}">{{merchant.email}}</option>-->
+<!--                                {% endfor %}-->
+<!--                            </select>-->
+<!--                        </div>-->
                         <div class="form-group">
                             <label for="">Shop Number </label>
                             <input type="text" class="form-control" required placeholder="Shop Number"
-                                   name="shop_no" value="{{shop_number}}">
+                                   name="shop_no" value="{{shop_no}}">
                         </div>
                         <div class="form-group">
                             <label for="">Street </label>
