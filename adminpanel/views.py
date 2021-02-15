@@ -572,7 +572,7 @@ class AddSubAdmin(LoginRequiredMixin, CreateView):
         try:
             user = User.objects.get(email=email)
             messages.info(self.request,
-                          'This email is already exists, please try another email or contact admin')
+                          'This email already exists, please try another email or contact admin')
             return render(self.request, 'sub-admin.html')
         except Exception as e:
             if password != confirm_password:
