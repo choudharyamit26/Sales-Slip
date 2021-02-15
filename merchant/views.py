@@ -11,6 +11,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.views import PasswordContextMixin
 from django.core.mail import send_mail
+from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
@@ -751,9 +752,22 @@ class BranchList(LoginRequiredMixin, ListView):
 
     def get(self, request, *args, **kwargs):
         user = self.request.user
+        qs = self.request.GET.get('qs')
         merchant_obj = Merchant.objects.get(email=user.email)
         branches = Branch.objects.filter(merchant_name=merchant_obj)
-        return render(self.request, 'merchant_branch_list.html', {'object_list': branches})
+        if qs:
+            search = Branch.objects.filter(merchant_name=merchant_obj).filter(Q(code__icontains=qs) | Q(shop_no__icontains=qs))
+            search_count = len(search)
+            # context = {'search': search}
+            # print(context)
+            if search:
+                messages.info(self.request, str(search_count) + ' matches found')
+                return render(self.request, 'merchant_branch_list.html', {'object_list': search})
+            else:
+                messages.info(self.request, 'No results found')
+                return render(self.request, 'merchant_branch_list.html', {'object_list': search})
+        else:
+            return render(self.request, 'merchant_branch_list.html', {'object_list': branches})
 
 
 class UpdateBranch(LoginRequiredMixin, UpdateView):

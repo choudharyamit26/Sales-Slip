@@ -767,6 +767,19 @@ class BranchList(LoginRequiredMixin, ListView):
     model = Branch
     template_name = 'branch-list.html'
 
+    def get(self, request, *args, **kwargs):
+        qs = self.request.GET.get('qs')
+        if qs:
+            search = Branch.objects.filter(Q(code__icontains=qs) | Q(shop_no__icontains=qs))
+            search_count = len(search)
+            if search:
+                messages.info(self.request, str(search_count) + ' matches found')
+                return render(self.request, 'branch-list.html', {'object_list': search})
+            else:
+                messages.info(self.request, 'No results found')
+                return render(self.request, 'branch-list.html', {'object_list': search})
+        return render(self.request, 'branch-list.html', {'object_list': Branch.objects.all()})
+
 
 class UpdateBranch(LoginRequiredMixin, UpdateView):
     login_url = 'adminpanel:login'
