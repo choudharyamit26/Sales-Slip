@@ -87,6 +87,7 @@ class MerchantLogin(View):
             user_object = user.objects.get(email=email)
             print('User Object', user_object)
             if user_object.check_password(password):
+                print('inside check password')
                 if user_object.is_merchant:
                     merchant = Merchant.objects.get(email=email)
                     if merchant.blocked:
@@ -234,6 +235,7 @@ class PasswordResetView(View):
         user = get_user_model()
         email = request.POST.get('email')
         email_template = "merchant/password_reset_email.html"
+        print(email_template)
         user_qs = user.objects.filter(email=email)
         if len(user_qs) == 0:
             messages.error(request, 'Email does not exists')
