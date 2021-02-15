@@ -569,57 +569,63 @@ class AddSubAdmin(LoginRequiredMixin, CreateView):
         email = self.request.POST['email']
         password = self.request.POST['password']
         confirm_password = self.request.POST['confirm_password']
-        if password != confirm_password:
-            messages.error(self.request, 'Password and Confirm password do not match')
-            return render(request, 'sub-admin.html', {'form': self.form_class})
-        elif len(password) < 8 or len(confirm_password) < 8:
-            messages.error(self.request, "Password must be at least 8 characters long")
-            return render(request, 'sub-admin.html', {'form': self.form_class})
-        elif password.isdigit() or confirm_password.isdigit() or password.isalpha() or confirm_password.isalpha():
-            messages.error(self.request, "Passwords must have a mix of numbers and characters")
-            return render(request, 'sub-admin.html', {'form': self.form_class})
-        else:
-            user = User.objects.create(
-                email=email,
-                is_subadmin=True
-            )
-            user.set_password(password)
-            user.save()
-            for perm in permissions:
-                print('_'.join(perm.lower().split()))
-                if '_'.join(perm.lower().split()) == 'can_manage_merchant':
-                    user.can_manage_merchant = True
-                    user.save()
-                elif '_'.join(perm.lower().split()) == 'can_manage_category':
-                    user.can_manage_category = True
-                    user.save()
-                elif '_'.join(perm.lower().split()) == 'can_manage_branch':
-                    user.can_manage_branch = True
-                    user.save()
-                elif '_'.join(perm.lower().split()) == 'can_manage_dashboard':
-                    user.can_manage_dashboard = True
-                    user.save()
-                else:
-                    user.can_manage_receipts = True
-                    user.save()
-            if self.request.is_secure():
-                protocol = 'https'
+        try:
+            user = User.objects.get(email=email)
+            messages.info(self.request,
+                          'This email is already exists, please try another email or contact admin')
+            return render(self.request, 'sub-admin.html')
+        except Exception as e:
+            if password != confirm_password:
+                messages.error(self.request, 'Password and Confirm password do not match')
+                return render(request, 'sub-admin.html', {'form': self.form_class})
+            elif len(password) < 8 or len(confirm_password) < 8:
+                messages.error(self.request, "Password must be at least 8 characters long")
+                return render(request, 'sub-admin.html', {'form': self.form_class})
+            elif password.isdigit() or confirm_password.isdigit() or password.isalpha() or confirm_password.isalpha():
+                messages.error(self.request, "Passwords must have a mix of numbers and characters")
+                return render(request, 'sub-admin.html', {'form': self.form_class})
             else:
-                protocol = 'http'
-            context = {
-                'email': self.request.POST['email'],
-                'password': self.request.POST['password'],
-                'domain': self.request.get_host(),
-                'protocol': protocol
-            }
-            user_email = self.request.POST['email']
-            email_template = 'sub_admin_signup_email.html'
-            email = render_to_string(email_template, context)
-            msg = EmailMultiAlternatives("Sub Admin Creation", email, 'servacnt@fatortech.net',
-                                         [user_email])
-            msg.content_subtype = "html"
-            msg.send()
-            return redirect('adminpanel:sub-admin-list')
+                user = User.objects.create(
+                    email=email,
+                    is_subadmin=True
+                )
+                user.set_password(password)
+                user.save()
+                for perm in permissions:
+                    print('_'.join(perm.lower().split()))
+                    if '_'.join(perm.lower().split()) == 'can_manage_merchant':
+                        user.can_manage_merchant = True
+                        user.save()
+                    elif '_'.join(perm.lower().split()) == 'can_manage_category':
+                        user.can_manage_category = True
+                        user.save()
+                    elif '_'.join(perm.lower().split()) == 'can_manage_branch':
+                        user.can_manage_branch = True
+                        user.save()
+                    elif '_'.join(perm.lower().split()) == 'can_manage_dashboard':
+                        user.can_manage_dashboard = True
+                        user.save()
+                    else:
+                        user.can_manage_receipts = True
+                        user.save()
+                if self.request.is_secure():
+                    protocol = 'https'
+                else:
+                    protocol = 'http'
+                context = {
+                    'email': self.request.POST['email'],
+                    'password': self.request.POST['password'],
+                    'domain': self.request.get_host(),
+                    'protocol': protocol
+                }
+                user_email = self.request.POST['email']
+                email_template = 'sub_admin_signup_email.html'
+                email = render_to_string(email_template, context)
+                msg = EmailMultiAlternatives("Sub Admin Creation", email, 'servacnt@fatortech.net',
+                                             [user_email])
+                msg.content_subtype = "html"
+                msg.send()
+                return redirect('adminpanel:sub-admin-list')
 
 
 class SubAdminList(LoginRequiredMixin, ListView):
@@ -650,7 +656,7 @@ class UpdateSubAdminDetail(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy('adminpanel:sub-admin-list')
 
     def get(self, request, *args, **kwargs):
-        print('GET METHOD',kwargs['pk'])
+        print('GET METHOD', kwargs['pk'])
         email = User.objects.get(id=kwargs['pk'])
         return render(self.request, 'update-sub-admin.html', {'email': email})
 
@@ -671,7 +677,8 @@ class UpdateSubAdminDetail(LoginRequiredMixin, UpdateView):
         elif len(self.request.POST['password']) < 8 or len(self.request.POST['confirm_password']) < 8:
             messages.error(self.request, "Password must be at least 8 characters long")
             return render(request, 'sub-admin.html', {'form': self.form_class})
-        elif self.request.POST['password'].isdigit() or self.request.POST['confirm_password'].isdigit() or self.request.POST['password'].isalpha() or self.request.POST['confirm_password'].isalpha():
+        elif self.request.POST['password'].isdigit() or self.request.POST['confirm_password'].isdigit() or \
+                self.request.POST['password'].isalpha() or self.request.POST['confirm_password'].isalpha():
             messages.error(self.request, "Passwords must have a mix of numbers and characters")
             return render(request, 'sub-admin.html', {'form': self.form_class})
         else:
