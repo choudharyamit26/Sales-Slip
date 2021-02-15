@@ -81,11 +81,11 @@ class MerchantLogin(View):
         password = self.request.POST['password']
         remember_me = self.request.POST.get('remember_me' or None)
         print('inside post method merchant login')
-        print('inside post method merchant login email',email)
+        print('inside post method merchant login email', email)
         print(self.request.POST['csrfmiddlewaretoken'])
         try:
             user_object = user.objects.get(email=email)
-            print(user_object)
+            print('User Object', user_object)
             if user_object.check_password(password):
                 if user_object.is_merchant:
                     merchant = Merchant.objects.get(email=email)
@@ -120,7 +120,7 @@ class MerchantLogin(View):
                 return HttpResponseRedirect(self.request.path_info, status=403)
                 # return HttpResponseBadRequest()
         except Exception as e:
-            print(e)
+            print('Exception---->>',e)
             messages.error(self.request, "Email doesn't exists")
             # return render(self.request, 'login.html', {"status": 400})
             return HttpResponseRedirect(self.request.path_info, status=403)
