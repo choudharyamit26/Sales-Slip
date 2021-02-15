@@ -1878,3 +1878,15 @@ class GetBannersView(APIView):
         except Exception as e:
             x = {'error': str(e)}
             return Response({'message': x['error'], 'status': HTTP_400_BAD_REQUEST})
+
+
+class UpdateProfilePic(APIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
+    def patch(self, request, *args, **kwargs):
+        user = self.request.user
+        profile_pic = self.request.data['profile_pic']
+        user.profile_pic = profile_pic
+        user.save()
+        return Response({'message': "Profile pic updated successfully "})
