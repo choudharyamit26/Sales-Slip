@@ -30,6 +30,8 @@ from .forms import LoginForm, MerchantForm, UserNotificationForm, UpdateAboutUsF
 from django.utils.translation import gettext_lazy as _
 from django.conf.global_settings import DEFAULT_FROM_EMAIL
 
+from src.fcm_notification import send_to_one,send_another
+
 user = get_user_model()
 
 
