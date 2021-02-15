@@ -568,6 +568,7 @@ class AddSubAdmin(LoginRequiredMixin, CreateView):
         print(self.request.POST)
         permissions = self.request.POST.getlist('category')
         first_name = self.request.POST['first_name']
+        last_name = self.request.POST['last_name']
         email = self.request.POST['email']
         password = self.request.POST['password']
         confirm_password = self.request.POST['confirm_password']
@@ -588,6 +589,8 @@ class AddSubAdmin(LoginRequiredMixin, CreateView):
                 return render(request, 'sub-admin.html', {'form': self.form_class})
             else:
                 user = User.objects.create(
+                    first_name=first_name,
+                    last_name=last_name,
                     email=email,
                     is_subadmin=True
                 )
