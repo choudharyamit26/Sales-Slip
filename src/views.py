@@ -1885,6 +1885,7 @@ class UpdateProfilePic(APIView):
     permission_classes = (IsAuthenticated,)
 
     def patch(self, request, *args, **kwargs):
+        print(self.request.data)
         user = self.request.user
         profile_pic = self.request.data['profile_pic']
         user.profile_pic = profile_pic
