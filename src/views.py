@@ -1142,12 +1142,14 @@ class CreateReceiptManually(CreateAPIView):
         # product_name = self.request.data['product_name']
         # product_cost = self.request.data['product_cost']
         # product_quantity = self.request.data['product_quantity']
+        branch_obj = Branch.objects.get(code=branch)
         merchant_obj = Merchant.objects.get(id=merchant_id)
         if merchant_obj.blocked:
             return Response({'message': "Merchant with this id does not exists", 'status': HTTP_400_BAD_REQUEST})
+        elif branch_obj.blocked:
+            return Response({'message': "Branch with this id does not exists", 'status': HTTP_400_BAD_REQUEST})
         else:
             category_obj = Category.objects.get(id=category)
-            branch_obj = Branch.objects.get(code=branch)
             print('branch-----------------', branch_obj)
             # final_item = zip(product_name, product_cost, product_quantity)
             # order_id = get_random_string(16)
