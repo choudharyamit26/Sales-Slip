@@ -754,10 +754,10 @@ class BranchList(LoginRequiredMixin, ListView):
         user = self.request.user
         qs = self.request.GET.get('qs')
         merchant_obj = Merchant.objects.get(email=user.email)
-        branches = Branch.objects.filter(merchant_name=merchant_obj)
+        branches = Branch.objects.filter(merchant_name=merchant_obj).filter(blocked=False)
         if qs:
             search = Branch.objects.filter(merchant_name=merchant_obj).filter(
-                Q(code__icontains=qs) | Q(shop_no__icontains=qs))
+                Q(code__icontains=qs) | Q(shop_no__icontains=qs)).exclude(blocked=True)
             search_count = len(search)
             # context = {'search': search}
             # print(context)
@@ -810,7 +810,8 @@ class DeleteBranch(LoginRequiredMixin, DeleteView):
 
     def post(self, request, *args, **kwargs):
         branch = Branch.objects.get(id=kwargs['pk'])
-        branch.delete()
+        branch.blocked = True
+        branch.save()
         messages.info(self.request, 'Branch deleted')
         return redirect('merchant:branch-list')
 

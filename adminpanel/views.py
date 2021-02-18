@@ -776,7 +776,7 @@ class BranchList(LoginRequiredMixin, ListView):
     def get(self, request, *args, **kwargs):
         qs = self.request.GET.get('qs')
         if qs:
-            search = Branch.objects.filter(Q(code__icontains=qs) | Q(shop_no__icontains=qs))
+            search = Branch.objects.filter(Q(code__icontains=qs) | Q(shop_no__icontains=qs)).exclude(blocked=True)
             search_count = len(search)
             if search:
                 messages.info(self.request, str(search_count) + ' matches found')
@@ -784,7 +784,7 @@ class BranchList(LoginRequiredMixin, ListView):
             else:
                 messages.info(self.request, 'No results found')
                 return render(self.request, 'branch-list.html', {'object_list': search})
-        return render(self.request, 'branch-list.html', {'object_list': Branch.objects.all()})
+        return render(self.request, 'branch-list.html', {'object_list': Branch.objects.filter(blocked=False)})
 
 
 class UpdateBranch(LoginRequiredMixin, UpdateView):
@@ -801,7 +801,7 @@ class UpdateBranch(LoginRequiredMixin, UpdateView):
                        'postal_code': Branch.objects.get(id=kwargs['pk']).postal_code,
                        'city': Branch.objects.get(id=kwargs['pk']).city,
                        'landmark': Branch.objects.get(id=kwargs['pk']).landmark,
-                       'street': Branch.objects.get(id=kwargs['pk']).street })
+                       'street': Branch.objects.get(id=kwargs['pk']).street})
 
     def post(self, request, *args, **kwargs):
         merchant_obj = Merchant.objects.get(id=self.request.POST['merchant_name'])
@@ -822,6 +822,12 @@ class DeleteBranch(LoginRequiredMixin, DeleteView):
     model = Branch
     template_name = 'delete-branch.html'
     success_url = reverse_lazy('adminpanel:branch-list')
+
+    def post(self, request, *args, **kwargs):
+        branch = Branch.objects.get(id=kwargs['pk'])
+        branch.blocked = True
+        branch.save()
+        return redirect('adminpanel:branch-list')
 
 
 class MerchantList(LoginRequiredMixin, ListView):

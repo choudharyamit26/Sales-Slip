@@ -1998,3 +1998,38 @@ width:100% !important;
     border:none;
     background:transparent
 }
+
+//new css code start
+.form-group.newGroup{
+display: block;
+    width: 100%;
+    float: left;
+}
+.form-group.newGroup .dropdown.bootstrap-select.show{
+    width: 100%;
+    border: 0;
+    outline: 0;
+    padding: 0;
+    margin: 0;
+    float: left;
+}
+.form-group.newGroup  .bootstrap-select > .dropdown-toggle{
+text-align:left;
+padding:0;
+}
+.form-group.newGroup  .bootstrap-select .dropdown-toggle .filter-option{
+position:initial;
+}
+.form-group.newGroup  .filter-option-inner-inner{
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+}
+.form-group.newGroup  .bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn){
+width:100%;
+}
+//new css code end

@@ -84,6 +84,7 @@ class Branch(models.Model):
     city = models.CharField(default='', max_length=2000)
     postal_code = models.CharField(default='', max_length=2000)
     code = models.CharField(default='', max_length=100)
+    blocked = models.BooleanField(default=False)
 
     def __str__(self):
         return self.code
