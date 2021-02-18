@@ -1740,7 +1740,7 @@ class GetMerchantNameAndCategory(APIView):
             if merchant_obj.blocked:
                 return Response({'message': 'Merchant does not exists', 'status': HTTP_400_BAD_REQUEST})
             else:
-                branch_obj = Branch.objects.filter(merchant_name=merchant_obj).filter(blockde=False)
+                branch_obj = Branch.objects.filter(merchant_name=merchant_obj).filter(blocked=False)
                 branches = []
                 for branch in branch_obj:
                     branches.append({'branch_id': branch.id, 'branch_code': branch.code})
