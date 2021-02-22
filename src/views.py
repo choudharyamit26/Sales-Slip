@@ -476,6 +476,20 @@ class UpdateNotification(APIView):
         #     return Response({"message": serializer.errors, "status": HTTP_400_BAD_REQUEST})
 
 
+class NotificationCount(APIView):
+    model = UserNotification
+    serializer_class = UpdateNotificationSerializer
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+    queryset = UserNotification.objects.all()
+
+    def get(self, request, *args, **kwargs):
+        user = self.request.user
+        notifications = UserNotification.objects.filter(
+            to=user.id).filter(read=False).count()
+        return Response({'count': notifications, 'status': HTTP_200_OK})
+
+
 class DeleteNotification(APIView):
     model = UserNotification
     serializer_class = NotificationSerializer
@@ -1892,4 +1906,4 @@ class UpdateProfilePic(APIView):
         profile_pic = self.request.data['profile_pic']
         user.profile_pic = profile_pic
         user.save()
-        return Response({'message': "Profile pic updated successfully ",'status':HTTP_200_OK})
+        return Response({'message': "Profile pic updated successfully ", 'status': HTTP_200_OK})

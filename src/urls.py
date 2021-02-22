@@ -10,7 +10,7 @@ from .views import UserCreateAPIView, LoginAPIView, ForgetPasswordAPIView, Chang
     PrivacyPolicyApiView, ContactUsApiView, TermsandConditionApiView, GetUserDetailApiView, CheckMobileOrPhoneNumber, \
     FirstViewSet, AboutUsView, UpdateEmailView, AddToCart, GetCategoryList, POSOrder, GetCartItemDetail, \
     GetMerchantNameAndCategory, FilterExpenseDataByMonth, FilterExpenseDataByCategory, AutoOrderCreation, \
-    GetBannersView, SignUpTermsandConditionApiView,UpdateProfilePic
+    GetBannersView, SignUpTermsandConditionApiView,UpdateProfilePic,NotificationCount
 
 app_name = 'src'
 # router = DefaultRouter()
@@ -73,4 +73,5 @@ urlpatterns = [
     path('auto-order-creation/', AutoOrderCreation.as_view(), name='auto-order-creation'),
     path('get-banners/', GetBannersView.as_view(), name='get-banners'),
     path('update-profile-pic/', UpdateProfilePic.as_view(), name='update-profile-pic'),
+    path('notification-count/', NotificationCount.as_view(), name='notification-count'),
 ]
