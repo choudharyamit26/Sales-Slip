@@ -58,6 +58,7 @@ class UserNotificationForm(forms.ModelForm):
 
 class UpdateTnCForm(forms.ModelForm):
     conditions = forms.CharField(widget=CKEditorWidget())
+    conditions_in_arabic = forms.CharField(widget=CKEditorWidget())
 
     class Meta:
         model = TermsAndCondition
@@ -77,6 +78,7 @@ class UpdateContactusForm(forms.ModelForm):
 
 class UpdatePrivacyPolicyForm(forms.ModelForm):
     policy = forms.CharField(widget=CKEditorWidget())
+    policy_in_arabic = forms.CharField(widget=CKEditorWidget())
 
     # policy_in_arabic = forms.CharField(widget=CKEditorWidget())
 
