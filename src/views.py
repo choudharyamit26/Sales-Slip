@@ -1563,7 +1563,7 @@ class UpdateEmailView(UpdateAPIView):
             if serializer.is_valid():
                 email = request.data['email']
                 print(email)
-                user.email = email
+                user.email = email.lower()
                 user.save()
                 return Response({"message": "Email updated successfully", "email": email, "status": HTTP_200_OK})
             else:
