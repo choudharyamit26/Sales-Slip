@@ -42,8 +42,8 @@ class BranchForm(forms.ModelForm):
     #     super().__init__(*args, **kwargs)
     #     print(kwargs)
     #     print(args)
-        # self.fields['Responsable'].queryset =
-        # self.fields['InformationsInstitution'].initial = user_initial
+    # self.fields['Responsable'].queryset =
+    # self.fields['InformationsInstitution'].initial = user_initial
 
     class Meta:
         model = Branch
@@ -72,7 +72,7 @@ class UpdateContactusForm(forms.ModelForm):
 
     class Meta:
         model = ContactUs
-        fields = ('phone_number', 'email')
+        fields = ('company_name', 'phone_number', 'email')
 
 
 class UpdatePrivacyPolicyForm(forms.ModelForm):
