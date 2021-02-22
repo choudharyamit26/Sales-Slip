@@ -89,10 +89,11 @@ class UpdatePrivacyPolicyForm(forms.ModelForm):
 
 class UpdateAboutUsForm(forms.ModelForm):
     content = forms.CharField(widget=CKEditorWidget())
+    content_in_arabic = forms.CharField(widget=CKEditorWidget())
 
     class Meta:
         model = AboutUs
-        fields = ('content',)
+        fields = ('content','content_in_arabic')
 
 
 class CategoryForm(forms.ModelForm):
