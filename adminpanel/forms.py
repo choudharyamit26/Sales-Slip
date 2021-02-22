@@ -61,7 +61,7 @@ class UpdateTnCForm(forms.ModelForm):
 
     class Meta:
         model = TermsAndCondition
-        fields = ('conditions',)
+        fields = ('conditions', 'conditions_in_arabic')
 
 
 class UpdateContactusForm(forms.ModelForm):
@@ -82,7 +82,7 @@ class UpdatePrivacyPolicyForm(forms.ModelForm):
 
     class Meta:
         model = PrivacyPolicy
-        fields = ('policy',)
+        fields = ('policy', 'policy_in_arabic')
 
 
 class UpdateAboutUsForm(forms.ModelForm):
