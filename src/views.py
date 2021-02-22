@@ -487,7 +487,8 @@ class NotificationCount(APIView):
         user = self.request.user
         notifications = UserNotification.objects.filter(
             to=user.id).filter(read=False).count()
-        return Response({'count': notifications, 'status': HTTP_200_OK})
+        return Response(
+            {'message': 'Notification count fetched successfully', 'count': notifications, 'status': HTTP_200_OK})
 
 
 class DeleteNotification(APIView):
