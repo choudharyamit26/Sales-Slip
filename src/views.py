@@ -107,7 +107,7 @@ class UserCreateAPIView(CreateAPIView):
                 country_code=country_code,
                 phone_number=phone_number,
                 profile_pic=profile_pic,
-                email=email,
+                email=email.lower(),
                 device_token=device_token
             )
             user.set_password(password)
@@ -142,7 +142,7 @@ class LoginAPIView(ObtainAuthToken):
         print('login---->>>>', device_token)
         try:
             if not email.isdigit():
-                userObj = User.objects.get(email=email)
+                userObj = User.objects.get(email=email.lower())
                 user_id = userObj.id
                 check_pass = userObj.check_password(password)
                 if check_pass:

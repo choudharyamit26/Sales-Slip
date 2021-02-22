@@ -1046,24 +1046,27 @@ class SendNotification(LoginRequiredMixin, View):
                 body=message,
                 read=False
             )
-            try:
-                # title = title
-                # body = message
-                # respo = send_to_one(fcm_token, title, body)
-                # print("FCM Response===============>0", respo)
-                data_message = {"data": {"title": title,
-                                         "body": message, "type": "adminNOtification"}}
-                print(title)
-                print(message)
-                respo = send_to_one(fcm_token, data_message)
-                print("FCM Response===============>0", respo)
-                message_type = "adminNOtification"
-                respo = send_another(fcm_token, title, message, message_type)
-                print(title)
-                print(message)
-                # fcm_token.send_message(data)
-                print("FCM Response===============>0", respo)
-            except:
+            if Settings.objects.get(user=user).notification:
+                try:
+                    # title = title
+                    # body = message
+                    # respo = send_to_one(fcm_token, title, body)
+                    # print("FCM Response===============>0", respo)
+                    data_message = {"data": {"title": title,
+                                             "body": message, "type": "adminNOtification"}}
+                    print(title)
+                    print(message)
+                    respo = send_to_one(fcm_token, data_message)
+                    print("FCM Response===============>0", respo)
+                    message_type = "adminNOtification"
+                    respo = send_another(fcm_token, title, message, message_type)
+                    print(title)
+                    print(message)
+                    # fcm_token.send_message(data)
+                    print("FCM Response===============>0", respo)
+                except:
+                    pass
+            else:
                 pass
         messages.success(self.request, "Notification sent successfully")
         return HttpResponseRedirect(self.request.path_info)
