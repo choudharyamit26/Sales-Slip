@@ -359,22 +359,22 @@ class AddMerchant(View):
         street = self.request.POST['street']
         city = self.request.POST['city']
         postal_code = self.request.POST['postal_code']
-        if not full_name.strip:
+        if not full_name.strip():
             messages.error(self.request, 'First name cannot be empty or contain only spaces')
             return render(request, 'merchant.html', {'form': self.form_class, 'category': category})
-        if not commercial_id.strip:
+        if not commercial_id.strip():
             messages.error(self.request, 'Commercial id cannot be empty or contain only spaces')
             return render(request, 'merchant.html', {'form': self.form_class, 'category': category})
-        if not shop_no.strip:
+        if not shop_no.strip():
             messages.error(self.request, 'Shop number cannot be empty or contain only spaces')
             return render(request, 'merchant.html', {'form': self.form_class, 'category': category})
-        if not street.strip:
+        if not street.strip():
             messages.error(self.request, 'Street cannot be empty or contain only spaces')
             return render(request, 'merchant.html', {'form': self.form_class, 'category': category})
-        if not city.strip:
+        if not city.strip():
             messages.error(self.request, 'City cannot be empty or contain only spaces')
             return render(request, 'merchant.html', {'form': self.form_class, 'category': category})
-        if not postal_code.strip:
+        if not postal_code.strip():
             messages.error(self.request, 'Postal cannot be empty or contain only spaces')
             return render(request, 'merchant.html', {'form': self.form_class, 'category': category})
         categories = self.request.POST['category']
