@@ -748,14 +748,14 @@ class AddBranch(LoginRequiredMixin, CreateView):
         merchant_obj = Merchant.objects.get(id=merchant_id)
         shop_no = self.request.POST['shop_no']
         street = self.request.POST['street']
-        landmark = self.request.POST['landmark']
+        # landmark = self.request.POST['landmark']
         city = self.request.POST['city']
         postal_code = self.request.POST['postal_code']
         x = Branch.objects.create(
             merchant_name=merchant_obj,
             shop_no=shop_no,
             street=street,
-            landmark=landmark,
+            # landmark=landmark,
             city=city,
             postal_code=postal_code,
             code=0
@@ -809,7 +809,7 @@ class UpdateBranch(LoginRequiredMixin, UpdateView):
         branch_obj.merchant = merchant_obj
         branch_obj.shop_no = self.request.POST['shop_no']
         branch_obj.street = self.request.POST['street']
-        branch_obj.landmark = self.request.POST['landmark']
+        # branch_obj.landmark = self.request.POST['landmark']
         branch_obj.city = self.request.POST['city']
         branch_obj.postal_code = self.request.POST['postal_code']
         branch_obj.save()
