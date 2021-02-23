@@ -352,19 +352,37 @@ class AddMerchant(View):
 
     def post(self, request, *args, **kwargs):
         print('------', self.request.POST)
+        category = Category.objects.all()
         full_name = self.request.POST['full_name']
+        commercial_id = self.request.POST['commercial_id']
+        shop_no = self.request.POST['shop_no']
+        street = self.request.POST['street']
+        city = self.request.POST['city']
+        postal_code = self.request.POST['postal_code']
+        if not full_name.strip:
+            messages.error(self.request, 'First name cannot be empty or contain only spaces')
+            return render(request, 'merchant.html', {'form': self.form_class, 'category': category})
+        if not commercial_id.strip:
+            messages.error(self.request, 'Commercial id cannot be empty or contain only spaces')
+            return render(request, 'merchant.html', {'form': self.form_class, 'category': category})
+        if not shop_no.strip:
+            messages.error(self.request, 'Shop number cannot be empty or contain only spaces')
+            return render(request, 'merchant.html', {'form': self.form_class, 'category': category})
+        if not street.strip:
+            messages.error(self.request, 'Street cannot be empty or contain only spaces')
+            return render(request, 'merchant.html', {'form': self.form_class, 'category': category})
+        if not city.strip:
+            messages.error(self.request, 'City cannot be empty or contain only spaces')
+            return render(request, 'merchant.html', {'form': self.form_class, 'category': category})
+        if not postal_code.strip:
+            messages.error(self.request, 'Postal cannot be empty or contain only spaces')
+            return render(request, 'merchant.html', {'form': self.form_class, 'category': category})
         categories = self.request.POST['category']
         email = self.request.POST['email']
-        commercial_id = self.request.POST['commercial_id']
         password = self.request.POST['password']
         confirm_password = self.request.POST['confirm_password']
         # address = self.request.POST['address']
-        shop_no = self.request.POST['shop_no']
-        street = self.request.POST['street']
         # landmark = self.request.POST['landmark']
-        city = self.request.POST['city']
-        postal_code = self.request.POST['postal_code']
-        category = Category.objects.all()
         if password != confirm_password:
             messages.error(self.request, 'Password and Confirm password do not match')
             return render(request, 'merchant.html', {'form': self.form_class, 'category': category})
