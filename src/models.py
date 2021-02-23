@@ -80,7 +80,7 @@ class Branch(models.Model):
     merchant_name = models.ForeignKey(Merchant, on_delete=models.CASCADE)
     shop_no = models.CharField(default='', max_length=2000)
     street = models.CharField(default='', max_length=2000)
-    landmark = models.CharField(default='', max_length=2000)
+    landmark = models.CharField(default='', max_length=2000, null=True, blank=True)
     city = models.CharField(default='', max_length=2000)
     postal_code = models.CharField(default='', max_length=2000)
     code = models.CharField(default='', max_length=100)
