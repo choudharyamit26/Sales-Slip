@@ -1908,3 +1908,37 @@ class UpdateProfilePic(APIView):
         user.profile_pic = profile_pic
         user.save()
         return Response({'message': "Profile pic updated successfully ", 'status': HTTP_200_OK})
+
+
+import jwt, json
+
+
+class JwtLogin(APIView):
+
+    def post(self, request, *args, **kwargs):
+        print(self.request.data)
+        username = self.request.data['email']
+        password = self.request.data['password']
+        try:
+            user = User.objects.get(email=username)
+            print(user)
+        except Exception as e:
+            print(e)
+            return Response({'message': 'Something went wrong', 'status': HTTP_400_BAD_REQUEST})
+        if user.check_password(password):
+            payload = {
+                'id': user.id,
+                'email': user.email
+            }
+
+            jwt_token = {'token': jwt.encode(payload, "SECRET_KEY")}
+            return Response(
+                {'token': jwt_token,
+                 'status': HTTP_200_OK}
+            )
+        else:
+            return Response(
+                json.dumps({'Error': "Invalid credentials"}),
+                status=400,
+                content_type="application/json"
+            )
