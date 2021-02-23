@@ -451,7 +451,7 @@ class AddMerchant(View):
                             category=category_object,
                             email=email.lower(),
                             commercial_id=commercial_id,
-                            address=str(shop_no) + str(street)  + str(city) + str(postal_code),
+                            address=str(shop_no) + str(street) + str(city) + str(postal_code),
                             password=password
                         )
                         merchant = User.objects.create(
@@ -932,6 +932,9 @@ class ReceiptDetail(LoginRequiredMixin, DetailView):
 class UserDetail(LoginRequiredMixin, DetailView):
     model = User
     template_name = 'user-details.html'
+
+    def get(self, request, *args, **kwargs):
+        return render(self.request, 'user-details.html')
 
     def get_context_data(self, **kwargs):
         context = super(UserDetail, self).get_context_data()
