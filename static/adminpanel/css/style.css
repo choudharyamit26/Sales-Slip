@@ -2032,4 +2032,24 @@ position:initial;
 .form-group.newGroup  .bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn){
 width:100%;
 }
+
+.form-group.newSelector{
+float:left;
+width:100%;
+display:block;
+margin-bottom:35px;
+}
+.form-group.newSelector .bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
+    width: 100%;
+}
+.form-group.newSelector  .bootstrap-select .dropdown-toggle .filter-option-inner {
+    float:left;
+    width:100%;
+}
+.form-group.newSelector .bootstrap-select .dropdown-toggle .filter-option-inner-inner{
+padding:5px 10px;
+background:#fff;
+border:1px solid #ccc;
+height:34px;
+}
 //new css code end
