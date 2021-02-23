@@ -934,14 +934,16 @@ class UserDetail(LoginRequiredMixin, DetailView):
     template_name = 'user-details.html'
 
     def get(self, request, *args, **kwargs):
-        return render(self.request, 'user-details.html')
-
-    def get_context_data(self, **kwargs):
-        context = super(UserDetail, self).get_context_data()
-        user_obj = User.objects.get(id=kwargs['object'].id)
-        # print(Receipt.objects.filter(user=user_obj.id).count())
-        context['receipts'] = Receipt.objects.filter(user=user_obj.id).count()
-        return context
+        user_obj = User.objects.get(id=kwargs['pk'])
+        return render(self.request, 'user-details.html',
+                      {'object': user_obj, 'receipts': Receipt.objects.filter(user=user_obj.id).count()})
+    #
+    # def get_context_data(self, **kwargs):
+    #     context = super(UserDetail, self).get_context_data()
+    #     user_obj = User.objects.get(id=kwargs['object'].id)
+    #     # print(Receipt.objects.filter(user=user_obj.id).count())
+    #     context['receipts'] = Receipt.objects.filter(user=user_obj.id).count()
+    #     return context
 
 
 class MerchantDetail(LoginRequiredMixin, DetailView):
