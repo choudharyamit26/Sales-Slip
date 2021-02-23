@@ -361,7 +361,7 @@ class AddMerchant(View):
         # address = self.request.POST['address']
         shop_no = self.request.POST['shop_no']
         street = self.request.POST['street']
-        landmark = self.request.POST['landmark']
+        # landmark = self.request.POST['landmark']
         city = self.request.POST['city']
         postal_code = self.request.POST['postal_code']
         category = Category.objects.all()
@@ -388,7 +388,7 @@ class AddMerchant(View):
                         category=category_object,
                         email=email.lower(),
                         commercial_id=commercial_id,
-                        address=str(shop_no) + str(street) + str(landmark) + str(city) + str(postal_code),
+                        address=str(shop_no) + str(street) + str(city) + str(postal_code),
                         password=password
                     )
                     merchant = User.objects.create(
@@ -401,7 +401,7 @@ class AddMerchant(View):
                         merchant_name=merchant_obj,
                         shop_no=shop_no,
                         street=street,
-                        landmark=landmark,
+                        # landmark=landmark,
                         city=city,
                         postal_code=postal_code,
                         code=0
@@ -451,7 +451,7 @@ class AddMerchant(View):
                             category=category_object,
                             email=email.lower(),
                             commercial_id=commercial_id,
-                            address=str(shop_no) + str(street) + str(landmark) + str(city) + str(postal_code),
+                            address=str(shop_no) + str(street)  + str(city) + str(postal_code),
                             password=password
                         )
                         merchant = User.objects.create(
@@ -463,14 +463,14 @@ class AddMerchant(View):
                         merchant.save()
                         shop_no = self.request.POST['shop_no']
                         street = self.request.POST['street']
-                        landmark = self.request.POST['landmark']
+                        # landmark = self.request.POST['landmark']
                         city = self.request.POST['city']
                         postal_code = self.request.POST['postal_code']
                         x = Branch.objects.create(
                             merchant_name=merchant_obj,
                             shop_no=shop_no,
                             street=street,
-                            landmark=landmark,
+                            # landmark=landmark,
                             city=city,
                             postal_code=postal_code,
                             code=0
@@ -507,7 +507,7 @@ class AddMerchant(View):
                         category=category_object,
                         email=email.lower(),
                         commercial_id=commercial_id,
-                        address=str(shop_no) + str(street) + str(landmark) + str(city) + str(postal_code),
+                        address=str(shop_no) + str(street) + str(city) + str(postal_code),
                         password=password
                     )
                     merchant = User.objects.create(
@@ -519,14 +519,14 @@ class AddMerchant(View):
                     merchant.save()
                     shop_no = self.request.POST['shop_no']
                     street = self.request.POST['street']
-                    landmark = self.request.POST['landmark']
+                    # landmark = self.request.POST['landmark']
                     city = self.request.POST['city']
                     postal_code = self.request.POST['postal_code']
                     x = Branch.objects.create(
                         merchant_name=merchant_obj,
                         shop_no=shop_no,
                         street=street,
-                        landmark=landmark,
+                        # landmark=landmark,
                         city=city,
                         postal_code=postal_code,
                         code=0
