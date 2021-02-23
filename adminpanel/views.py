@@ -65,7 +65,7 @@ class Login(View):
         print('Email-------', email)
         print('Password-------', password)
         try:
-            user_object = user.objects.get(email=email)
+            user_object = user.objects.get(email=email.lower())
             if user_object.check_password(password):
                 if user_object.is_superuser:
                     login(self.request, user_object)
@@ -386,13 +386,13 @@ class AddMerchant(View):
                     merchant_obj = Merchant.objects.create(
                         full_name=full_name,
                         category=category_object,
-                        email=email,
+                        email=email.lower(),
                         commercial_id=commercial_id,
                         address=str(shop_no) + str(street) + str(landmark) + str(city) + str(postal_code),
                         password=password
                     )
                     merchant = User.objects.create(
-                        email=email,
+                        email=email.lower(),
                         is_merchant=True
                     )
                     merchant.set_password(password)
@@ -449,7 +449,7 @@ class AddMerchant(View):
                         merchant_obj = Merchant.objects.create(
                             full_name=full_name,
                             category=category_object,
-                            email=email,
+                            email=email.lower(),
                             commercial_id=commercial_id,
                             address=str(shop_no) + str(street) + str(landmark) + str(city) + str(postal_code),
                             password=password
@@ -505,7 +505,7 @@ class AddMerchant(View):
                     merchant_obj = Merchant.objects.create(
                         full_name=full_name,
                         category=category_object,
-                        email=email,
+                        email=email.lower(),
                         commercial_id=commercial_id,
                         address=str(shop_no) + str(street) + str(landmark) + str(city) + str(postal_code),
                         password=password
