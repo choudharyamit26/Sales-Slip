@@ -725,7 +725,7 @@ class AddBranch(LoginRequiredMixin, CreateView):
         # merchant_id = self.request.POST['merchant_name']
         # merchant_obj = Merchant.objects.get(id=merchant_id)
         user = self.request.user
-        merchant_obj = Merchant.objects.get(email=user.email)
+        merchant_obj = Merchant.objects.filter(email=user.email).last()
         shop_no = self.request.POST['shop_no']
         street = self.request.POST['street']
         # landmark = self.request.POST['landmark']
