@@ -90,8 +90,9 @@ class MerchantLogin(View):
             if user_object.check_password(password):
                 print('inside check password')
                 if user_object.is_merchant:
-                    merchant = Merchant.objects.get(email=email.lower().strip())
-                    if merchant.blocked:
+                    merchant = Merchant.objects.filter(email=email.lower().strip())
+                    # if merchant.blocked:
+                    if merchant.last().blocked:
                         messages.error(self.request, "Email doesn't exists")
                         # return render(self.request, 'login.html', {"status": 400})
                         return HttpResponseRedirect(self.request.path_info, status=403)
