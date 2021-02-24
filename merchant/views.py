@@ -754,7 +754,7 @@ class BranchList(LoginRequiredMixin, ListView):
     def get(self, request, *args, **kwargs):
         user = self.request.user
         qs = self.request.GET.get('qs')
-        merchant_obj = Merchant.objects.get(email=user.email)
+        merchant_obj = Merchant.objects.filter(email=user.email).last()
         branches = Branch.objects.filter(merchant_name=merchant_obj).filter(blocked=False)
         if qs:
             search = Branch.objects.filter(merchant_name=merchant_obj).filter(
