@@ -1162,7 +1162,7 @@ class CreateCategory(LoginRequiredMixin, CreateView):
             messages.info(self.request, 'Category with this name already exists')
             return render(self.request, 'category.html')
         else:
-            Category.objects.create(category)
+            Category.objects.create(category_name=category)
             return redirect('adminpanel:category-list')
 
 
