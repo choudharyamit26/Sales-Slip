@@ -1198,6 +1198,10 @@ class MerchantDelete(LoginRequiredMixin, DeleteView):
         UserObj = User.objects.get(email=merchant_obj.email)
         UserObj.delete()
         # print(UserObj.email)
+        braches = Branch.objects.filter(merchant_name=merchant_obj)
+        for branch in braches:
+            branch.blocked = True
+            branch.save()
         messages.success(self.request, "Merchant deleted successfully")
         return HttpResponseRedirect('/adminpanel/merchant-list/')
 
