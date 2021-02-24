@@ -85,12 +85,12 @@ class MerchantLogin(View):
         print('inside post method merchant login email', email)
         print(self.request.POST['csrfmiddlewaretoken'])
         try:
-            user_object = user.objects.get(email=email.lower())
+            user_object = user.objects.get(email=email.lower().strip())
             print('User Object', user_object)
             if user_object.check_password(password):
                 print('inside check password')
                 if user_object.is_merchant:
-                    merchant = Merchant.objects.get(email=email.lower())
+                    merchant = Merchant.objects.get(email=email.lower().strip())
                     if merchant.blocked:
                         messages.error(self.request, "Email doesn't exists")
                         # return render(self.request, 'login.html', {"status": 400})
