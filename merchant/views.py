@@ -399,7 +399,7 @@ class CreateOrder(LoginRequiredMixin, CreateView):
             item_string = ','.join(x)
             total_string = ',Total : ' + str(order_total) + ', '
             item_string += total_string
-            merchant_obj = Merchant.objects.get(email=self.request.user.email)
+            merchant_obj = Merchant.objects.filter(email=self.request.user.email).last()
             branch_obj = Branch.objects.get(id=branch)
             user_string = 'User ID:{},Name of the user:{} {}, User Contact Number:{}'.format(user.id,
                                                                                              user_obj.first_name,
