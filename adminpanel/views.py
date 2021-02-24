@@ -1272,9 +1272,14 @@ class HideUser(LoginRequiredMixin, View):
         print(receipt_obj.merchant)
         print(receipt_obj.user)
         print(receipt_obj.merchant.email)
-        HiddenUsers.objects.create(
-            merchant=receipt_obj.merchant,
-            user=receipt_obj.user
-        )
+        try:
+            h = HiddenUsers.objects.get(receipt=receipt_obj)
+            h.delete()
+        except Exception as e:
+            HiddenUsers.objects.create(
+                receipt=receipt_obj,
+                merchant=receipt_obj.merchant,
+                user=receipt_obj.user
+            )
         messages.success(self.request, 'User has been hidden successfully')
         return HttpResponseRedirect('/adminpanel/receipt-list/')

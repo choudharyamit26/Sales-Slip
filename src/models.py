@@ -200,6 +200,7 @@ class SubAdmin(models.Model):
 
 
 class HiddenUsers(models.Model):
+    receipt = models.ForeignKey(Receipt, on_delete=models.CASCADE)
     merchant = models.ForeignKey(Merchant, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
