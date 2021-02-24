@@ -2052,4 +2052,7 @@ background:#fff;
 border:1px solid #ccc;
 height:34px;
 }
+.form-group.newSelector .filter-option{
+padding:0 !important;
+}
 //new css code end

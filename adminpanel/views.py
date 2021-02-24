@@ -1155,6 +1155,16 @@ class CreateCategory(LoginRequiredMixin, CreateView):
     form_class = CategoryForm
     success_url = reverse_lazy("adminpanel:category-list")
 
+    def post(self, request, *args, **kwargs):
+        categories = [x.category_name.lower() for x in Category.objects.all()]
+        category = self.request.POST['category_name']
+        if category.lower() in categories:
+            messages.info(self.request, 'Category with this name already exists')
+            return render(self.request, 'category.html')
+        else:
+            Category.objects.create(category)
+            return redirect('adminpanel:category-list')
+
 
 class CategoryList(LoginRequiredMixin, ListView):
     model = Category
