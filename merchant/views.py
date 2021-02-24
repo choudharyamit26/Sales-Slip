@@ -468,7 +468,7 @@ class OrderList(LoginRequiredMixin, ListView):
     login_url = 'merchant:login'
 
     def get(self, request, *args, **kwargs):
-        merchant_obj = Merchant.objects.get(email=self.request.user.email)
+        merchant_obj = Merchant.objects.filter(email=self.request.user.email).last()
         hidden_users = HiddenUsers.objects.filter(merchant=merchant_obj)
         print('>>>>', [x.user for x in hidden_users])
         receipts = Receipt.objects.filter(merchant=merchant_obj)
