@@ -346,7 +346,7 @@ class CreateOrder(LoginRequiredMixin, CreateView):
     def get(self, request, *args, **kwargs):
         users = User.objects.all().exclude(is_merchant=True).exclude(is_superuser=True)
         print(users)
-        merchant_obj = Merchant.objects.get(email=self.request.user.email)
+        merchant_obj = Merchant.objects.filter(email=self.request.user.email).last()
         print(merchant_obj)
         branches = Branch.objects.filter(merchant_name=merchant_obj)
         return render(self.request, 'order-new.html',
