@@ -824,7 +824,7 @@ class BranchPerformance(LoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
         user = self.request.user
-        merchant_obj = Merchant.objects.get(email=user.email)
+        merchant_obj = Merchant.objects.filter(email=user.email).last()
         branches = Branch.objects.filter(merchant_name=merchant_obj)
         receipts = []
         for branch in branches:
