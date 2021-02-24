@@ -136,7 +136,7 @@ class MerchantDashBoard(LoginRequiredMixin, ListView):
 
     def get(self, request, *args, **kwargs):
         # users_count = User.objects.all().exclude(is_superuser=True).exclude(is_merchant=True).count()
-        merchant = Merchant.objects.get(email=self.request.user.email)
+        merchant = Merchant.objects.filter(email=self.request.user.email).last()
         receipts_count = Receipt.objects.filter(merchant=merchant).count()
         users_count = []
         print(len(Receipt.objects.filter(merchant=merchant)))
