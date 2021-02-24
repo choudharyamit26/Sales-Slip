@@ -38,6 +38,7 @@
                                     <th>Category</th>
                                     <th>Merchant Email id</th>
                                     <th>User Email id</th>
+                                    <th>User Phone number</th>
                                     <th>Date</th>
                                     <th>action</th>
                                 </tr>
@@ -51,6 +52,7 @@
                                     <td>{{object.merchant.category.category_name}}</td>
                                     <td>{{object.merchant.email}}</td>
                                     <td>{{object.user.email}}</td>
+                                    <td>{{object.user.phone_number}}</td>
                                     <td>{{object.created_at}}</td>
                                     <td>
                                         <a class="Blue" href="{% url 'adminpanel:receipt-detail' object.id %}">
@@ -78,6 +80,7 @@
                                     <th>Category</th>
                                     <th>Merchant Email id</th>
                                     <th>User Email id</th>
+                                    <th>User Phone number</th>
                                     <th>Date</th>
                                     <th>action</th>
                                 </tr>
@@ -91,6 +94,7 @@
                                     <td>{{object.merchant.category.category_name}}</td>
                                     <td>{{object.merchant.email}}</td>
                                     <td>{{object.user.email}}</td>
+                                    <td>{{object.user.phone_number}}</td>
                                     <td>{{object.created_at}}</td>
                                     <td>
                                         <a class="Blue" href="{% url 'adminpanel:receipt-detail' object.id %}">
