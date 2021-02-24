@@ -123,7 +123,7 @@ class Dashboard(LoginRequiredMixin, ListView):
 
     def get(self, request, *args, **kwargs):
         users_count = User.objects.all().exclude(is_superuser=True).exclude(is_merchant=True).count()
-        merchant_count = Merchant.objects.all().count()
+        merchant_count = Merchant.objects.filter(blocked=False).count()
         receipts_count = Receipt.objects.all().count()
         context = {
             'users_count': users_count,
