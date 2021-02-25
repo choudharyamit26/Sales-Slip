@@ -119,6 +119,7 @@ class Login(View):
 
 class Dashboard(LoginRequiredMixin, ListView):
     model = User
+    login_url = 'adminpanel:login'
     template_name = 'dashboard-ereceipt.html'
 
     def get(self, request, *args, **kwargs):
@@ -294,7 +295,8 @@ class PasswordChangeDoneView(PasswordContextMixin, TemplateView):
 
 
 class UsersList(LoginRequiredMixin, ListView):
-    paginate_by = 5
+    paginate_by = 50
+    login_url = 'adminpanel:login'
     model = User
     template_name = 'user-management.html'
 
@@ -338,12 +340,17 @@ class UsersList(LoginRequiredMixin, ListView):
 class NotificationView(ListView):
     model = UserNotification
     template_name = 'notification.html'
+    login_url = 'adminpanel:login'
+
 
 
 class AddMerchant(View):
     model = Merchant
     template_name = 'merchant.html'
     form_class = MerchantForm
+    login_url = 'adminpanel:login'
+
+
 
     def get(self, request, *args, **kwargs):
         form = MerchantForm
