@@ -859,7 +859,7 @@ class MerchantList(LoginRequiredMixin, ListView):
     login_url = 'adminpanel:login'
     model = Merchant
     template_name = 'merchant_list.html'
-    paginate_by = 5
+    paginate_by = 50
 
     def get(self, request, *args, **kwargs):
         qs = self.request.GET.get('qs')
