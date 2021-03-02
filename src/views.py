@@ -1160,9 +1160,17 @@ class CreateReceiptManually(CreateAPIView):
         branch_obj = Branch.objects.get(code=branch)
         merchant_obj = Merchant.objects.get(id=merchant_id)
         if merchant_obj.blocked:
-            return Response({'message': "Merchant with this id does not exists", 'status': HTTP_400_BAD_REQUEST})
+            lang_setting_obj = Settings.objects.get(user=user)
+            if lang_setting_obj.language == 'English':
+                return Response({'message': "Merchant with this id does not exists", 'status': HTTP_400_BAD_REQUEST})
+            else:
+                return Response({'message': "التاجر بهذا المعرف غير موجود", 'status': HTTP_400_BAD_REQUEST})
         elif branch_obj.blocked:
-            return Response({'message': "Branch with this id does not exists", 'status': HTTP_400_BAD_REQUEST})
+            lang_setting_obj = Settings.objects.get(user=user)
+            if lang_setting_obj.language == 'English':
+                return Response({'message': "Branch with this id does not exists", 'status': HTTP_400_BAD_REQUEST})
+            else:
+                return Response({'message': "الفرع بهذا المعرف غير موجود", 'status': HTTP_400_BAD_REQUEST})
         else:
             category_obj = Category.objects.get(id=category)
             print('branch-----------------', branch_obj)
@@ -1193,7 +1201,12 @@ class CreateReceiptManually(CreateAPIView):
                 merchant=merchant_obj,
                 order=receipt_obj
             )
-            return Response({"message": "Order created successfully", 'id': receipt_obj.id, "status": HTTP_200_OK})
+            lang_setting_obj = Settings.objects.get(user=user)
+            if lang_setting_obj.language == 'English':
+                return Response({"message": "Order created successfully", 'id': receipt_obj.id, "status": HTTP_200_OK})
+            else:
+                return Response({"message": "تم إنشاء الطلب بنجاح", 'id': receipt_obj.id, "status": HTTP_200_OK})
+
 
 
 class GetLatestTransactions(ListAPIView):
