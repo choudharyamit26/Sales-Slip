@@ -1764,7 +1764,7 @@ class GetMerchantNameAndCategory(APIView):
     def get(self, request, *args, **kwargs):
         merchant_id = self.request.GET.get('merchant_name')
         try:
-            merchant_obj = Merchant.objects.filter(id=merchant_id)
+            merchant_obj = Merchant.objects.filter(full_name=merchant_id)
             if merchant_obj.blocked:
                 return Response({'message': 'Merchant does not exists', 'status': HTTP_400_BAD_REQUEST})
             else:
