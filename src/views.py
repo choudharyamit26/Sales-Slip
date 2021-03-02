@@ -1776,6 +1776,7 @@ class GetMerchantNameAndCategory(APIView):
                 else:
                     # for merchant in merchant_obj:
                     branch_obj = Branch.objects.filter(merchant_name=merchant).filter(blocked=False)
+                    print('<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<',branch_obj)
                     for branch in branch_obj:
                         branches.append({'branch_id': branch.id, 'branch_code': branch.code})
                         print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>',branches)
