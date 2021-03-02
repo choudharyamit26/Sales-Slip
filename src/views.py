@@ -1778,10 +1778,11 @@ class GetMerchantNameAndCategory(APIView):
                     branches = []
                     for branch in branch_obj:
                         branches.append({'branch_id': branch.id, 'branch_code': branch.code})
+                        print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>',branches)
                     # return Response({'name': merchant.full_name, 'category_id': merchant.category.id,
                     #                  'category': merchant.category.category_name, 'branches': branches,
                     #                  'status': HTTP_200_OK})
-                        merchants.append({'name': merchant.full_name, 'category_id': merchant.category.id,
+                    merchants.append({'name': merchant.full_name, 'category_id': merchant.category.id,
                                       'category': merchant.category.category_name, 'branches': branches})
             return Response({'data': merchants, 'status': HTTP_200_OK})
         except Exception as e:
