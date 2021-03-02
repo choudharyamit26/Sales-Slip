@@ -1761,8 +1761,9 @@ class GetMerchantNameAndCategory(APIView):
     # authentication_classes = (TokenAuthentication,)
     # permission_classes = (IsAuthenticated,)
 
-    def get(self, request, *args, **kwargs):
-        merchant_id = self.request.GET.get('merchant_name')
+    def post(self, request, *args, **kwargs):
+        # merchant_id = self.request.GET.get('merchant_name')
+        merchant_id = self.request.POST['merchant_name']
         try:
             merchant_obj = Merchant.objects.filter(full_name=merchant_id)
             for merchant in merchant_obj:
