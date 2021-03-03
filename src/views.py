@@ -1776,15 +1776,16 @@ class GetMerchantNameAndCategory(APIView):
                 else:
                     # for merchant in merchant_obj:
                     branch_obj = Branch.objects.filter(merchant_name=merchant).filter(blocked=False)
-                    print('<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<',branch_obj)
+                    print('<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<', branch_obj)
                     for branch in branch_obj:
                         branches.append({'branch_id': branch.id, 'branch_code': branch.code})
-                        print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>',branches)
+                        print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', branches)
                     # return Response({'name': merchant.full_name, 'category_id': merchant.category.id,
                     #                  'category': merchant.category.category_name, 'branches': branches,
                     #                  'status': HTTP_200_OK})
-                    merchants.append({'id':merchant.id,'name': merchant.full_name, 'category_id': merchant.category.id,
-                                      'category': merchant.category.category_name, 'branches': branches})
+                    merchants.append(
+                        {'id': merchant.id, 'name': merchant.full_name, 'category_id': merchant.category.id,
+                         'category': merchant.category.category_name, 'branches': branches})
             return Response({'data': merchants, 'status': HTTP_200_OK})
         except Exception as e:
             x = {'error': str(e)}
@@ -1932,3 +1933,23 @@ class UpdateProfilePic(APIView):
         user.profile_pic = profile_pic
         user.save()
         return Response({'message': "Profile pic updated successfully ", 'status': HTTP_200_OK})
+
+
+class GetMerchantDetail(APIView):
+
+    def get(self, request, *args, **kwargs):
+        merchant_id = self.request.GET.get('merchant_id')
+        try:
+            merchant_obj = Merchant.objects.get(id=merchant_id)
+            branches = []
+            merchant_detail = []
+            branch_obj = Branch.objects.filter(merchant_name=merchant_obj)
+            for branch in branch_obj:
+                branches.append({'branch_id': branch.id, 'branch_code': branch.code})
+            merchant_detail.append(
+                        {'id': merchant_obj.id, 'name': merchant_obj.full_name, 'category_id': merchant_obj.category.id,
+                         'category': merchant_obj.category.category_name, 'branches': branches})
+            return Response({'data': merchant_detail, 'status': HTTP_200_OK})
+        except Exception as e:
+            x = {'error': str(e)}
+            return Response({'message': x['error'], 'status': HTTP_400_BAD_REQUEST})
