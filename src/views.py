@@ -1612,7 +1612,8 @@ class POSOrder(CreateAPIView):
             # check_user = User.objects.get(phone_number=user_mobile_no)
             # if check_user:
             merchant_obj = Merchant.objects.get(id=merchant_id)
-            user = User.objects.get(phone_number=user_mobile_no)
+            # user = User.objects.get(phone_number=user_mobile_no)
+            user = User.objects.get(email=customer_email)
             category_obj = Category.objects.get(id=category)
             order_id = get_random_string(16)
             final_item = zip(product_name, product_cost, product_quantity)
