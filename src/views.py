@@ -1607,6 +1607,8 @@ class POSOrder(CreateAPIView):
         product_quantity = self.request.data['product_quantity']
         order_amount = self.request.data['order_amount']
         vat_percent = self.request.data['vat_percent']
+        print('-------------------------------------',self.request.data)
+        order_id = get_random_string(16)
         try:
             check_user = User.objects.get(phone_number=user_mobile_no)
             if check_user:
@@ -1614,7 +1616,6 @@ class POSOrder(CreateAPIView):
                 user = User.objects.get(email=customer_email)
                 category_obj = Category.objects.get(id=category)
                 final_item = zip(product_name, product_cost, product_quantity)
-                order_id = get_random_string(16)
                 for item in final_item:
                     order_obj = OrderItem.objects.create(
                         user=user,
@@ -1622,7 +1623,7 @@ class POSOrder(CreateAPIView):
                         price=item[1],
                         quantity=item[2],
                         vat=vat_percent,
-                        total=order_amount + (15 / 100) * order_amount,
+                        total=order_amount + (vat_percent / 100) * order_amount,
                         order_id=order_id
                     )
                 ordered_items = OrderItem.objects.filter(order_id=order_id)
@@ -1708,7 +1709,7 @@ class POSOrder(CreateAPIView):
                     price=item[1],
                     quantity=item[2],
                     vat=vat_percent,
-                    total=order_amount + (15 / 100) * order_amount,
+                    total=order_amount + (vat_percent / 100) * order_amount,
                     order_id=order_id
                 )
             ordered_items = OrderItem.objects.filter(order_id=order_id)
