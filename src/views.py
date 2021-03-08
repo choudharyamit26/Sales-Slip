@@ -1690,7 +1690,7 @@ class POSOrder(CreateAPIView):
                 country_code=country_code,
                 phone_number=user_mobile_no,
                 # profile_pic=profile_pic,
-                # email=email,
+                email=customer_email,
                 # device_token=device_token
             )
             user.set_password('FatorTech@001')
