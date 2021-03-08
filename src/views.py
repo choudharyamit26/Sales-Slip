@@ -1622,7 +1622,8 @@ class POSOrder(CreateAPIView):
                     product=item[0],
                     price=item[1],
                     quantity=item[2],
-                    vat=15,
+                    vat=(vat_percent / 100) * order_amount,
+                    vat_percent=vat_percent,
                     total=order_amount + (vat_percent / 100) * order_amount,
                     order_id=order_id
                 )
@@ -1710,7 +1711,8 @@ class POSOrder(CreateAPIView):
                     product=item[0],
                     price=item[1],
                     quantity=item[2],
-                    vat=15,
+                    vat=(vat_percent / 100) * order_amount,
+                    vat_percent=vat_percent,
                     total=order_amount + (vat_percent / 100) * order_amount,
                     order_id=order_id
                 )
