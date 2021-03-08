@@ -1608,13 +1608,13 @@ class POSOrder(CreateAPIView):
         order_amount = self.request.data['order_amount']
         vat_percent = self.request.data['vat_percent']
         print('-------------------------------------',self.request.data)
-        order_id = get_random_string(16)
         try:
             check_user = User.objects.get(phone_number=user_mobile_no)
             if check_user:
                 merchant_obj = Merchant.objects.get(id=merchant_id)
                 user = User.objects.get(email=customer_email)
                 category_obj = Category.objects.get(id=category)
+                order_id = get_random_string(16)
                 final_item = zip(product_name, product_cost, product_quantity)
                 for item in final_item:
                     order_obj = OrderItem.objects.create(
@@ -1685,6 +1685,7 @@ class POSOrder(CreateAPIView):
             #     return Response({"message": "Order created successfully", "status": HTTP_200_OK})
         except Exception as e:
             print(e)
+            print('Inside except block---->>',self.request.data)
             user = User.objects.create(
                 # first_name=first_name,
                 # last_name=last_name,
