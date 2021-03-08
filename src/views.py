@@ -1630,6 +1630,9 @@ class POSOrder(CreateAPIView):
             ordered_items = OrderItem.objects.filter(order_id=order_id)
             receipt_obj = Receipt.objects.create(
                 user=user,
+                vat=(vat_percent / 100) * order_amount,
+                amount=order_amount,
+                total=(vat_percent / 100) * order_amount + order_amount,
                 merchant=merchant_obj,
                 branch=Branch.objects.get(code=branch)
             )
@@ -1720,6 +1723,9 @@ class POSOrder(CreateAPIView):
             ordered_items = OrderItem.objects.filter(order_id=order_id)
             receipt_obj = Receipt.objects.create(
                 user=user,
+                vat=(vat_percent / 100) * order_amount,
+                amount=order_amount,
+                total=(vat_percent / 100) * order_amount + order_amount,
                 merchant=merchant_obj,
                 branch=Branch.objects.get(code=branch)
             )
