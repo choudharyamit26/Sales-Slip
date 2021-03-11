@@ -1591,6 +1591,7 @@ class FirstViewSet(ModelViewSet):
 
 
 class POSOrder(CreateAPIView):
+    queryset = Receipt.objects.all()
 
     def post(self, request, *args, **kwargs):
         country_code = self.request.data['country_code']
