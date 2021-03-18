@@ -112,7 +112,7 @@ class MerchantLogin(View):
                             return response
                         else:
                             self.request.session.set_expiry(0)
-                        return redirect('merchant:dashboard')
+                        return redirect('dashboard')
                 else:
                     messages.error(self.request, "You are not authorised")
                     # return render(self.request, 'login.html', {"status": 400})
