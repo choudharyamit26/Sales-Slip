@@ -97,7 +97,7 @@ function login() {
     console.log(email,password,remember_me)
 
     console.log(email,password,remember_me)
-    var url = "{% url 'merchant:login' %}";
+    var url = "{% host_url 'login' host 'merchant' %}";
     $.ajax({
         url: url,
         method: 'POST',
