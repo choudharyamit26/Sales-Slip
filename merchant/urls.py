@@ -11,7 +11,7 @@ app_name = 'merchant'
 
 urlpatterns = [
 
-    path('', MerchantLogin.as_view(), name='login'),
+    path('login/', MerchantLogin.as_view(), name='login'),
     path('dashboard/', MerchantDashBoard.as_view(), name='dashboard'),
     path('logout/', MerchantLogout.as_view(), name='logout'),
     path('password-reset/',
