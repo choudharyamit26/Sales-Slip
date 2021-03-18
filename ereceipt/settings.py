@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'fcm_django',
     'storages',
     'django_extensions',
-    'django_hosts'
+    # 'django_hosts'
 
 ]
 
