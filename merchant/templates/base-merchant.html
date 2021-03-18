@@ -1,5 +1,4 @@
 {% load static %}
-{% load hosts %}
 <head>
     <title>Merchant Panel | Dashboard</title>
     <meta charset="UTF-8">
@@ -59,9 +58,9 @@
                     <figure><img src="{{user.profile_pic.url}}"></figure>
                     <h4> {{user}} <span>Administrator</span></h4>
                 </li>
-                <li><a href="{% host_url 'change_password' host 'merchant' %}"><span><i class="fa fa-cog"></i></span> Setting</a>
+                <li><a href="{% url 'merchant:change_password' %}"><span><i class="fa fa-cog"></i></span> Setting</a>
                 </li>
-                <li><a href="{% host_url 'logout' host 'merchant' %}"><span><i class="fa fa-sign-out"></i></span> Logout</a></li>
+                <li><a href="{% url 'merchant:logout' %}"><span><i class="fa fa-sign-out"></i></span> Logout</a></li>
             </ul>
         </div>
         <div class="clear"></div>
@@ -72,12 +71,12 @@
     <ul>
 
         <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'merchant:dashboard' %}active{% endif %}">
-            <a href="{% host_url 'dashboard' host 'merchant'  %}">
+            <a href="{% url 'merchant:dashboard'  %}">
                 <span><i class="fa fa-tachometer"></i></span> Dashboard
             </a>
         </li>
         <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'merchant:create-order' %}active{% endif %}">
-            <a href="{% host_url 'create-order' host 'merchant'  %}">
+            <a href="{% url 'merchant:create-order'  %}">
                 <span><i class="fa fa-first-order"></i></span>Generate QR Code
             </a>
         </li>
@@ -87,17 +86,17 @@
         <!--            </a>-->
         <!--        </li>-->
         <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'merchant:order-list' %}active{% endif %}">
-            <a href="{% host_url 'order-list' host 'merchant'  %}">
+            <a href="{% url 'merchant:order-list'  %}">
                 <span><i class="fa fa-list"></i></span> Receipt's Management
             </a>
         </li>
         <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'merchant:add-branch' %}active{% endif %}">
-            <a href="{% host_url 'add-branch' host 'merchant'  %}">
+            <a href="{% url 'merchant:add-branch'  %}">
                 <span><i class="fa fa-building"></i></span> Add Branch
             </a>
         </li>
         <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'merchant:branch-list' %}active{% endif %}">
-            <a href="{% host_url 'branch-list' host 'merchant'  %}">
+            <a href="{% url 'merchant:branch-list'  %}">
                 <span><i class="fa fa fa-list-alt"></i></span>Branch List
             </a>
         </li>
@@ -112,12 +111,12 @@
         <!--            </a>-->
         <!--        </li>-->
         <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'merchant:profile' %}active{% endif %}">
-            <a href="{% host_url 'profile' host 'merchant'  %}">
+            <a href="{% url 'merchant:profile'  %}">
                 <span><i class="fa fa-flag"></i></span> My Profile
             </a>
         </li>
         <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'merchant:branch-performance' %}active{% endif %}">
-            <a href="{% host_url 'branch-performance' host 'merchant' %}">
+            <a href="{% url 'merchant:branch-performance'  %}">
                 <span><i class="fa fa-pie-chart"></i></span> Branch Performance
             </a>
         </li>
@@ -165,7 +164,7 @@
         <!--        </li>-->
 
         <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'logout' %}active{% endif %}">
-            <a href="{% host_url 'logout' host 'merchant' %}">
+            <a href="{% url 'merchant:logout' %}">
                 <span><i class="fa fa-sign-out"></i></span>
                 <p>Logout</p>
             </a>
