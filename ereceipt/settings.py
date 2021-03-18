@@ -64,9 +64,9 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'ereceipt.urls'
-ROOT_HOSTCONF = 'ereceipt.hosts'  # Change `mysite` to the name of your project
-DEFAULT_HOST = 'www'
-PARENT_HOST = 'fatortech.net'
+# ROOT_HOSTCONF = 'ereceipt.hosts'  # Change `mysite` to the name of your project
+# DEFAULT_HOST = 'www'
+# PARENT_HOST = 'fatortech.net'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
