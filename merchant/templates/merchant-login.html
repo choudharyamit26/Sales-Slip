@@ -1,5 +1,4 @@
 {% load static %}
-{% load hosts %}
 <html lang="en-us">
 
 <head>
@@ -64,7 +63,7 @@
             </div>
 
             <div class="Checkboxs">
-                <a href="{% host_url 'password_reset' host 'merchant' %}">Forgot password?</a>
+                <a href="{% url 'merchant:password_reset' %}">Forgot password?</a>
                 <label class="CheckBox" id="check">Remember Me
                     <input name="remember_me" class="remember_me" id='remember' type="checkbox" value="{{cookie3}}">
                     <span class="checkmark"></span>
@@ -97,7 +96,7 @@ function login() {
     console.log(email,password,remember_me)
 
     console.log(email,password,remember_me)
-    var url = "{% host_url 'login' host 'merchant' %}";
+    var url = "{% url 'merchant:login' %}";
     $.ajax({
         url: url,
         method: 'POST',
