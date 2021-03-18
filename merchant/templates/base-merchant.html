@@ -1,4 +1,5 @@
 {% load static %}
+{% load hosts %}
 <head>
     <title>Merchant Panel | Dashboard</title>
     <meta charset="UTF-8">
@@ -58,9 +59,9 @@
                     <figure><img src="{{user.profile_pic.url}}"></figure>
                     <h4> {{user}} <span>Administrator</span></h4>
                 </li>
-                <li><a href="{% url 'merchant:change_password' %}"><span><i class="fa fa-cog"></i></span> Setting</a>
+                <li><a href="{% host_url 'merchant:change_password' host 'merchant' %}"><span><i class="fa fa-cog"></i></span> Setting</a>
                 </li>
-                <li><a href="{% url 'merchant:logout' %}"><span><i class="fa fa-sign-out"></i></span> Logout</a></li>
+                <li><a href="{% host_url 'merchant:logout' host 'merchant' %}"><span><i class="fa fa-sign-out"></i></span> Logout</a></li>
             </ul>
         </div>
         <div class="clear"></div>
@@ -71,12 +72,12 @@
     <ul>
 
         <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'merchant:dashboard' %}active{% endif %}">
-            <a href="{% url 'merchant:dashboard'  %}">
+            <a href="{% host_url 'merchant:dashboard' host 'merchant'  %}">
                 <span><i class="fa fa-tachometer"></i></span> Dashboard
             </a>
         </li>
         <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'merchant:create-order' %}active{% endif %}">
-            <a href="{% url 'merchant:create-order'  %}">
+            <a href="{% host_url 'merchant:create-order' host 'merchant'  %}">
                 <span><i class="fa fa-first-order"></i></span>Generate QR Code
             </a>
         </li>
@@ -86,17 +87,17 @@
         <!--            </a>-->
         <!--        </li>-->
         <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'merchant:order-list' %}active{% endif %}">
-            <a href="{% url 'merchant:order-list'  %}">
+            <a href="{% host_url 'merchant:order-list' host 'merchant'  %}">
                 <span><i class="fa fa-list"></i></span> Receipt's Management
             </a>
         </li>
         <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'merchant:add-branch' %}active{% endif %}">
-            <a href="{% url 'merchant:add-branch'  %}">
+            <a href="{% host_url 'merchant:add-branch' host 'merchant'  %}">
                 <span><i class="fa fa-building"></i></span> Add Branch
             </a>
         </li>
         <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'merchant:branch-list' %}active{% endif %}">
-            <a href="{% url 'merchant:branch-list'  %}">
+            <a href="{% host_url 'merchant:branch-list' host 'merchant'  %}">
                 <span><i class="fa fa fa-list-alt"></i></span>Branch List
             </a>
         </li>
@@ -111,12 +112,12 @@
         <!--            </a>-->
         <!--        </li>-->
         <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'merchant:profile' %}active{% endif %}">
-            <a href="{% url 'merchant:profile'  %}">
+            <a href="{% host_url 'merchant:profile' host 'merchant'  %}">
                 <span><i class="fa fa-flag"></i></span> My Profile
             </a>
         </li>
         <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'merchant:branch-performance' %}active{% endif %}">
-            <a href="{% url 'merchant:branch-performance'  %}">
+            <a href="{% host_url 'merchant:branch-performance' host 'merchant' %}">
                 <span><i class="fa fa-pie-chart"></i></span> Branch Performance
             </a>
         </li>
@@ -164,7 +165,7 @@
         <!--        </li>-->
 
         <li class="nav-item nav-link {% if request.resolver_match.view_name  == 'logout' %}active{% endif %}">
-            <a href="{% url 'merchant:logout' %}">
+            <a href="{% host_url 'merchant:logout' host 'merchant' %}">
                 <span><i class="fa fa-sign-out"></i></span>
                 <p>Logout</p>
             </a>
