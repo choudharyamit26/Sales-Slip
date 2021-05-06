@@ -1,8 +1,9 @@
 from datetime import datetime
 from random import randint
 
+import requests
 from django.core.mail import EmailMessage
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.utils import timezone
 from rest_framework.generics import CreateAPIView, UpdateAPIView, ListAPIView
 from django.utils.decorators import method_decorator
@@ -1968,3 +1969,32 @@ class GetMerchantDetail(APIView):
         except Exception as e:
             x = {'error': str(e)}
             return Response({'message': x['error'], 'status': HTTP_400_BAD_REQUEST})
+
+
+class FoodicsAPI(APIView):
+
+    def get(self, request, *args, **kwargs):
+        client_id = '934f88da-2f2a-425d-8246-1f784b5a24be'
+        state = 'random'
+        return redirect(f"https://console-sandbox.foodics.com/authorize?client_id={client_id}&state={state}")
+
+
+class GetParamsfromUrl(APIView):
+    def get(self, request, *args, **kwargs):
+        client_id = '934f88da-2f2a-425d-8246-1f784b5a24be'
+        client_secret = 'vlUwxMcASxqxKgaomUZQQuzYozOKsd5lido3XFzn'
+        code = self.request.GET.get('code')
+        state = self.request.GET.get('state')
+        x = requests.post('https://api-sandbox.foodics.com/oauth/token', data={"grant_type": "authorization_code",
+                                                                               "code": code,
+                                                                               "client_id": client_id,
+                                                                               "client_secret": client_secret,
+                                                                               "redirect_uri": "https://www.fatortech.net/foodics-success"})
+
+        return Response({'data': x.json()})
+
+
+class FoodicsWebHookUrl(APIView):
+
+    def get(self, request, *args, **kwargs):
+        return Response({'message': 'success'})
