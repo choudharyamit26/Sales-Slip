@@ -1,24 +1,23 @@
-from datetime import datetime
 from random import randint
 
 import requests
 from django.core.mail import EmailMessage
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from django.utils import timezone
-from rest_framework.generics import CreateAPIView, UpdateAPIView, ListAPIView
+from django.utils.crypto import get_random_string
 from django.utils.decorators import method_decorator
-
 from django.views.decorators.csrf import csrf_exempt
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
-from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_200_OK, HTTP_404_NOT_FOUND
-
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.generics import CreateAPIView, UpdateAPIView, ListAPIView
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.settings import api_settings
+from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_200_OK, HTTP_404_NOT_FOUND
 from rest_framework.views import APIView
+from rest_framework.viewsets import ModelViewSet
 
-from django.utils.crypto import get_random_string
 from .fcm_notification import send_another, send_to_one
 from .models import User, Settings, UserNotification, Otp, ScannedData, Merchant, Receipt, Category, OrderItem, FAQ, \
     TermsAndCondition, ContactUs, PrivacyPolicy, AboutUs, Branch, Banner
@@ -26,9 +25,6 @@ from .serializers import UserCreateSerializer, AuthTokenSerializer, ForgetPasswo
     UpdateNotificationSerializer, NotificationSerializer, OtpSerializer, UpdatePhoneSerializer, ScannedDataSerializer, \
     TermsandConditionSerializer, ContactUsSerializer, PrivacyPolicySerializer, LanguageSettingSerializer, \
     NotificationSettingSerializer, SettingsSerializer, FAQSerializer, LanguageSettingsSerializer, UpdateEmailSerializer
-
-from rest_framework.settings import api_settings
-from rest_framework.viewsets import ModelViewSet
 
 
 def remove_html_tags(text):
@@ -1835,7 +1831,6 @@ class FilterExpenseDataByMonth(APIView):
                 else:
                     final.append(y)
             return Response({'expense_data_by_month': final, 'status': HTTP_200_OK})
-
         except Exception as e:
             x = {'error': str(e)}
             return Response({'message': x['error'], 'status': HTTP_400_BAD_REQUEST})
@@ -1989,7 +1984,7 @@ class GetParamsfromUrl(APIView):
                                                                                "code": code,
                                                                                "client_id": client_id,
                                                                                "client_secret": client_secret,
-                                                                               "redirect_uri": "https://www.fatortech.net/foodics-success"})
+                                                                               "redirect_uri": "https://www.fatortech.net/api/foodics-success/"})
 
         return Response({'data': x.json()})
 
