@@ -1980,6 +1980,7 @@ class GetParamsfromUrl(APIView):
         client_secret = 'vlUwxMcASxqxKgaomUZQQuzYozOKsd5lido3XFzn'
         code = self.request.GET.get('code')
         state = self.request.GET.get('state')
+        # https: // www.fatortech.net/api/foodics-success/?code = def50200ca8f46c518bc6e27a009d59113d30d87b37d66332fee402196c909c69b74db0a838c8fb20919d50ae48994c77093c74a3e8138724f74f0d6a1871d06d5b3a3905c2f25a40dcd308b3d7c71f7db678821a45e54e050cfdae50486cea85b5d71f715b4dc0335b4199e39321294257709ced9aaf2efe7ec5c04265560d663797891f6144008dc875759eb73712866fb38e115d2a14c6aadd4108d7c459207c3b50a061710597224497e1f36f437e5efc09b84f4049b4f5f1cc6465068e0e2c49ca5a24ac8cd0f1eccae3f6f72d7daad0d5c5378b24f2c63c5e1b96a676cedf0191ad1cd6d7158f32662498ecd403d40c57edd2e5886827baabfac29b9cd5e6207a2713fb64c0a5d8978d7f48cdbf1f1b7ff9ea3023dc19820d1aa557eca77f7480e418440db9439108dadb0d5d94f9f6fa24e7c40e9e5220abb385a2cb0387929fec666d3e500c69feca20b0124b0b8236c1b8df3ee9a37eaef37320d453ed812dd78ac7c04114dc3adeae22d1696be2835aad64905daebec0698a1df3d79f90f93fa61fcbcb527aa0099f85a88e8f90c3e970540cfcb44011ee3146784faaee3b40ca9f404f9dd518fd2614cc279ef82a6b8f5 & state = random
         x = requests.post('https://api-sandbox.foodics.com/oauth/token', data={"grant_type": "authorization_code",
                                                                                "code": code,
                                                                                "client_id": client_id,

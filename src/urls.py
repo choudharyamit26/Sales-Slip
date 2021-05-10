@@ -77,6 +77,6 @@ urlpatterns = [
     path('notification-count/', NotificationCount.as_view(), name='notification-count'),
     path('merchant-detail/', GetMerchantDetail.as_view(), name='merchant-detail'),
     path('foodics-api/', FoodicsAPI.as_view(), name='foodics-api'),
-    path('foodics-success/', GetParamsfromUrl.as_view(), name='foodics-success'),
-    path('foodics-webhook/', FoodicsWebHookUrl.as_view(), name='foodics-webhook'),
+    path('foodics-success', GetParamsfromUrl.as_view(), name='foodics-success'),
+    path('foodics-webhook', FoodicsWebHookUrl.as_view(), name='foodics-webhook'),
 ]
