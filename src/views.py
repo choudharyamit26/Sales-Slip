@@ -1985,7 +1985,7 @@ class GetParamsfromUrl(APIView):
                                                                                "code": code,
                                                                                "client_id": client_id,
                                                                                "client_secret": client_secret,
-                                                                               "redirect_uri": "https://www.fatortech.net/api/foodics-success/"})
+                                                                               "redirect_uri": "https://www.fatortech.net/api/foodics-success"})
 
         return Response({'data': x.json()})
 
