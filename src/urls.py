@@ -11,7 +11,7 @@ from .views import UserCreateAPIView, LoginAPIView, ForgetPasswordAPIView, Chang
     FirstViewSet, AboutUsView, UpdateEmailView, AddToCart, GetCategoryList, POSOrder, GetCartItemDetail, \
     GetMerchantNameAndCategory, FilterExpenseDataByMonth, FilterExpenseDataByCategory, AutoOrderCreation, \
     GetBannersView, SignUpTermsandConditionApiView, UpdateProfilePic, NotificationCount, GetMerchantDetail, FoodicsAPI, \
-    GetParamsfromUrl, FoodicsWebHookUrl, GetFoodicsToken
+    GetParamsfromUrl, FoodicsWebHookUrl, GetFoodicsToken, FetchDataFromFoodicsApi
 
 app_name = 'src'
 # router = DefaultRouter()
@@ -80,4 +80,5 @@ urlpatterns = [
     path('foodics-success', GetParamsfromUrl.as_view(), name='foodics-success'),
     path('foodics-token/', GetFoodicsToken.as_view(), name='foodics-token'),
     path('foodics-webhook', FoodicsWebHookUrl.as_view(), name='foodics-webhook'),
+    path('foodics-data', FetchDataFromFoodicsApi.as_view(), name='foodics-data'),
 ]

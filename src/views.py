@@ -2009,10 +2009,25 @@ class GetFoodicsToken(APIView):
                                 "client_id": client_id,
                                 "client_secret": client_secret,
                                 "redirect_uri": "https://fatortech.net/api/foodics-success"})
+        request.session['access_token'] = x.json()['access_token']
+        request.session['refresh_token'] = x.json()['refresh_token']
+        # request.session['code'] = code
         return Response({'data': x.json()})
 
 
 class FoodicsWebHookUrl(APIView):
 
     def get(self, request, *args, **kwargs):
-        return Response({'data': x.json()})
+        return Response({'message': 'Success', 'status': HTTP_200_OK})
+
+
+class FetchDataFromFoodicsApi(APIView):
+
+    def get(self, request, *args, **kwargs):
+        # api-sandbox.foodics.com/v5
+        # get settings
+        access_token = request.session['access_token']
+        refresh_token = request.session['refresh_token']
+        x = request.get('api-sandbox.foodics.com/v5/settings',
+                        headers={'Authorization': 'Bearer {}'.format(refresh_token)})
+        return Response({'data': x.json(), 'status': HTTP_200_OK})
