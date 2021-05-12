@@ -2028,6 +2028,6 @@ class FetchDataFromFoodicsApi(APIView):
         # get settings
         access_token = request.session['access_token']
         refresh_token = request.session['refresh_token']
-        x = requests.get('api-sandbox.foodics.com/v5/settings',
+        x = requests.get('http://api-sandbox.foodics.com/v5/settings',
                         headers={'Authorization': 'Bearer {}'.format(refresh_token)})
         return Response({'data': x.json(), 'status': HTTP_200_OK})
