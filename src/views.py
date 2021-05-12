@@ -1995,11 +1995,10 @@ class GetParamsfromUrl(APIView):
         request.session['code'] = code
 
         # return Response({'data': x.json()})
-        return redirect("src:foodics-webhook")
+        return redirect("src:foodics-token")
 
 
-class FoodicsWebHookUrl(APIView):
-
+class GetFoodicsToken(APIView):
     def get(self, request, *args, **kwargs):
         client_id = '934f88da-2f2a-425d-8246-1f784b5a24be'
         client_secret = 'vlUwxMcASxqxKgaomUZQQuzYozOKsd5lido3XFzn'
@@ -2010,4 +2009,10 @@ class FoodicsWebHookUrl(APIView):
                                 "client_id": client_id,
                                 "client_secret": client_secret,
                                 "redirect_uri": "https://fatortech.net/api/foodics-success"})
+        return Response({'data': x.json()})
+
+
+class FoodicsWebHookUrl(APIView):
+
+    def get(self, request, *args, **kwargs):
         return Response({'data': x.json()})
