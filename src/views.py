@@ -1984,17 +1984,30 @@ class GetParamsfromUrl(APIView):
         print(code)
         headers = 'Content-Type: Application/json'
         state = self.request.GET.get('state')
-        x = requests.post('https://api-sandbox.foodics.com/oauth/token', headers=headers,
-                          data={"grant_type": "authorization_code",
-                                "code": code,
-                                "client_id": client_id,
-                                "client_secret": client_secret,
-                                "redirect_uri": "https://fatortech.net/api/foodics-success"})
+        # headers = {'Content-Type': 'Application/json'}
+        # x = requests.post('https://api-sandbox.foodics.com/oauth/token',
+        #                   data={"grant_type": "authorization_code",
+        #                         "code": code,
+        #                         "client_id": client_id,
+        #                         "client_secret": client_secret,
+        #                         "redirect_uri": "https://fatortech.net/api/foodics-success"}
+        #                   )
+        request.session['code'] = code
 
-        return Response({'data': x.json()})
+        # return Response({'data': x.json()})
+        return redirect("src:foodics-webhook")
 
 
 class FoodicsWebHookUrl(APIView):
 
     def get(self, request, *args, **kwargs):
-        return Response({'message': 'success'})
+        client_id = '934f88da-2f2a-425d-8246-1f784b5a24be'
+        client_secret = 'vlUwxMcASxqxKgaomUZQQuzYozOKsd5lido3XFzn'
+        code = request.session['code']
+        x = requests.post('https://api-sandbox.foodics.com/oauth/token',
+                          data={"grant_type": "authorization_code",
+                                "code": code,
+                                "client_id": client_id,
+                                "client_secret": client_secret,
+                                "redirect_uri": "https://fatortech.net/api/foodics-success"})
+        return Response({'data': x.json()})
