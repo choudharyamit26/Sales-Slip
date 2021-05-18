@@ -1951,10 +1951,16 @@ class GetMerchantDetail(APIView):
     def get(self, request, *args, **kwargs):
         merchant_id = self.request.GET.get('merchant_id')
         try:
-            merchant_obj = Merchant.objects.get(id=merchant_id)
+            # merchant_obj = Merchant.objects.get(id=merchant_id)
+            # print(Merchant.objects.get(id=merchant_id).explain())
+            merchant_obj = Merchant.objects.select_related('category').get(id=merchant_id)
+            # print(Merchant.objects.select_related('category').get(id=merchant_id).explain())
             branches = []
             merchant_detail = []
-            branch_obj = Branch.objects.filter(merchant_name=merchant_obj)
+            # branch_obj = Branch.objects.filter(merchant_name=merchant_obj)
+            # print('>>>>', branch_obj.explain())
+            branch_obj = Branch.objects.select_related('merchant_name').filter(merchant_name=merchant_obj)
+            print('<<<<<', branch_obj.explain())
             for branch in branch_obj:
                 branches.append({'branch_id': branch.id, 'branch_code': branch.code})
             merchant_detail.append(
@@ -2009,8 +2015,8 @@ class GetFoodicsToken(APIView):
                                 "client_id": client_id,
                                 "client_secret": client_secret,
                                 "redirect_uri": "https://fatortech.net/api/foodics-success"})
-        request.session['access_token'] = x.json()['access_token']
-        request.session['refresh_token'] = x.json()['refresh_token']
+        # request.session['access_token'] = x.json()['access_token']
+        # request.session['refresh_token'] = x.json()['refresh_token']
         # request.session['code'] = code
         return Response({'data': x.json()})
 
@@ -2026,8 +2032,27 @@ class FetchDataFromFoodicsApi(APIView):
     def get(self, request, *args, **kwargs):
         # api-sandbox.foodics.com/v5
         # get settings
-        access_token = request.session['access_token']
-        refresh_token = request.session['refresh_token']
-        x = requests.get('http://api-sandbox.foodics.com/v5/settings',
-                        headers={'Authorization': 'Bearer {}'.format(refresh_token)})
-        return Response({'data': x.json(), 'status': HTTP_200_OK})
+        # access_token = request.session['access_token']
+        # refresh_token = request.session['refresh_token']
+        # refresh_token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImMyZjExNmM3MDZmMjQ2ZGI5ZmQ0NDJlNjA5MDE3YTFkMDg1MWZmZjk1MDNmZDNkMWJjYTM4ZjNkY2E4M2U4ZTc4ZGRkZDY5NmMxZTNjNWYwIn0.eyJhdWQiOiI5MzRmODhkYS0yZjJhLTQyNWQtODI0Ni0xZjc4NGI1YTI0YmUiLCJqdGkiOiJjMmYxMTZjNzA2ZjI0NmRiOWZkNDQyZTYwOTAxN2ExZDA4NTFmZmY5NTAzZmQzZDFiY2EzOGYzZGNhODNlOGU3OGRkZGQ2OTZjMWUzYzVmMCIsImlhdCI6MTYyMTMzNTgwMiwibmJmIjoxNjIxMzM1ODAyLCJleHAiOjE3NzkxMDIyMDIsInN1YiI6IjkzNGY5NjZhLWVjNTUtNGYwOC04OTE2LTQyMmQyNjBkN2IzZiIsInNjb3BlcyI6W10sImJ1c2luZXNzIjoiOTM0Zjk2NmItMDIwYi00NWM5LWI5ZWQtZTUwMDk5ZmE2MzYxIiwicmVmZXJlbmNlIjoiMjk4OTQ2In0.mCXcLHnAdjClEV1wZ53NxoRg0805coTnHvjs7bR5jNzJyOllZZhYwEuMacCH2ETtBeeD3cUWb5PZ6tkO7JPZTQcpqj2jQCQ51PFRzt50nb77pwEQ7iwAA7Weh3MNcujIoIRafLBvBwqZzk1IRIpTs3RXlL92h88IQT0vArFp_kc8BzvNdDbD0tWnlxwd6ML7zT7E0qNm3Ciix4yoHzjCgcOqw1xLCdULhFFPi-2fPoJFXnfjhcyu1HjOHrFNdT-wssFARxrE65_D1TRrGhtlPZMjqZqxhDJFUfDjETJc2eyMymIVQNyi5x2BRmM8tZDG0lHqWCSdgXSH-11RVSRvdpiBeZ6AwY64UzLVNcqVp81mwakOj15MIvaHlfkZ857DeCtaZDx1RntZwTHdov77sttwdiC-AVbLOqNCkrprQEB0FvS8Ro5sXeUgjhVTwH6f3BZj3iC7RVC7VgETtYa8Nl1ENt96bGR1qAx7Fm2O79xjQ0SaBotVgOO0R4QVMNTh5N2OjoDKvn-6HPB4nrw3rG-vXRCRU2UtJPHBwhnlqp-DBdyNwzZ7TXwc0iI5bV1jAFAbprEyCmQ_nQwjKTRgfgNV6Djegzc-qaOM2cStmSvxPeWLQjg7c9jWcUdJAH21PNRM7wIId8JgcKVtZDmLb1kXtgL_w5qsLHAR_wQHNlI'
+        # header = {'authorization': 'Bearer {}'.format(refresh_token)}
+        if request.is_secure():
+            protocol = "https"
+        else:
+            protocol = "http"
+        domain = request.META['HTTP_HOST']
+        print(protocol)
+        print(domain)
+        print(f'{protocol}://{domain}/api/foodics-token/')
+        y = requests.get(f'{protocol}://{domain}/api/foodics-token/')
+        print(y)
+        print(y.json())
+        access_token = y.json()['access_token']
+        from requests.structures import CaseInsensitiveDict
+        headers = CaseInsensitiveDict()
+        headers["Accept"] = "application/json"
+        headers["Authorization"] = f"Bearer {access_token}"
+        x = requests.get('https://api-sandbox.foodics.com/v5/settings',
+                         headers=headers)
+        print(x.status_code)
+        return Response({'data': x.json(), 'status': x.status_code})
