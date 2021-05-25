@@ -1,4 +1,5 @@
 from random import randint
+from requests.structures import CaseInsensitiveDict
 
 import requests
 from django.core.mail import EmailMessage
@@ -2024,6 +2025,7 @@ class GetFoodicsToken(APIView):
 class FoodicsWebHookUrl(APIView):
 
     def get(self, request, *args, **kwargs):
+        print(self.request.GET)
         return Response({'message': 'Success', 'status': HTTP_200_OK})
 
 
@@ -2034,21 +2036,20 @@ class FetchDataFromFoodicsApi(APIView):
         # get settings
         # access_token = request.session['access_token']
         # refresh_token = request.session['refresh_token']
-        # refresh_token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImMyZjExNmM3MDZmMjQ2ZGI5ZmQ0NDJlNjA5MDE3YTFkMDg1MWZmZjk1MDNmZDNkMWJjYTM4ZjNkY2E4M2U4ZTc4ZGRkZDY5NmMxZTNjNWYwIn0.eyJhdWQiOiI5MzRmODhkYS0yZjJhLTQyNWQtODI0Ni0xZjc4NGI1YTI0YmUiLCJqdGkiOiJjMmYxMTZjNzA2ZjI0NmRiOWZkNDQyZTYwOTAxN2ExZDA4NTFmZmY5NTAzZmQzZDFiY2EzOGYzZGNhODNlOGU3OGRkZGQ2OTZjMWUzYzVmMCIsImlhdCI6MTYyMTMzNTgwMiwibmJmIjoxNjIxMzM1ODAyLCJleHAiOjE3NzkxMDIyMDIsInN1YiI6IjkzNGY5NjZhLWVjNTUtNGYwOC04OTE2LTQyMmQyNjBkN2IzZiIsInNjb3BlcyI6W10sImJ1c2luZXNzIjoiOTM0Zjk2NmItMDIwYi00NWM5LWI5ZWQtZTUwMDk5ZmE2MzYxIiwicmVmZXJlbmNlIjoiMjk4OTQ2In0.mCXcLHnAdjClEV1wZ53NxoRg0805coTnHvjs7bR5jNzJyOllZZhYwEuMacCH2ETtBeeD3cUWb5PZ6tkO7JPZTQcpqj2jQCQ51PFRzt50nb77pwEQ7iwAA7Weh3MNcujIoIRafLBvBwqZzk1IRIpTs3RXlL92h88IQT0vArFp_kc8BzvNdDbD0tWnlxwd6ML7zT7E0qNm3Ciix4yoHzjCgcOqw1xLCdULhFFPi-2fPoJFXnfjhcyu1HjOHrFNdT-wssFARxrE65_D1TRrGhtlPZMjqZqxhDJFUfDjETJc2eyMymIVQNyi5x2BRmM8tZDG0lHqWCSdgXSH-11RVSRvdpiBeZ6AwY64UzLVNcqVp81mwakOj15MIvaHlfkZ857DeCtaZDx1RntZwTHdov77sttwdiC-AVbLOqNCkrprQEB0FvS8Ro5sXeUgjhVTwH6f3BZj3iC7RVC7VgETtYa8Nl1ENt96bGR1qAx7Fm2O79xjQ0SaBotVgOO0R4QVMNTh5N2OjoDKvn-6HPB4nrw3rG-vXRCRU2UtJPHBwhnlqp-DBdyNwzZ7TXwc0iI5bV1jAFAbprEyCmQ_nQwjKTRgfgNV6Djegzc-qaOM2cStmSvxPeWLQjg7c9jWcUdJAH21PNRM7wIId8JgcKVtZDmLb1kXtgL_w5qsLHAR_wQHNlI'
+        access_token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImVjMDg1ZDQwODk4ODgwYmFkYjY3NDM0NTRmNGQ3OWI3NjEwMDJmMGJjOTVkYmU1NjM4ZjA1M2M0NDQ3OTFkNTFjNjg1YzQ3ZDU3MWNlNTUxIn0.eyJhdWQiOiI5MzRmODhkYS0yZjJhLTQyNWQtODI0Ni0xZjc4NGI1YTI0YmUiLCJqdGkiOiJlYzA4NWQ0MDg5ODg4MGJhZGI2NzQzNDU0ZjRkNzliNzYxMDAyZjBiYzk1ZGJlNTYzOGYwNTNjNDQ0NzkxZDUxYzY4NWM0N2Q1NzFjZTU1MSIsImlhdCI6MTYyMTMzNzYxNywibmJmIjoxNjIxMzM3NjE3LCJleHAiOjE3NzkxMDQwMTcsInN1YiI6IjkzNGY5NjZhLWVjNTUtNGYwOC04OTE2LTQyMmQyNjBkN2IzZiIsInNjb3BlcyI6W10sImJ1c2luZXNzIjoiOTM0Zjk2NmItMDIwYi00NWM5LWI5ZWQtZTUwMDk5ZmE2MzYxIiwicmVmZXJlbmNlIjoiMjk4OTQ2In0.fIxwO6pPLRLrr1Nif1_RhOQGFoWHchyiL2hqPc2dtcIpcnY6w13Jg7fpfW9sTPiYGosdUzTCR2PZ7FIVkHegGGV0idnnYXpgcT4zJBvMmuCUTvbl1cg8dG0lKasJyxCOIqFULnIzOynczg94mxrpj2Hot-ZPGovaHfqvIolvphSoVkeKCp84Ld2Dm7YCrPFCplmAgJGYXi0X6ex0R4GBjTEEPhQL3jeRJtDJUINZtfJf6zZXu2T6WZ8w481Hry9xF2x9tvLRxKbWU4shCOp9aQ4jK7uoDj4xJy9IVvN2L2StCipr2FthnD37POvVuedygljkrT6uh_gKl9beYFjO3sdqCvSDwjT9RAlUAjCcVR_Om-mRm2S_2BWL2D9bhdZDEFSzzTdqISr4omyVUt0hc4EqoFehEHm-tPYjwkYq0YIWHT8rLYlCvElRUBfr-wuYfoOQhPE9OKTgm-isPcr8Xhgjz3_LURmXRRN_d8nTjc-bC1S61FGl9recLyzo3sq0gpIGy_FO08O_6RePrChG5RgQ4YcrEEXquJF3_SnLBR67Kjin52xztoAtRZV9ZN2iN9UA5WTfa45ucZyU3d6WgqnN4WTtYMhcZJ7w6iVo4FH9oWi1nznC1EXAEJhCAvmTVYDvQPzv2OjSgyVAjFO4SgGmAgmmYqqTF63NJ2FbvkI'
         # header = {'authorization': 'Bearer {}'.format(refresh_token)}
-        if request.is_secure():
-            protocol = "https"
-        else:
-            protocol = "http"
-        domain = request.META['HTTP_HOST']
-        print(protocol)
-        print(domain)
-        print(f'{protocol}://{domain}/api/foodics-token/')
-        y = requests.get(f'{protocol}://{domain}/api/foodics-token/')
-        print(y)
-        print(y.json())
-        access_token = y.json()['access_token']
-        from requests.structures import CaseInsensitiveDict
+        # if request.is_secure():
+        #     protocol = "https"
+        # else:
+        #     protocol = "http"
+        # domain = request.META['HTTP_HOST']
+        # print(protocol)
+        # print(domain)
+        # print(f'{protocol}://{domain}/api/foodics-api')
+        # y = requests.get(f'{protocol}://{domain}/api/foodics-api')
+        # print(y)
+        # print(y.json())
+        # access_token = y.json()['access_token']
         headers = CaseInsensitiveDict()
         headers["Accept"] = "application/json"
         headers["Authorization"] = f"Bearer {access_token}"
