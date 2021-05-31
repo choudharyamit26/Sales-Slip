@@ -2033,6 +2033,15 @@ class FoodicsWebHookUrl(APIView):
         return Response({'status': HTTP_200_OK})
 
 
+class NewFoodicsWebHookUrl(APIView):
+    def get(self, request, *args, **kwargs):
+        return Response({'message': 'Success', 'status': HTTP_200_OK})
+
+    def post(self, request, *args, **kwargs):
+        print('Data from post method of foodics web hook url', self.request.POST)
+        return Response(status=HTTP_200_OK)
+
+
 class FetchDataFromFoodicsApi(APIView):
 
     def get(self, request, *args, **kwargs):
