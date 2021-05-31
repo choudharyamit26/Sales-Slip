@@ -2039,6 +2039,8 @@ class NewFoodicsWebHookUrl(APIView):
 
     def post(self, request, *args, **kwargs):
         print('Data from post method of foodics web hook url', self.request.POST)
+        print('Data from post method of foodics web hook url args', *args)
+        print('Data from post method of foodics web hook url', **kwargs)
         return Response(status=HTTP_200_OK)
 
 
