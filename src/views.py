@@ -2003,8 +2003,9 @@ class GetParamsfromUrl(APIView):
 
         # return Response({'data': x.json()})
         return redirect("src:foodics-token")
-    def post(self,request,*args,**kwargs):
-        print('Foodics webhook data--->>>',self.request.data)
+
+    def post(self, request, *args, **kwargs):
+        print('Foodics webhook data--->>>', self.request.data)
         return Response(status=HTTP_200_OK)
 
 
