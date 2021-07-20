@@ -82,7 +82,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'ereceipt.wsgi.application'
 
 
-CORS_ALLOWED_ORIGINS = ["*"]
+CORS_ALLOWED_ORIGINS = ['*']
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 

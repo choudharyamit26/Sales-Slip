@@ -951,7 +951,8 @@ class ReceiptDetail(LoginRequiredMixin, DetailView):
         receipt = Receipt.objects.get(id=self.kwargs.get('pk'))
         print('>>>>>>>>>>>>>>>>>>>>>>>>>>>', receipt.qr_code)
         try:
-            context['total_amount'] = receipt.order.all()[0].total
+            # context['total_amount'] = receipt.order.all()[0].total
+            context['total_amount'] = receipt.total
         except Exception as e:
             print(e)
         return context

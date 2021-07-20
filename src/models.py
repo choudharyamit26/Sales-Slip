@@ -63,7 +63,7 @@ class Category(models.Model):
 class Merchant(models.Model):
     full_name = models.CharField(default='', max_length=200)
     profile_pic = models.ImageField(default='default_profile.png', null=True, blank=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True)
     email = models.EmailField()
     password = models.CharField(default='', max_length=100)
     confirm_password = models.CharField(default='', max_length=100)
