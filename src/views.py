@@ -2036,8 +2036,8 @@ class FoodicsWebHookUrl(APIView):
 
     def get(self, request, *args, **kwargs):
         print(self.request.GET)
-        print('<<<----From foodics web hook------>>>>', self.request.POST)
-        print('----From foodics web hook------', request.data)
+        print('<<<---- GET METHOD From foodics web hook------>>>>', self.request.POST)
+        print('---- GET METHOD From foodics web hook------', request.data)
         # webhook_data = request.data
     #     webhook_data = {
     #         'timestamp': 1626438646,
