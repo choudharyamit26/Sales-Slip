@@ -24,7 +24,7 @@ Pillow==8.0.1
 psycopg2-binary==2.8.6
 pyfcm==1.4.9
 pygraphviz==1.7
-PyJWT==2.0.1
+PyJWT==1.7.1
 PyPDF2==1.26.0
 pypng==0.0.20
 PyQRCode==1.2.1
@@ -36,6 +36,7 @@ requests==2.25.0
 s3transfer==0.3.3
 six==1.15.0
 sqlparse==0.4.1
+twilio==6.62.0
 urllib3==1.26.2
 webencodings==0.5.1
 xhtml2pdf==0.2.5

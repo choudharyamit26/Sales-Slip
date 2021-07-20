@@ -118,6 +118,7 @@ class Receipt(models.Model):
     amount = models.FloatField()
     total = models.FloatField()
     qr_code = models.ImageField(upload_to='QR')
+    order_created_from = models.CharField(default='', max_length=1000)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def get_absolute_url(self):
