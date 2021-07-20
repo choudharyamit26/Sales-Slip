@@ -2695,7 +2695,7 @@ class FoodicsWebHookUrl(APIView):
                 client.messages.create(
                     body=f'Your receipt with receipt id-{receipt_obj} has been generated.'
                          f'Please download the app to view th receipt. '
-                         f'Please login using credentials are email: {user.email} and password:Test@123',
+                         f'Please login using credentials given in this message. Login Email: {user.email}, Login Password:Test@123',
                     from_='+19412579649',
                     to='+' + str((user.country_code) + str(user.phone_number))
                 )
