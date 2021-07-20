@@ -2039,576 +2039,576 @@ class FoodicsWebHookUrl(APIView):
         print('<<<---- GET METHOD From foodics web hook------>>>>', self.request.POST)
         print('---- GET METHOD From foodics web hook------', request.data)
         # webhook_data = request.data
-    #     webhook_data = {
-    #         'timestamp': 1626438646,
-    #         'event': 'customer.order.created',
-    #         'business': {
-    #             'name': 'FATORTECH',
-    #             'reference': 298946
-    #         },
-    #         'order': {
-    #             'branch': {
-    #                 'id': '934f9698-fc23-4084-b19f-ea09e0669a64',
-    #                 'name': 'Branch 2',
-    #                 'name_localized': None,
-    #                 'reference': 'B02',
-    #                 'type': 1,
-    #                 'latitude': None,
-    #                 'longitude': None,
-    #                 'phone': None,
-    #                 'opening_from': '00:00',
-    #                 'opening_to': '00:00',
-    #                 'inventory_end_of_day_time': '00:00',
-    #                 'receipt_header': None,
-    #                 'receipt_footer': None,
-    #                 'created_at': '2021-04-29 12:46:23',
-    #                 'updated_at': '2021-04-29 12:46:23',
-    #                 'deleted_at': None,
-    #                 'receives_online_orders': True,
-    #                 'accepts_reservations': False,
-    #                 'reservation_duration': 30,
-    #                 'reservation_times': None
-    #             },
-    #             'promotion': None,
-    #             'original_order': None,
-    #             'table': None,
-    #             'creator': {
-    #                 'pin': '*****',
-    #                 'is_owner': True,
-    #                 'id': '934f966a-ec55-4f08-8916-422d260d7b3f',
-    #                 'name': 'hussain Ali',
-    #                 'number': None,
-    #                 'email': 'hussain@fatortech.net',
-    #                 'phone': None,
-    #                 'lang': 'en',
-    #                 'display_localized_names': False,
-    #                 'email_verified': True,
-    #                 'must_use_fingerprint': False,
-    #                 'last_console_login_at': '2021-07-16 10:05:33',
-    #                 'last_cashier_login_at': None,
-    #                 'created_at': '2021-04-29 12:46:22',
-    #                 'updated_at': '2021-07-16 10:05:33',
-    #                 'deleted_at': None
-    #             },
-    #             'closer': {
-    #                 'pin': '*****',
-    #                 'is_owner': True,
-    #                 'id': '934f966a-ec55-4f08-8916-422d260d7b3f',
-    #                 'name': 'hussain Ali',
-    #                 'number': None,
-    #                 'email': 'hussain@fatortech.net',
-    #                 'phone': None,
-    #                 'lang': 'en',
-    #                 'display_localized_names': False,
-    #                 'email_verified': True,
-    #                 'must_use_fingerprint': False,
-    #                 'last_console_login_at': '2021-07-16 10:05:33',
-    #                 'last_cashier_login_at': None,
-    #                 'created_at': '2021-04-29 12:46:22',
-    #                 'updated_at': '2021-07-16 10:05:33',
-    #                 'deleted_at': None
-    #             },
-    #             'driver': None,
-    #             'customer': {
-    #                 'id': '938fd5bf-2ff0-4546-923a-afbd455c594b',
-    #                 'name': 'BINIT',
-    #                 'dial_code': 91,
-    #                 'phone': '7678689353',
-    #                 'email': 'ravichoudhary766@gmail.com',
-    #                 'gender': None,
-    #                 'birth_date': None,
-    #                 'is_blacklisted': False,
-    #                 'is_house_account_enabled': False,
-    #                 'house_account_limit': None,
-    #                 'is_loyalty_enabled': False,
-    #                 'order_count': 2,
-    #                 'last_order_at': '2021-07-16 12:29:45',
-    #                 'created_at': '2021-05-31 11:15:56',
-    #                 'updated_at': '2021-07-16 12:30:46',
-    #                 'deleted_at': None
-    #             },
-    #             'customer_address': None,
-    #             'discount': None,
-    #             'tags': [
-    #
-    #             ],
-    #             'coupon': None,
-    #             'gift_card': None,
-    #             'charges': [
-    #
-    #             ],
-    #             'payments': [
-    #                 {
-    #                     'user': {
-    #                         'pin': '*****',
-    #                         'is_owner': True,
-    #                         'id': '934f966a-ec55-4f08-8916-422d260d7b3f',
-    #                         'name': 'hussain Ali',
-    #                         'number': None,
-    #                         'email': 'hussain@fatortech.net',
-    #                         'phone': None,
-    #                         'lang': 'en',
-    #                         'display_localized_names': False,
-    #                         'email_verified': True,
-    #                         'must_use_fingerprint': False,
-    #                         'last_console_login_at': '2021-07-16 10:05:33',
-    #                         'last_cashier_login_at': None,
-    #                         'created_at': '2021-04-29 12:46:22',
-    #                         'updated_at': '2021-07-16 10:05:33',
-    #                         'deleted_at': None
-    #                     },
-    #                     'payment_method': {
-    #                         'id': '934f9699-0a44-4bf9-bf7e-efc48f9eef19',
-    #                         'name': 'Cash',
-    #                         'name_localized': 'Cash',
-    #                         'type': 1,
-    #                         'code': None,
-    #                         'auto_open_drawer': True,
-    #                         'is_active': True,
-    #                         'created_at': '2021-04-29 12:46:23',
-    #                         'updated_at': '2021-04-29 12:46:23',
-    #                         'deleted_at': None,
-    #                         'index': 0
-    #                     },
-    #                     'meta': [
-    #
-    #                     ],
-    #                     'amount': 230,
-    #                     'tendered': 230,
-    #                     'tips': 0,
-    #                     'business_date': '2021-07-16',
-    #                     'added_at': '2021-07-16 12:30:42'
-    #                 }
-    #             ],
-    #             'products': [
-    #                 {
-    #                     'product': {
-    #                         'category': {
-    #                             'id': '93820e96-ee8a-4a71-8a74-bc3d693e6302',
-    #                             'name': 'Sandwiches',
-    #                             'name_localized': None,
-    #                             'reference': None,
-    #                             'image': None,
-    #                             'created_at': '2021-05-24 14:53:18',
-    #                             'updated_at': '2021-05-24 14:53:18',
-    #                             'deleted_at': None
-    #                         },
-    #                         'ingredients': [
-    #
-    #                         ],
-    #                         'id': '93820f4b-94dd-459d-ba26-5ac2f584b3b9',
-    #                         'sku': 'Burg-002',
-    #                         'barcode': None,
-    #                         'name': 'Double buger',
-    #                         'name_localized': None,
-    #                         'description': None,
-    #                         'description_localized': None,
-    #                         'image': None,
-    #                         'is_active': True,
-    #                         'is_stock_product': False,
-    #                         'is_ready': True,
-    #                         'pricing_method': 1,
-    #                         'selling_method': 1,
-    #                         'costing_method': 1,
-    #                         'preparation_time': None,
-    #                         'price': 20,
-    #                         'cost': 10,
-    #                         'calories': None,
-    #                         'created_at': '2021-05-24 14:55:16',
-    #                         'updated_at': '2021-05-24 14:55:16',
-    #                         'deleted_at': None
-    #                     },
-    #                     'promotion': None,
-    #                     'discount': None,
-    #                     'options': [
-    #
-    #                     ],
-    #                     'taxes': [
-    #
-    #                     ],
-    #                     'timed_events': [
-    #
-    #                     ],
-    #                     'void_reason': None,
-    #                     'creator': {
-    #                         'pin': '*****',
-    #                         'is_owner': True,
-    #                         'id': '934f966a-ec55-4f08-8916-422d260d7b3f',
-    #                         'name': 'hussain Ali',
-    #                         'number': None,
-    #                         'email': 'hussain@fatortech.net',
-    #                         'phone': None,
-    #                         'lang': 'en',
-    #                         'display_localized_names': False,
-    #                         'email_verified': True,
-    #                         'must_use_fingerprint': False,
-    #                         'last_console_login_at': '2021-07-16 10:05:33',
-    #                         'last_cashier_login_at': None,
-    #                         'created_at': '2021-04-29 12:46:22',
-    #                         'updated_at': '2021-07-16 10:05:33',
-    #                         'deleted_at': None
-    #                     },
-    #                     'voider': None,
-    #                     'discount_type': None,
-    #                     'quantity': 5,
-    #                     'returned_quantity': 0,
-    #                     'unit_price': 20,
-    #                     'discount_amount': 0,
-    #                     'total_price': 100,
-    #                     'total_cost': 50,
-    #                     'tax_exclusive_discount_amount': 0,
-    #                     'tax_exclusive_unit_price': 20,
-    #                     'tax_exclusive_total_price': 100,
-    #                     'status': 3,
-    #                     'is_ingredients_wasted': 0,
-    #                     'delay_in_seconds': None,
-    #                     'kitchen_notes': None,
-    #                     'meta': {
-    #                         'foodics': {
-    #                             'uuid': 'e2416f99-0543-4300-9214-609490cb0a21'
-    #                         }
-    #                     },
-    #                     'added_at': '2021-07-16 12:29:45',
-    #                     'closed_at': '2021-07-16 12:30:42'
-    #                 },
-    #                 {
-    #                     'product': {
-    #                         'category': {
-    #                             'id': '93820e85-ea34-4c83-83d7-a3185dee3c8b',
-    #                             'name': 'Drinks',
-    #                             'name_localized': None,
-    #                             'reference': None,
-    #                             'image': None,
-    #                             'created_at': '2021-05-24 14:53:06',
-    #                             'updated_at': '2021-05-24 14:53:06',
-    #                             'deleted_at': None
-    #                         },
-    #                         'ingredients': [
-    #
-    #                         ],
-    #                         'id': '93821031-a68f-4313-8476-f6d58ad3e83a',
-    #                         'sku': 'sk-0006',
-    #                         'barcode': None,
-    #                         'name': 'Cola',
-    #                         'name_localized': None,
-    #                         'description': None,
-    #                         'description_localized': None,
-    #                         'image': None,
-    #                         'is_active': True,
-    #                         'is_stock_product': False,
-    #                         'is_ready': True,
-    #                         'pricing_method': 1,
-    #                         'selling_method': 1,
-    #                         'costing_method': 1,
-    #                         'preparation_time': None,
-    #                         'price': 6,
-    #                         'cost': 2,
-    #                         'calories': None,
-    #                         'created_at': '2021-05-24 14:57:47',
-    #                         'updated_at': '2021-05-24 14:57:59',
-    #                         'deleted_at': None
-    #                     },
-    #                     'promotion': None,
-    #                     'discount': None,
-    #                     'options': [
-    #
-    #                     ],
-    #                     'taxes': [
-    #
-    #                     ],
-    #                     'timed_events': [
-    #
-    #                     ],
-    #                     'void_reason': None,
-    #                     'creator': {
-    #                         'pin': '*****',
-    #                         'is_owner': True,
-    #                         'id': '934f966a-ec55-4f08-8916-422d260d7b3f',
-    #                         'name': 'hussain Ali',
-    #                         'number': None,
-    #                         'email': 'hussain@fatortech.net',
-    #                         'phone': None,
-    #                         'lang': 'en',
-    #                         'display_localized_names': False,
-    #                         'email_verified': True,
-    #                         'must_use_fingerprint': False,
-    #                         'last_console_login_at': '2021-07-16 10:05:33',
-    #                         'last_cashier_login_at': None,
-    #                         'created_at': '2021-04-29 12:46:22',
-    #                         'updated_at': '2021-07-16 10:05:33',
-    #                         'deleted_at': None
-    #                     },
-    #                     'voider': None,
-    #                     'discount_type': None,
-    #                     'quantity': 5,
-    #                     'returned_quantity': 0,
-    #                     'unit_price': 6,
-    #                     'discount_amount': 0,
-    #                     'total_price': 30,
-    #                     'total_cost': 10,
-    #                     'tax_exclusive_discount_amount': 0,
-    #                     'tax_exclusive_unit_price': 6,
-    #                     'tax_exclusive_total_price': 30,
-    #                     'status': 3,
-    #                     'is_ingredients_wasted': 0,
-    #                     'delay_in_seconds': None,
-    #                     'kitchen_notes': None,
-    #                     'meta': {
-    #                         'foodics': {
-    #                             'uuid': 'd36c75af-6553-48da-b1e9-80299ecf3f50'
-    #                         }
-    #                     },
-    #                     'added_at': '2021-07-16 12:30:08',
-    #                     'closed_at': '2021-07-16 12:30:42'
-    #                 },
-    #                 {
-    #                     'product': {
-    #                         'category': {
-    #                             'id': '93820e78-fbe2-4855-af62-56c3ee888740',
-    #                             'name': 'Fries',
-    #                             'name_localized': None,
-    #                             'reference': None,
-    #                             'image': None,
-    #                             'created_at': '2021-05-24 14:52:58',
-    #                             'updated_at': '2021-05-24 14:52:58',
-    #                             'deleted_at': None
-    #                         },
-    #                         'ingredients': [
-    #
-    #                         ],
-    #                         'id': '93820f9e-cf33-42e4-897a-b7f4237e7963',
-    #                         'sku': 'sk-0004',
-    #                         'barcode': None,
-    #                         'name': 'Amazing fried potato',
-    #                         'name_localized': None,
-    #                         'description': None,
-    #                         'description_localized': None,
-    #                         'image': None,
-    #                         'is_active': True,
-    #                         'is_stock_product': False,
-    #                         'is_ready': True,
-    #                         'pricing_method': 1,
-    #                         'selling_method': 1,
-    #                         'costing_method': 1,
-    #                         'preparation_time': None,
-    #                         'price': 20,
-    #                         'cost': 10,
-    #                         'calories': None,
-    #                         'created_at': '2021-05-24 14:56:10',
-    #                         'updated_at': '2021-05-24 14:56:10',
-    #                         'deleted_at': None
-    #                     },
-    #                     'promotion': None,
-    #                     'discount': None,
-    #                     'options': [
-    #
-    #                     ],
-    #                     'taxes': [
-    #
-    #                     ],
-    #                     'timed_events': [
-    #
-    #                     ],
-    #                     'void_reason': None,
-    #                     'creator': {
-    #                         'pin': '*****',
-    #                         'is_owner': True,
-    #                         'id': '934f966a-ec55-4f08-8916-422d260d7b3f',
-    #                         'name': 'hussain Ali',
-    #                         'number': None,
-    #                         'email': 'hussain@fatortech.net',
-    #                         'phone': None,
-    #                         'lang': 'en',
-    #                         'display_localized_names': False,
-    #                         'email_verified': True,
-    #                         'must_use_fingerprint': False,
-    #                         'last_console_login_at': '2021-07-16 10:05:33',
-    #                         'last_cashier_login_at': None,
-    #                         'created_at': '2021-04-29 12:46:22',
-    #                         'updated_at': '2021-07-16 10:05:33',
-    #                         'deleted_at': None
-    #                     },
-    #                     'voider': None,
-    #                     'discount_type': None,
-    #                     'quantity': 5,
-    #                     'returned_quantity': 0,
-    #                     'unit_price': 20,
-    #                     'discount_amount': 0,
-    #                     'total_price': 100,
-    #                     'total_cost': 50,
-    #                     'tax_exclusive_discount_amount': 0,
-    #                     'tax_exclusive_unit_price': 20,
-    #                     'tax_exclusive_total_price': 100,
-    #                     'status': 3,
-    #                     'is_ingredients_wasted': 0,
-    #                     'delay_in_seconds': None,
-    #                     'kitchen_notes': None,
-    #                     'meta': {
-    #                         'foodics': {
-    #                             'uuid': '84af87df-41ff-4cdb-8971-0b14bdc91d20'
-    #                         }
-    #                     },
-    #                     'added_at': '2021-07-16 12:30:22',
-    #                     'closed_at': '2021-07-16 12:30:42'
-    #                 }
-    #             ],
-    #             'combos': [
-    #
-    #             ],
-    #             'device': {
-    #                 'id': '934f9699-07ad-4191-85bc-57d32a604c0a',
-    #                 'name': 'Cashier 2',
-    #                 'code': '19379',
-    #                 'reference': 'C02',
-    #                 'type': 1
-    #             },
-    #             'id': 'f7ed9b2d-414e-430e-ac19-4fbac94b9761',
-    #             'app_id': '8f9eb3f6-7987-4f66-aa8c-478c34d0c568',
-    #             'promotion_id': None,
-    #             'discount_type': None,
-    #             'reference_x': None,
-    #             'number': 3,
-    #             'type': 2,
-    #             'source': 1,
-    #             'status': 4,
-    #             'delivery_status': None,
-    #             'guests': 1,
-    #             'kitchen_notes': None,
-    #             'customer_notes': None,
-    #             'business_date': '2021-07-16',
-    #             'subtotal_price': 230,
-    #             'discount_amount': 0,
-    #             'rounding_amount': 0,
-    #             'total_price': 230,
-    #             'tax_exclusive_discount_amount': 0,
-    #             'delay_in_seconds': None,
-    #             'meta': {
-    #                 'foodics': {
-    #                     'device_id': '934f9699-07ad-4191-85bc-57d32a604c0a',
-    #                     'products_kitchen': [
-    #
-    #                     ]
-    #                 }
-    #             },
-    #             'opened_at': '2021-07-16 12:29:45',
-    #             'accepted_at': None,
-    #             'due_at': None,
-    #             'driver_assigned_at': None,
-    #             'dispatched_at': None,
-    #             'driver_collected_at': None,
-    #             'delivered_at': None,
-    #             'closed_at': '2021-07-16 12:30:42',
-    #             'created_at': '2021-07-16 12:30:46',
-    #             'updated_at': '2021-07-16 12:30:46',
-    #             'reference': 27,
-    #             'check_number': 100003
-    #         }
-    #     }
-    #     branch = None
-    #     merchant = None
-    #     user = None
-    #     new_user = None
-    #     order_item = []
-    #     try:
-    #         merchant = Merchant.objects.get(email=webhook_data['order']['creator']['email'])
-    #     except Exception as e:
-    #         merchant = Merchant.objects.create(email=webhook_data['order']['creator']['email'],
-    #                                            full_name=webhook_data['order']['creator']['name'])
-    #     try:
-    #         branch = Branch.objects.get(code=webhook_data['order']['branch']['name'])
-    #     except Exception as e:
-    #         branch = Branch.objects.create(code=webhook_data['order']['branch']['name'], merchant_name=merchant)
-    #     try:
-    #         user = User.objects.get(email=webhook_data['order']['customer']['email'])
-    #     except Exception as e:
-    #         user = User.objects.create(first_name=webhook_data['order']['customer']['name'],
-    #                                    email=webhook_data['order']['customer']['email'],
-    #                                    country_code=webhook_data['order']['customer']['dial_code'],
-    #                                    phone_number=webhook_data['order']['customer']['phone'])
-    #         user.set_password('Test@123')
-    #         user.save()
-    #         new_user = user
-    #     print('NEW USER----->>', new_user)
-    #     print(webhook_data['order']['branch']['name'])
-    #     print(webhook_data['order']['creator']['name'])
-    #     print(webhook_data['order']['customer']['name'], webhook_data['order']['customer']['dial_code'],
-    #           webhook_data['order']['customer']['phone'],
-    #           webhook_data['order']['customer']['email'])
-    #     print('Payment--', webhook_data['order']['payments'][0]['payment_method']['name'])
-    #     print('Payment--', webhook_data['order']['payments'][0]['amount'])
-    #
-    #     for i in range(len(webhook_data['order']['products'])):
-    #         print(webhook_data['order']['products'][i]['product']['category']['name'])
-    #         print(webhook_data['order']['products'][i]['product']['name'])
-    #         print(webhook_data['order']['products'][i]['product']['price'])
-    #         print(webhook_data['order']['products'][i]['quantity'])
-    #         print(webhook_data['order']['products'][i]['unit_price'])
-    #         print(webhook_data['order']['products'][i]['total_price'])
-    #         order_item_obj = OrderItem.objects.create(
-    #             user=user,
-    #             product=webhook_data['order']['products'][i]['product']['name'],
-    #             price=webhook_data['order']['products'][i]['product']['price'],
-    #             quantity=webhook_data['order']['products'][i]['quantity'],
-    #             total=webhook_data['order']['products'][i]['total_price'],
-    #             vat_percent=0
-    #         )
-    #         order_item.append(order_item_obj)
-    #     print(webhook_data['order']['payments'][0]['amount'])
-    #     receipt_obj = Receipt.objects.create(
-    #         user=user,
-    #         merchant=merchant,
-    #         branch=branch,
-    #         vat=0,
-    #         amount=webhook_data['order']['payments'][0]['amount'],
-    #         total=webhook_data['order']['payments'][0]['amount'],
-    #         order_created_from = 'FOODICS API'
-    #
-    #     )
-    #     for item in order_item:
-    #         receipt_obj.order.add(OrderItem.objects.get(id=item.id))
-    #     receipt_id = 0
-    #     try:
-    #         receipt_obj = Receipt.objects.last()
-    #         receipt_id = receipt_obj.id + 1
-    #     except Exception as e:
-    #         print(e)
-    #         receipt_id += 1
-    #     item_string = ''
-    #     item_string += ', Order Id : ' + str(receipt_obj.id)
-    #     url = pyqrcode.create(item_string, encoding='utf-8')
-    #     url.png(f'media/{receipt_id}.png', scale=6)
-    #     qr = os.path.basename(f'{receipt_id}.png'), File(open(f'media/{receipt_id}.png', 'rb'))
-    #     receipt_obj.qr_code = qr[1]
-    #     receipt_obj.save(update_fields=['qr_code'])
-    #     scanned_data_obj = ScannedData.objects.create(
-    #         user=user,
-    #         merchant=merchant,
-    #         order=receipt_obj
-    #     )
-    #     try:
-    #         if new_user:
-    #             account_sid = 'ACf02ece6f59b345778bdd512e693c8e3e'
-    #             auth_token = '427991ea9201b5e360ab49532d703157'
-    #             client = Client(account_sid, auth_token)
-    #             client.messages.create(
-    #                 body=f'Your receipt with receipt id-{receipt_obj.id} has been generated.'
-    #                      f'Please download the app to view th receipt. '
-    #                      f'Please login using credentials are email: {user.email} and password:Test@123',
-    #                 from_='+19412579649',
-    #                 to='+' + str(str(user.country_code) + str(user.phone_number))
-    #             )
-    #     except Exception as e:
-    #         print('Exception from twilio---', e)
-    #         pass
-    #     print(webhook_data['order']['customer']['name'])
-    #
+        #     webhook_data = {
+        #         'timestamp': 1626438646,
+        #         'event': 'customer.order.created',
+        #         'business': {
+        #             'name': 'FATORTECH',
+        #             'reference': 298946
+        #         },
+        #         'order': {
+        #             'branch': {
+        #                 'id': '934f9698-fc23-4084-b19f-ea09e0669a64',
+        #                 'name': 'Branch 2',
+        #                 'name_localized': None,
+        #                 'reference': 'B02',
+        #                 'type': 1,
+        #                 'latitude': None,
+        #                 'longitude': None,
+        #                 'phone': None,
+        #                 'opening_from': '00:00',
+        #                 'opening_to': '00:00',
+        #                 'inventory_end_of_day_time': '00:00',
+        #                 'receipt_header': None,
+        #                 'receipt_footer': None,
+        #                 'created_at': '2021-04-29 12:46:23',
+        #                 'updated_at': '2021-04-29 12:46:23',
+        #                 'deleted_at': None,
+        #                 'receives_online_orders': True,
+        #                 'accepts_reservations': False,
+        #                 'reservation_duration': 30,
+        #                 'reservation_times': None
+        #             },
+        #             'promotion': None,
+        #             'original_order': None,
+        #             'table': None,
+        #             'creator': {
+        #                 'pin': '*****',
+        #                 'is_owner': True,
+        #                 'id': '934f966a-ec55-4f08-8916-422d260d7b3f',
+        #                 'name': 'hussain Ali',
+        #                 'number': None,
+        #                 'email': 'hussain@fatortech.net',
+        #                 'phone': None,
+        #                 'lang': 'en',
+        #                 'display_localized_names': False,
+        #                 'email_verified': True,
+        #                 'must_use_fingerprint': False,
+        #                 'last_console_login_at': '2021-07-16 10:05:33',
+        #                 'last_cashier_login_at': None,
+        #                 'created_at': '2021-04-29 12:46:22',
+        #                 'updated_at': '2021-07-16 10:05:33',
+        #                 'deleted_at': None
+        #             },
+        #             'closer': {
+        #                 'pin': '*****',
+        #                 'is_owner': True,
+        #                 'id': '934f966a-ec55-4f08-8916-422d260d7b3f',
+        #                 'name': 'hussain Ali',
+        #                 'number': None,
+        #                 'email': 'hussain@fatortech.net',
+        #                 'phone': None,
+        #                 'lang': 'en',
+        #                 'display_localized_names': False,
+        #                 'email_verified': True,
+        #                 'must_use_fingerprint': False,
+        #                 'last_console_login_at': '2021-07-16 10:05:33',
+        #                 'last_cashier_login_at': None,
+        #                 'created_at': '2021-04-29 12:46:22',
+        #                 'updated_at': '2021-07-16 10:05:33',
+        #                 'deleted_at': None
+        #             },
+        #             'driver': None,
+        #             'customer': {
+        #                 'id': '938fd5bf-2ff0-4546-923a-afbd455c594b',
+        #                 'name': 'BINIT',
+        #                 'dial_code': 91,
+        #                 'phone': '7678689353',
+        #                 'email': 'ravichoudhary766@gmail.com',
+        #                 'gender': None,
+        #                 'birth_date': None,
+        #                 'is_blacklisted': False,
+        #                 'is_house_account_enabled': False,
+        #                 'house_account_limit': None,
+        #                 'is_loyalty_enabled': False,
+        #                 'order_count': 2,
+        #                 'last_order_at': '2021-07-16 12:29:45',
+        #                 'created_at': '2021-05-31 11:15:56',
+        #                 'updated_at': '2021-07-16 12:30:46',
+        #                 'deleted_at': None
+        #             },
+        #             'customer_address': None,
+        #             'discount': None,
+        #             'tags': [
+        #
+        #             ],
+        #             'coupon': None,
+        #             'gift_card': None,
+        #             'charges': [
+        #
+        #             ],
+        #             'payments': [
+        #                 {
+        #                     'user': {
+        #                         'pin': '*****',
+        #                         'is_owner': True,
+        #                         'id': '934f966a-ec55-4f08-8916-422d260d7b3f',
+        #                         'name': 'hussain Ali',
+        #                         'number': None,
+        #                         'email': 'hussain@fatortech.net',
+        #                         'phone': None,
+        #                         'lang': 'en',
+        #                         'display_localized_names': False,
+        #                         'email_verified': True,
+        #                         'must_use_fingerprint': False,
+        #                         'last_console_login_at': '2021-07-16 10:05:33',
+        #                         'last_cashier_login_at': None,
+        #                         'created_at': '2021-04-29 12:46:22',
+        #                         'updated_at': '2021-07-16 10:05:33',
+        #                         'deleted_at': None
+        #                     },
+        #                     'payment_method': {
+        #                         'id': '934f9699-0a44-4bf9-bf7e-efc48f9eef19',
+        #                         'name': 'Cash',
+        #                         'name_localized': 'Cash',
+        #                         'type': 1,
+        #                         'code': None,
+        #                         'auto_open_drawer': True,
+        #                         'is_active': True,
+        #                         'created_at': '2021-04-29 12:46:23',
+        #                         'updated_at': '2021-04-29 12:46:23',
+        #                         'deleted_at': None,
+        #                         'index': 0
+        #                     },
+        #                     'meta': [
+        #
+        #                     ],
+        #                     'amount': 230,
+        #                     'tendered': 230,
+        #                     'tips': 0,
+        #                     'business_date': '2021-07-16',
+        #                     'added_at': '2021-07-16 12:30:42'
+        #                 }
+        #             ],
+        #             'products': [
+        #                 {
+        #                     'product': {
+        #                         'category': {
+        #                             'id': '93820e96-ee8a-4a71-8a74-bc3d693e6302',
+        #                             'name': 'Sandwiches',
+        #                             'name_localized': None,
+        #                             'reference': None,
+        #                             'image': None,
+        #                             'created_at': '2021-05-24 14:53:18',
+        #                             'updated_at': '2021-05-24 14:53:18',
+        #                             'deleted_at': None
+        #                         },
+        #                         'ingredients': [
+        #
+        #                         ],
+        #                         'id': '93820f4b-94dd-459d-ba26-5ac2f584b3b9',
+        #                         'sku': 'Burg-002',
+        #                         'barcode': None,
+        #                         'name': 'Double buger',
+        #                         'name_localized': None,
+        #                         'description': None,
+        #                         'description_localized': None,
+        #                         'image': None,
+        #                         'is_active': True,
+        #                         'is_stock_product': False,
+        #                         'is_ready': True,
+        #                         'pricing_method': 1,
+        #                         'selling_method': 1,
+        #                         'costing_method': 1,
+        #                         'preparation_time': None,
+        #                         'price': 20,
+        #                         'cost': 10,
+        #                         'calories': None,
+        #                         'created_at': '2021-05-24 14:55:16',
+        #                         'updated_at': '2021-05-24 14:55:16',
+        #                         'deleted_at': None
+        #                     },
+        #                     'promotion': None,
+        #                     'discount': None,
+        #                     'options': [
+        #
+        #                     ],
+        #                     'taxes': [
+        #
+        #                     ],
+        #                     'timed_events': [
+        #
+        #                     ],
+        #                     'void_reason': None,
+        #                     'creator': {
+        #                         'pin': '*****',
+        #                         'is_owner': True,
+        #                         'id': '934f966a-ec55-4f08-8916-422d260d7b3f',
+        #                         'name': 'hussain Ali',
+        #                         'number': None,
+        #                         'email': 'hussain@fatortech.net',
+        #                         'phone': None,
+        #                         'lang': 'en',
+        #                         'display_localized_names': False,
+        #                         'email_verified': True,
+        #                         'must_use_fingerprint': False,
+        #                         'last_console_login_at': '2021-07-16 10:05:33',
+        #                         'last_cashier_login_at': None,
+        #                         'created_at': '2021-04-29 12:46:22',
+        #                         'updated_at': '2021-07-16 10:05:33',
+        #                         'deleted_at': None
+        #                     },
+        #                     'voider': None,
+        #                     'discount_type': None,
+        #                     'quantity': 5,
+        #                     'returned_quantity': 0,
+        #                     'unit_price': 20,
+        #                     'discount_amount': 0,
+        #                     'total_price': 100,
+        #                     'total_cost': 50,
+        #                     'tax_exclusive_discount_amount': 0,
+        #                     'tax_exclusive_unit_price': 20,
+        #                     'tax_exclusive_total_price': 100,
+        #                     'status': 3,
+        #                     'is_ingredients_wasted': 0,
+        #                     'delay_in_seconds': None,
+        #                     'kitchen_notes': None,
+        #                     'meta': {
+        #                         'foodics': {
+        #                             'uuid': 'e2416f99-0543-4300-9214-609490cb0a21'
+        #                         }
+        #                     },
+        #                     'added_at': '2021-07-16 12:29:45',
+        #                     'closed_at': '2021-07-16 12:30:42'
+        #                 },
+        #                 {
+        #                     'product': {
+        #                         'category': {
+        #                             'id': '93820e85-ea34-4c83-83d7-a3185dee3c8b',
+        #                             'name': 'Drinks',
+        #                             'name_localized': None,
+        #                             'reference': None,
+        #                             'image': None,
+        #                             'created_at': '2021-05-24 14:53:06',
+        #                             'updated_at': '2021-05-24 14:53:06',
+        #                             'deleted_at': None
+        #                         },
+        #                         'ingredients': [
+        #
+        #                         ],
+        #                         'id': '93821031-a68f-4313-8476-f6d58ad3e83a',
+        #                         'sku': 'sk-0006',
+        #                         'barcode': None,
+        #                         'name': 'Cola',
+        #                         'name_localized': None,
+        #                         'description': None,
+        #                         'description_localized': None,
+        #                         'image': None,
+        #                         'is_active': True,
+        #                         'is_stock_product': False,
+        #                         'is_ready': True,
+        #                         'pricing_method': 1,
+        #                         'selling_method': 1,
+        #                         'costing_method': 1,
+        #                         'preparation_time': None,
+        #                         'price': 6,
+        #                         'cost': 2,
+        #                         'calories': None,
+        #                         'created_at': '2021-05-24 14:57:47',
+        #                         'updated_at': '2021-05-24 14:57:59',
+        #                         'deleted_at': None
+        #                     },
+        #                     'promotion': None,
+        #                     'discount': None,
+        #                     'options': [
+        #
+        #                     ],
+        #                     'taxes': [
+        #
+        #                     ],
+        #                     'timed_events': [
+        #
+        #                     ],
+        #                     'void_reason': None,
+        #                     'creator': {
+        #                         'pin': '*****',
+        #                         'is_owner': True,
+        #                         'id': '934f966a-ec55-4f08-8916-422d260d7b3f',
+        #                         'name': 'hussain Ali',
+        #                         'number': None,
+        #                         'email': 'hussain@fatortech.net',
+        #                         'phone': None,
+        #                         'lang': 'en',
+        #                         'display_localized_names': False,
+        #                         'email_verified': True,
+        #                         'must_use_fingerprint': False,
+        #                         'last_console_login_at': '2021-07-16 10:05:33',
+        #                         'last_cashier_login_at': None,
+        #                         'created_at': '2021-04-29 12:46:22',
+        #                         'updated_at': '2021-07-16 10:05:33',
+        #                         'deleted_at': None
+        #                     },
+        #                     'voider': None,
+        #                     'discount_type': None,
+        #                     'quantity': 5,
+        #                     'returned_quantity': 0,
+        #                     'unit_price': 6,
+        #                     'discount_amount': 0,
+        #                     'total_price': 30,
+        #                     'total_cost': 10,
+        #                     'tax_exclusive_discount_amount': 0,
+        #                     'tax_exclusive_unit_price': 6,
+        #                     'tax_exclusive_total_price': 30,
+        #                     'status': 3,
+        #                     'is_ingredients_wasted': 0,
+        #                     'delay_in_seconds': None,
+        #                     'kitchen_notes': None,
+        #                     'meta': {
+        #                         'foodics': {
+        #                             'uuid': 'd36c75af-6553-48da-b1e9-80299ecf3f50'
+        #                         }
+        #                     },
+        #                     'added_at': '2021-07-16 12:30:08',
+        #                     'closed_at': '2021-07-16 12:30:42'
+        #                 },
+        #                 {
+        #                     'product': {
+        #                         'category': {
+        #                             'id': '93820e78-fbe2-4855-af62-56c3ee888740',
+        #                             'name': 'Fries',
+        #                             'name_localized': None,
+        #                             'reference': None,
+        #                             'image': None,
+        #                             'created_at': '2021-05-24 14:52:58',
+        #                             'updated_at': '2021-05-24 14:52:58',
+        #                             'deleted_at': None
+        #                         },
+        #                         'ingredients': [
+        #
+        #                         ],
+        #                         'id': '93820f9e-cf33-42e4-897a-b7f4237e7963',
+        #                         'sku': 'sk-0004',
+        #                         'barcode': None,
+        #                         'name': 'Amazing fried potato',
+        #                         'name_localized': None,
+        #                         'description': None,
+        #                         'description_localized': None,
+        #                         'image': None,
+        #                         'is_active': True,
+        #                         'is_stock_product': False,
+        #                         'is_ready': True,
+        #                         'pricing_method': 1,
+        #                         'selling_method': 1,
+        #                         'costing_method': 1,
+        #                         'preparation_time': None,
+        #                         'price': 20,
+        #                         'cost': 10,
+        #                         'calories': None,
+        #                         'created_at': '2021-05-24 14:56:10',
+        #                         'updated_at': '2021-05-24 14:56:10',
+        #                         'deleted_at': None
+        #                     },
+        #                     'promotion': None,
+        #                     'discount': None,
+        #                     'options': [
+        #
+        #                     ],
+        #                     'taxes': [
+        #
+        #                     ],
+        #                     'timed_events': [
+        #
+        #                     ],
+        #                     'void_reason': None,
+        #                     'creator': {
+        #                         'pin': '*****',
+        #                         'is_owner': True,
+        #                         'id': '934f966a-ec55-4f08-8916-422d260d7b3f',
+        #                         'name': 'hussain Ali',
+        #                         'number': None,
+        #                         'email': 'hussain@fatortech.net',
+        #                         'phone': None,
+        #                         'lang': 'en',
+        #                         'display_localized_names': False,
+        #                         'email_verified': True,
+        #                         'must_use_fingerprint': False,
+        #                         'last_console_login_at': '2021-07-16 10:05:33',
+        #                         'last_cashier_login_at': None,
+        #                         'created_at': '2021-04-29 12:46:22',
+        #                         'updated_at': '2021-07-16 10:05:33',
+        #                         'deleted_at': None
+        #                     },
+        #                     'voider': None,
+        #                     'discount_type': None,
+        #                     'quantity': 5,
+        #                     'returned_quantity': 0,
+        #                     'unit_price': 20,
+        #                     'discount_amount': 0,
+        #                     'total_price': 100,
+        #                     'total_cost': 50,
+        #                     'tax_exclusive_discount_amount': 0,
+        #                     'tax_exclusive_unit_price': 20,
+        #                     'tax_exclusive_total_price': 100,
+        #                     'status': 3,
+        #                     'is_ingredients_wasted': 0,
+        #                     'delay_in_seconds': None,
+        #                     'kitchen_notes': None,
+        #                     'meta': {
+        #                         'foodics': {
+        #                             'uuid': '84af87df-41ff-4cdb-8971-0b14bdc91d20'
+        #                         }
+        #                     },
+        #                     'added_at': '2021-07-16 12:30:22',
+        #                     'closed_at': '2021-07-16 12:30:42'
+        #                 }
+        #             ],
+        #             'combos': [
+        #
+        #             ],
+        #             'device': {
+        #                 'id': '934f9699-07ad-4191-85bc-57d32a604c0a',
+        #                 'name': 'Cashier 2',
+        #                 'code': '19379',
+        #                 'reference': 'C02',
+        #                 'type': 1
+        #             },
+        #             'id': 'f7ed9b2d-414e-430e-ac19-4fbac94b9761',
+        #             'app_id': '8f9eb3f6-7987-4f66-aa8c-478c34d0c568',
+        #             'promotion_id': None,
+        #             'discount_type': None,
+        #             'reference_x': None,
+        #             'number': 3,
+        #             'type': 2,
+        #             'source': 1,
+        #             'status': 4,
+        #             'delivery_status': None,
+        #             'guests': 1,
+        #             'kitchen_notes': None,
+        #             'customer_notes': None,
+        #             'business_date': '2021-07-16',
+        #             'subtotal_price': 230,
+        #             'discount_amount': 0,
+        #             'rounding_amount': 0,
+        #             'total_price': 230,
+        #             'tax_exclusive_discount_amount': 0,
+        #             'delay_in_seconds': None,
+        #             'meta': {
+        #                 'foodics': {
+        #                     'device_id': '934f9699-07ad-4191-85bc-57d32a604c0a',
+        #                     'products_kitchen': [
+        #
+        #                     ]
+        #                 }
+        #             },
+        #             'opened_at': '2021-07-16 12:29:45',
+        #             'accepted_at': None,
+        #             'due_at': None,
+        #             'driver_assigned_at': None,
+        #             'dispatched_at': None,
+        #             'driver_collected_at': None,
+        #             'delivered_at': None,
+        #             'closed_at': '2021-07-16 12:30:42',
+        #             'created_at': '2021-07-16 12:30:46',
+        #             'updated_at': '2021-07-16 12:30:46',
+        #             'reference': 27,
+        #             'check_number': 100003
+        #         }
+        #     }
+        #     branch = None
+        #     merchant = None
+        #     user = None
+        #     new_user = None
+        #     order_item = []
+        #     try:
+        #         merchant = Merchant.objects.get(email=webhook_data['order']['creator']['email'])
+        #     except Exception as e:
+        #         merchant = Merchant.objects.create(email=webhook_data['order']['creator']['email'],
+        #                                            full_name=webhook_data['order']['creator']['name'])
+        #     try:
+        #         branch = Branch.objects.get(code=webhook_data['order']['branch']['name'])
+        #     except Exception as e:
+        #         branch = Branch.objects.create(code=webhook_data['order']['branch']['name'], merchant_name=merchant)
+        #     try:
+        #         user = User.objects.get(email=webhook_data['order']['customer']['email'])
+        #     except Exception as e:
+        #         user = User.objects.create(first_name=webhook_data['order']['customer']['name'],
+        #                                    email=webhook_data['order']['customer']['email'],
+        #                                    country_code=webhook_data['order']['customer']['dial_code'],
+        #                                    phone_number=webhook_data['order']['customer']['phone'])
+        #         user.set_password('Test@123')
+        #         user.save()
+        #         new_user = user
+        #     print('NEW USER----->>', new_user)
+        #     print(webhook_data['order']['branch']['name'])
+        #     print(webhook_data['order']['creator']['name'])
+        #     print(webhook_data['order']['customer']['name'], webhook_data['order']['customer']['dial_code'],
+        #           webhook_data['order']['customer']['phone'],
+        #           webhook_data['order']['customer']['email'])
+        #     print('Payment--', webhook_data['order']['payments'][0]['payment_method']['name'])
+        #     print('Payment--', webhook_data['order']['payments'][0]['amount'])
+        #
+        #     for i in range(len(webhook_data['order']['products'])):
+        #         print(webhook_data['order']['products'][i]['product']['category']['name'])
+        #         print(webhook_data['order']['products'][i]['product']['name'])
+        #         print(webhook_data['order']['products'][i]['product']['price'])
+        #         print(webhook_data['order']['products'][i]['quantity'])
+        #         print(webhook_data['order']['products'][i]['unit_price'])
+        #         print(webhook_data['order']['products'][i]['total_price'])
+        #         order_item_obj = OrderItem.objects.create(
+        #             user=user,
+        #             product=webhook_data['order']['products'][i]['product']['name'],
+        #             price=webhook_data['order']['products'][i]['product']['price'],
+        #             quantity=webhook_data['order']['products'][i]['quantity'],
+        #             total=webhook_data['order']['products'][i]['total_price'],
+        #             vat_percent=0
+        #         )
+        #         order_item.append(order_item_obj)
+        #     print(webhook_data['order']['payments'][0]['amount'])
+        #     receipt_obj = Receipt.objects.create(
+        #         user=user,
+        #         merchant=merchant,
+        #         branch=branch,
+        #         vat=0,
+        #         amount=webhook_data['order']['payments'][0]['amount'],
+        #         total=webhook_data['order']['payments'][0]['amount'],
+        #         order_created_from = 'FOODICS API'
+        #
+        #     )
+        #     for item in order_item:
+        #         receipt_obj.order.add(OrderItem.objects.get(id=item.id))
+        #     receipt_id = 0
+        #     try:
+        #         receipt_obj = Receipt.objects.last()
+        #         receipt_id = receipt_obj.id + 1
+        #     except Exception as e:
+        #         print(e)
+        #         receipt_id += 1
+        #     item_string = ''
+        #     item_string += ', Order Id : ' + str(receipt_obj.id)
+        #     url = pyqrcode.create(item_string, encoding='utf-8')
+        #     url.png(f'media/{receipt_id}.png', scale=6)
+        #     qr = os.path.basename(f'{receipt_id}.png'), File(open(f'media/{receipt_id}.png', 'rb'))
+        #     receipt_obj.qr_code = qr[1]
+        #     receipt_obj.save(update_fields=['qr_code'])
+        #     scanned_data_obj = ScannedData.objects.create(
+        #         user=user,
+        #         merchant=merchant,
+        #         order=receipt_obj
+        #     )
+        #     try:
+        #         if new_user:
+        #             account_sid = 'ACf02ece6f59b345778bdd512e693c8e3e'
+        #             auth_token = '427991ea9201b5e360ab49532d703157'
+        #             client = Client(account_sid, auth_token)
+        #             client.messages.create(
+        #                 body=f'Your receipt with receipt id-{receipt_obj.id} has been generated.'
+        #                      f'Please download the app to view th receipt. '
+        #                      f'Please login using credentials are email: {user.email} and password:Test@123',
+        #                 from_='+19412579649',
+        #                 to='+' + str(str(user.country_code) + str(user.phone_number))
+        #             )
+        #     except Exception as e:
+        #         print('Exception from twilio---', e)
+        #         pass
+        #     print(webhook_data['order']['customer']['name'])
+        #
         return Response({'message': 'Success', 'status': HTTP_200_OK})
 
     def post(self, request, *args, **kwargs):
         print('<<<----From foodics web hook------>>>>', self.request.POST)
         # print('----From foodics web hook------', request.data)
         webhook_data = request.data
-        print('WEB HOOK DATA FROM POST METHOD ',webhook_data)
+        print('WEB HOOK DATA FROM POST METHOD ', webhook_data)
         # webhook_data = {'timestamp': 1626778337, 'event': 'customer.order.created', 'business': {'name': 'FATORTECH', 'reference': 298946}, 'order': {'branch': {'id': '934f9698-f08c-40c4-ba2e-0411749b4857', 'name': 'Branch 1', 'name_localized': None, 'reference': 'B01', 'type': 1, 'latitude': None, 'longitude': None, 'phone': None, 'opening_from': '00:00', 'opening_to': '00:00', 'inventory_end_of_day_time': '00:00', 'receipt_header': None, 'receipt_footer': None, 'created_at': '2021-04-29 12:46:23', 'updated_at': '2021-04-29 12:46:23', 'deleted_at': None, 'receives_online_orders': True, 'accepts_reservations': False, 'reservation_duration': 30, 'reservation_times': None}, 'promotion': None, 'original_order': None, 'table': None, 'creator': {'pin': '*****', 'is_owner': True, 'id': '934f966a-ec55-4f08-8916-422d260d7b3f', 'name': 'hussain Ali', 'number': None, 'email': 'hussain@fatortech.net', 'phone': None, 'lang': 'en', 'display_localized_names': False, 'email_verified': True, 'must_use_fingerprint': False, 'last_console_login_at': '2021-07-20 09:07:53', 'last_cashier_login_at': None, 'created_at': '2021-04-29 12:46:22', 'updated_at': '2021-07-20 09:07:53', 'deleted_at': None}, 'closer': {'pin': '*****', 'is_owner': True, 'id': '934f966a-ec55-4f08-8916-422d260d7b3f', 'name': 'hussain Ali', 'number': None, 'email': 'hussain@fatortech.net', 'phone': None, 'lang': 'en', 'display_localized_names': False, 'email_verified': True, 'must_use_fingerprint': False, 'last_console_login_at': '2021-07-20 09:07:53', 'last_cashier_login_at': None, 'created_at': '2021-04-29 12:46:22', 'updated_at': '2021-07-20 09:07:53', 'deleted_at': None}, 'driver': None, 'customer': {'id': '93f44e67-0e9f-4b0d-bd69-00f90eb2fc29', 'name': 'Ali', 'dial_code': 966, 'phone': '545982710', 'email': 'test@email.com', 'gender': None, 'birth_date': None, 'is_blacklisted': False, 'is_house_account_enabled': False, 'house_account_limit': None, 'is_loyalty_enabled': False, 'order_count': 3, 'last_order_at': '2021-07-20 10:51:41', 'created_at': '2021-07-20 09:56:06', 'updated_at': '2021-07-20 10:52:09', 'deleted_at': None}, 'customer_address': None, 'discount': None, 'tags': [], 'coupon': None, 'gift_card': None, 'charges': [], 'payments': [{'user': {'pin': '*****', 'is_owner': True, 'id': '934f966a-ec55-4f08-8916-422d260d7b3f', 'name': 'hussain Ali', 'number': None, 'email': 'hussain@fatortech.net', 'phone': None, 'lang': 'en', 'display_localized_names': False, 'email_verified': True, 'must_use_fingerprint': False, 'last_console_login_at': '2021-07-20 09:07:53', 'last_cashier_login_at': None, 'created_at': '2021-04-29 12:46:22', 'updated_at': '2021-07-20 09:07:53', 'deleted_at': None}, 'payment_method': {'id': '934f9699-0a44-4bf9-bf7e-efc48f9eef19', 'name': 'Cash', 'name_localized': 'Cash', 'type': 1, 'code': None, 'auto_open_drawer': True, 'is_active': True, 'created_at': '2021-04-29 12:46:23', 'updated_at': '2021-04-29 12:46:23', 'deleted_at': None, 'index': 0}, 'meta': [], 'amount': 58, 'tendered': 58, 'tips': 0, 'business_date': '2021-07-20', 'added_at': '2021-07-20 10:51:58'}], 'products': [{'product': {'category': {'id': '93820e96-ee8a-4a71-8a74-bc3d693e6302', 'name': 'Sandwiches', 'name_localized': None, 'reference': None, 'image': None, 'created_at': '2021-05-24 14:53:18', 'updated_at': '2021-05-24 14:53:18', 'deleted_at': None}, 'ingredients': [], 'id': '93820ef8-ea71-4fca-835a-34f015e03ac7', 'sku': 'Burg-01', 'barcode': None, 'name': 'King burger', 'name_localized': None, 'description': None, 'description_localized': None, 'image': None, 'is_active': True, 'is_stock_product': False, 'is_ready': True, 'pricing_method': 1, 'selling_method': 1, 'costing_method': 1, 'preparation_time': None, 'price': 20, 'cost': 10, 'calories': None, 'created_at': '2021-05-24 14:54:22', 'updated_at': '2021-05-24 14:54:22', 'deleted_at': None}, 'promotion': None, 'discount': None, 'options': [], 'taxes': [], 'timed_events': [], 'void_reason': None, 'creator': {'pin': '*****', 'is_owner': True, 'id': '934f966a-ec55-4f08-8916-422d260d7b3f', 'name': 'hussain Ali', 'number': None, 'email': 'hussain@fatortech.net', 'phone': None, 'lang': 'en', 'display_localized_names': False, 'email_verified': True, 'must_use_fingerprint': False, 'last_console_login_at': '2021-07-20 09:07:53', 'last_cashier_login_at': None, 'created_at': '2021-04-29 12:46:22', 'updated_at': '2021-07-20 09:07:53', 'deleted_at': None}, 'voider': None, 'discount_type': None, 'quantity': 1, 'returned_quantity': 0, 'unit_price': 20, 'discount_amount': 0, 'total_price': 20, 'total_cost': 10, 'tax_exclusive_discount_amount': 0, 'tax_exclusive_unit_price': 20, 'tax_exclusive_total_price': 20, 'status': 3, 'is_ingredients_wasted': 0, 'delay_in_seconds': None, 'kitchen_notes': None, 'meta': {'foodics': {'uuid': '44dac135-20fe-40a5-b862-a49726a9e21b'}}, 'added_at': '2021-07-20 10:51:41', 'closed_at': '2021-07-20 10:51:58'}, {'product': {'category': {'id': '93820e96-ee8a-4a71-8a74-bc3d693e6302', 'name': 'Sandwiches', 'name_localized': None, 'reference': None, 'image': None, 'created_at': '2021-05-24 14:53:18', 'updated_at': '2021-05-24 14:53:18', 'deleted_at': None}, 'ingredients': [], 'id': '93820f4b-94dd-459d-ba26-5ac2f584b3b9', 'sku': 'Burg-002', 'barcode': None, 'name': 'Double buger', 'name_localized': None, 'description': None, 'description_localized': None, 'image': None, 'is_active': True, 'is_stock_product': False, 'is_ready': True, 'pricing_method': 1, 'selling_method': 1, 'costing_method': 1, 'preparation_time': None, 'price': 20, 'cost': 10, 'calories': None, 'created_at': '2021-05-24 14:55:16', 'updated_at': '2021-05-24 14:55:16', 'deleted_at': None}, 'promotion': None, 'discount': None, 'options': [], 'taxes': [], 'timed_events': [], 'void_reason': None, 'creator': {'pin': '*****', 'is_owner': True, 'id': '934f966a-ec55-4f08-8916-422d260d7b3f', 'name': 'hussain Ali', 'number': None, 'email': 'hussain@fatortech.net', 'phone': None, 'lang': 'en', 'display_localized_names': False, 'email_verified': True, 'must_use_fingerprint': False, 'last_console_login_at': '2021-07-20 09:07:53', 'last_cashier_login_at': None, 'created_at': '2021-04-29 12:46:22', 'updated_at': '2021-07-20 09:07:53', 'deleted_at': None}, 'voider': None, 'discount_type': None, 'quantity': 1, 'returned_quantity': 0, 'unit_price': 20, 'discount_amount': 0, 'total_price': 20, 'total_cost': 10, 'tax_exclusive_discount_amount': 0, 'tax_exclusive_unit_price': 20, 'tax_exclusive_total_price': 20, 'status': 3, 'is_ingredients_wasted': 0, 'delay_in_seconds': None, 'kitchen_notes': None, 'meta': {'foodics': {'uuid': '678a086a-3b64-406b-b12f-77e7b1c72b34'}}, 'added_at': '2021-07-20 10:51:42', 'closed_at': '2021-07-20 10:51:58'}, {'product': {'category': {'id': '93820e78-fbe2-4855-af62-56c3ee888740', 'name': 'Fries', 'name_localized': None, 'reference': None, 'image': None, 'created_at': '2021-05-24 14:52:58', 'updated_at': '2021-05-24 14:52:58', 'deleted_at': None}, 'ingredients': [], 'id': '93820ff5-628f-4311-a116-9e4adb64c1cb', 'sku': 'sk-0005', 'barcode': None, 'name': 'Wicked fries', 'name_localized': None, 'description': None, 'description_localized': None, 'image': None, 'is_active': True, 'is_stock_product': False, 'is_ready': True, 'pricing_method': 1, 'selling_method': 1, 'costing_method': 1, 'preparation_time': None, 'price': 18, 'cost': 12, 'calories': None, 'created_at': '2021-05-24 14:57:07', 'updated_at': '2021-05-24 14:57:07', 'deleted_at': None}, 'promotion': None, 'discount': None, 'options': [], 'taxes': [], 'timed_events': [], 'void_reason': None, 'creator': {'pin': '*****', 'is_owner': True, 'id': '934f966a-ec55-4f08-8916-422d260d7b3f', 'name': 'hussain Ali', 'number': None, 'email': 'hussain@fatortech.net', 'phone': None, 'lang': 'en', 'display_localized_names': False, 'email_verified': True, 'must_use_fingerprint': False, 'last_console_login_at': '2021-07-20 09:07:53', 'last_cashier_login_at': None, 'created_at': '2021-04-29 12:46:22', 'updated_at': '2021-07-20 09:07:53', 'deleted_at': None}, 'voider': None, 'discount_type': None, 'quantity': 1, 'returned_quantity': 0, 'unit_price': 18, 'discount_amount': 0, 'total_price': 18, 'total_cost': 12, 'tax_exclusive_discount_amount': 0, 'tax_exclusive_unit_price': 18, 'tax_exclusive_total_price': 18, 'status': 3, 'is_ingredients_wasted': 0, 'delay_in_seconds': None, 'kitchen_notes': None, 'meta': {'foodics': {'uuid': '23bc0c9d-d5fc-4be2-9628-0052354cd731'}}, 'added_at': '2021-07-20 10:51:45', 'closed_at': '2021-07-20 10:51:58'}], 'combos': [], 'device': {'id': '934f9699-04f1-4a53-98c9-2c68c0304981', 'name': 'Cashier 1', 'code': '16341', 'reference': 'C01', 'type': 1}, 'id': '8531fd47-0649-44d8-a439-d06651e9d20f', 'app_id': '8f9eb3f6-7987-4f66-aa8c-478c34d0c568', 'promotion_id': None, 'discount_type': None, 'reference_x': None, 'number': 10, 'type': 2, 'source': 1, 'status': 4, 'delivery_status': None, 'guests': 1, 'kitchen_notes': None, 'customer_notes': None, 'business_date': '2021-07-20', 'subtotal_price': 58, 'discount_amount': 0, 'rounding_amount': 0, 'total_price': 58, 'tax_exclusive_discount_amount': 0, 'delay_in_seconds': None, 'meta': {'foodics': {'device_id': '934f9699-04f1-4a53-98c9-2c68c0304981', 'products_kitchen': []}}, 'opened_at': '2021-07-20 10:51:41', 'accepted_at': None, 'due_at': None, 'driver_assigned_at': None, 'dispatched_at': None, 'driver_collected_at': None, 'delivered_at': None, 'closed_at': '2021-07-20 10:51:58', 'created_at': '2021-07-20 10:52:09', 'updated_at': '2021-07-20 10:52:09', 'reference': 46, 'check_number': 100027}}
         branch = None
         merchant = None
@@ -2619,15 +2619,18 @@ class FoodicsWebHookUrl(APIView):
         try:
             merchant = Merchant.objects.get(email=webhook_data['order']['creator']['email'])
         except Exception as e:
+            print('MERCHANT EXCEPTION', e)
             merchant = Merchant.objects.create(email=webhook_data['order']['creator']['email'],
                                                full_name=webhook_data['order']['creator']['name'])
         try:
             branch = Branch.objects.get(code=webhook_data['order']['branch']['name'])
         except Exception as e:
+            print('BRANCH EXCEPTION', e)
             branch = Branch.objects.create(code=webhook_data['order']['branch']['name'], merchant_name=merchant)
         try:
             user = User.objects.get(email=webhook_data['order']['customer']['email'])
         except Exception as e:
+            print('USER EXCEPTION', e)
             user = User.objects.create(first_name=webhook_data['order']['customer']['name'],
                                        email=webhook_data['order']['customer']['email'],
                                        country_code=webhook_data['order']['customer']['dial_code'],
@@ -2676,7 +2679,7 @@ class FoodicsWebHookUrl(APIView):
             receipt_obj = Receipt.objects.last()
             receipt_id = receipt_obj.id + 1
         except Exception as e:
-            print(e)
+            print('RECEIPT EXCEPTION', e)
             receipt_id += 1
         item_string = ''
         item_string += ', Order Id : ' + str(receipt_obj.id)
@@ -2703,6 +2706,7 @@ class FoodicsWebHookUrl(APIView):
                     to='+' + str((user.country_code) + str(user.phone_number))
                 )
         except Exception as e:
+            print('TWILIO EXCEPTION ',e)
             pass
         # print(webhook_data['order']['customer']['name'])
 
