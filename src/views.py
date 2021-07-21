@@ -2630,7 +2630,6 @@ class FoodicsWebHookUrl(APIView):
         try:
             user = User.objects.get(email=webhook_data['order']['customer']['email'])
         except Exception as e:
-            print('USER EXCEPTION', e)
             user = User.objects.create(first_name=webhook_data['order']['customer']['name'],
                                        email=webhook_data['order']['customer']['email'],
                                        country_code=webhook_data['order']['customer']['dial_code'],
@@ -2638,6 +2637,7 @@ class FoodicsWebHookUrl(APIView):
             user.set_password('Test@123')
             user.save()
             new_user = user
+
         print(webhook_data['order']['branch']['name'])
         print(webhook_data['order']['creator']['name'])
         print(webhook_data['order']['customer']['name'], webhook_data['order']['customer']['dial_code'],
@@ -2706,11 +2706,11 @@ class FoodicsWebHookUrl(APIView):
                     to='+' + str((user.country_code) + str(user.phone_number))
                 )
         except Exception as e:
-            print('TWILIO EXCEPTION ',e)
+            print('TWILIO EXCEPTION ', e)
             pass
         # print(webhook_data['order']['customer']['name'])
 
-        return Response(HTTP_200_OK)
+        return Response({'status': HTTP_200_OK, 'message': 'success'})
 
 
 class NewFoodicsWebHookUrl(APIView):

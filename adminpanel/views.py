@@ -61,9 +61,9 @@ class Login(View):
         email = self.request.POST['email']
         password = self.request.POST['password']
         remember_me = self.request.POST.get('remember_me' or None)
-        print('inside Login-------')
-        print('Email-------', email)
-        print('Password-------', password)
+        # print('inside Login-------')
+        # print('Email-------', email)
+        # print('Password-------', password)
         try:
             user_object = user.objects.get(email=email.lower())
             if user_object.check_password(password):
@@ -80,12 +80,12 @@ class Login(View):
                         response.set_cookie('cid2', self.request.POST['password'], max_age=cookie_age)
                         response.set_cookie('cid3', self.request.POST['remember_me'], max_age=cookie_age)
                         # return HttpResponse(json.dumps('is_superuser'), status=200)
-                        print('Permissions---->>>', user_object.has_perm('src.add_merchant'))
+                        # print('Permissions---->>>', user_object.has_perm('src.add_merchant'))
                         from django.contrib.auth.models import Permission
                         permissions = Permission.objects.filter(user=user_object)
                         permission = Permission.objects.get(name='Can add merchant')
                         user_object.user_permissions.add(permission)
-                        print('----------', permissions)
+                        # print('----------', permissions)
                         return response
                     else:
                         self.request.session.set_expiry(0)
