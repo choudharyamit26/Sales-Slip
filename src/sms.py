@@ -1,7 +1,6 @@
 from twilio.rest import Client
 
 #######TEST Credentials for fatortech twilio
-
 # test_account_sid = 'ACf066c909ca372ae45c816bc3b6a7f484'
 # test_auth_token = 'f469cbff870b601b3ef84763c19487ae'
 # client = Client(test_account_sid, test_auth_token)
