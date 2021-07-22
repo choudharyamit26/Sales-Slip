@@ -1975,7 +1975,7 @@ class GetMerchantDetail(APIView):
             for branch in branch_obj:
                 branches.append({'branch_id': branch.id, 'branch_code': branch.code})
             merchant_detail.append(
-                {'id': merchant_obj.id, 'name': merchant_obj.full_name, 'category_id': merchant_obj.category.id,
+                {'id': merchant_obj.id, 'name': merchant_obj.full_name,
                  'branches': branches})
             return Response({'data': merchant_detail, 'status': HTTP_200_OK})
         except Exception as e:
