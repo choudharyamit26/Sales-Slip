@@ -1808,7 +1808,7 @@ class GetMerchantNameAndCategory(APIView):
                     #                  'category': merchant.category.category_name, 'branches': branches,
                     #                  'status': HTTP_200_OK})
                     merchants.append(
-                        {'id': merchant.id, 'name': merchant.full_name,'branches': branches})
+                        {'id': merchant.id, 'name': merchant.full_name, 'branches': branches})
             return Response({'data': merchants, 'status': HTTP_200_OK})
         except Exception as e:
             x = {'error': str(e)}
@@ -1975,7 +1975,8 @@ class GetMerchantDetail(APIView):
             for branch in branch_obj:
                 branches.append({'branch_id': branch.id, 'branch_code': branch.code})
             merchant_detail.append(
-                {'id': merchant_obj.id, 'name': merchant_obj.full_name, 'category_id': merchant_obj.category.id,'branches': branches})
+                {'id': merchant_obj.id, 'name': merchant_obj.full_name, 'category_id': merchant_obj.category.id,
+                 'branches': branches})
             return Response({'data': merchant_detail, 'status': HTTP_200_OK})
         except Exception as e:
             x = {'error': str(e)}
@@ -2633,6 +2634,9 @@ class FoodicsWebHookUrl(APIView):
         try:
             user = User.objects.get(email=webhook_data['order']['customer']['email'])
         except Exception as e:
+            print('USER EXCEPTION--->>', e)
+            print(webhook_data['order']['customer']['name'], webhook_data['order']['customer']['email'],
+                  webhook_data['order']['customer']['dial_code'], webhook_data['order']['customer']['phone'])
             user = User.objects.create(first_name=webhook_data['order']['customer']['name'],
                                        email=webhook_data['order']['customer']['email'],
                                        country_code=webhook_data['order']['customer']['dial_code'],
