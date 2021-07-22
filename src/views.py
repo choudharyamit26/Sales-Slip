@@ -905,7 +905,7 @@ class GetUserTransactions(ListAPIView):
 
     def get(self, request, *args, **kwargs):
         user = self.request.user
-        receipt_obj = Receipt.objects.filter(user=user)
+        receipt_obj = Receipt.objects.filter(user=user).order_by('-id')
         receipt_list = []
         for obj in receipt_obj:
             data = {}
@@ -1251,11 +1251,6 @@ class GetLatestTransactions(ListAPIView):
                 data['created_at'] = x.created_at
                 product_list = []
                 for order_obj in x.order.all():
-                    # print(i)
-                    # data.update({'receipt_id_{}_product_{}_name'.format(j, i): order_obj.product})
-                    # data.update({'receipt_id_{}_product_{}_price'.format(j, i): order_obj.price})
-                    # data.update({'receipt_id_{}_product_{}_quantity'.format(j, i): order_obj.quantity})
-                    # data.update({'total_{}'.format('receipt_id_{}'.format(j)): order_obj.total})
                     product_list.append({'product_name': order_obj.product, 'product_price': order_obj.price,
                                          'product_quantity': order_obj.quantity, 'product_vat': order_obj.vat,
                                          'product_vat_percent': order_obj.vat_percent})
@@ -1274,11 +1269,6 @@ class GetLatestTransactions(ListAPIView):
                 data['created_at'] = x.created_at
                 product_list = []
                 for order_obj in x.order.all():
-                    # print(i)
-                    # data.update({'receipt_id_{}_product_{}_name'.format(j, i): order_obj.product})
-                    # data.update({'receipt_id_{}_product_{}_price'.format(j, i): order_obj.price})
-                    # data.update({'receipt_id_{}_product_{}_quantity'.format(j, i): order_obj.quantity})
-                    # data.update({'total_{}'.format('receipt_id_{}'.format(j)): order_obj.total})
                     product_list.append({'product_name': order_obj.product, 'product_price': order_obj.price,
                                          'product_quantity': order_obj.quantity, 'product_vat': order_obj.vat,
                                          'product_vat_percent': order_obj.vat_percent})
@@ -1286,9 +1276,6 @@ class GetLatestTransactions(ListAPIView):
                     data.update({'products': product_list})
                 data.update({'total': x.total})
                 receipt_list.append(data)
-                # i += 1
-                # i = 1
-                # j += 1
         return Response(
             {"data": receipt_list, 'message': "Latest receipts fetched successfully", "status": HTTP_200_OK})
 
