@@ -913,7 +913,7 @@ class GetUserTransactions(ListAPIView):
             data['merchant'] = obj.merchant.email
             data['merchant_id'] = obj.merchant.id
             data['merchant_name'] = obj.merchant.full_name
-            data['merchant_category'] = obj.merchant.category.category_name
+            # data['merchant_category'] = obj.merchant.category.category_name
             data['created_at'] = obj.created_at
             product_list = []
             for order_obj in obj.order.all():

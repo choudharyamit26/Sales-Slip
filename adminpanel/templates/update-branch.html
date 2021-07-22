@@ -27,7 +27,7 @@
                         <!--                        </div>-->
                         <div class="form-group">
                             <label for="">Merchant</label>
-                            <select required id="id_merchant_name" name="merchant_name">
+                            <select required id="id_merchant_name" class="form-control" name="merchant_name">
                                 {% for merchant in merchants %}
                                 <option value="{{merchant.pk}}">{{merchant.email}}</option>
                                 {% endfor %}
