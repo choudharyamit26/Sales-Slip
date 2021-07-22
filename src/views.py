@@ -940,7 +940,6 @@ class ReceiptSearchView(ListAPIView):
             data_list = []
             data = {'id': receipt_obj.id, 'merchant': receipt_obj.merchant.email,
                     'merchant_id': receipt_obj.merchant.id, 'merchant_name': receipt_obj.merchant.full_name,
-                    # 'merchant_category': receipt_obj.merchant.category.category_name,
                     'created_at': receipt_obj.created_at}
             total = 0
             vat = 0
@@ -1795,8 +1794,7 @@ class GetMerchantNameAndCategory(APIView):
                     #                  'category': merchant.category.category_name, 'branches': branches,
                     #                  'status': HTTP_200_OK})
                     merchants.append(
-                        {'id': merchant.id, 'name': merchant.full_name, 'category_id': merchant.category.id,
-                         'category': merchant.category.category_name, 'branches': branches})
+                        {'id': merchant.id, 'name': merchant.full_name, 'category_id': merchant.category.id,'branches': branches})
             return Response({'data': merchants, 'status': HTTP_200_OK})
         except Exception as e:
             x = {'error': str(e)}
@@ -1845,7 +1843,7 @@ class FilterExpenseDataByCategory(APIView):
             receipts = Receipt.objects.filter(created_at__icontains=year).filter(user=self.request.user)
             receipt_list = []
             for receipt in receipts:
-                receipt_list.append({'category': receipt.merchant.category.category_name, 'total': receipt.total})
+                receipt_list.append({'total': receipt.total})
             final = []
             for y in receipt_list:
                 if len(final) > 0:
@@ -1963,8 +1961,7 @@ class GetMerchantDetail(APIView):
             for branch in branch_obj:
                 branches.append({'branch_id': branch.id, 'branch_code': branch.code})
             merchant_detail.append(
-                {'id': merchant_obj.id, 'name': merchant_obj.full_name, 'category_id': merchant_obj.category.id,
-                 'category': merchant_obj.category.category_name, 'branches': branches})
+                {'id': merchant_obj.id, 'name': merchant_obj.full_name, 'category_id': merchant_obj.category.id,'branches': branches})
             return Response({'data': merchant_detail, 'status': HTTP_200_OK})
         except Exception as e:
             x = {'error': str(e)}
