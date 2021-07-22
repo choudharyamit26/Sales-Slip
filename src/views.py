@@ -2710,7 +2710,7 @@ class FoodicsWebHookUrl(APIView):
                          f'Please download the app to view th receipt. '
                          f'Please login using credentials given in this message. Login Email: {user.email}, Login Password:Test@123',
                     from_='+19412579649',
-                    to='+' + str((user.country_code) + str(user.phone_number))
+                    to='+' + str(str(user.country_code) + str(user.phone_number))
                 )
         except Exception as e:
             print('TWILIO EXCEPTION ', e)
