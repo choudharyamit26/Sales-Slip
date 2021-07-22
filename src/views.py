@@ -1290,7 +1290,7 @@ class GetLatestTransactions(ListAPIView):
                 # i = 1
                 # j += 1
         return Response(
-            {"data": receipt_list[::-1], 'message': "Latest receipts fetched successfully", "status": HTTP_200_OK})
+            {"data": receipt_list, 'message': "Latest receipts fetched successfully", "status": HTTP_200_OK})
 
 
 class FAQApiView(ListAPIView):
