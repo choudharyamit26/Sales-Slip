@@ -1146,7 +1146,7 @@ class CreateReceiptManually(CreateAPIView):
         user = self.request.user
         merchant_id = self.request.data['merchant_id']
         merchant_name = self.request.data['merchant_name']
-        category = self.request.data['category']
+        # category = self.request.data['category']
         date_of_purchase = self.request.data['date_of_purchase']
         time_of_purchase = self.request.data['time_of_purchase']
         # order_id = self.request.data['order_id']
