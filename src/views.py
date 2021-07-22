@@ -1261,7 +1261,7 @@ class GetLatestTransactions(ListAPIView):
                                          'product_vat_percent': order_obj.vat_percent})
                     data.update({'products': product_list})
                 data.update({'total': x.total})
-                receipt_list.append(data)
+                receipt_list.append()
         else:
             receipt_list = []
             for x in receipts[::-1]:
@@ -1290,7 +1290,7 @@ class GetLatestTransactions(ListAPIView):
                 # i = 1
                 # j += 1
         return Response(
-            {"data": receipt_list, 'message': "Latest receipts fetched successfully", "status": HTTP_200_OK})
+            {"data": receipt_list[::-1], 'message': "Latest receipts fetched successfully", "status": HTTP_200_OK})
 
 
 class FAQApiView(ListAPIView):
