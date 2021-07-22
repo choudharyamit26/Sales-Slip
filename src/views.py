@@ -1786,7 +1786,7 @@ class GetMerchantNameAndCategory(APIView):
 
     def post(self, request, *args, **kwargs):
         # merchant_id = self.request.GET.get('merchant_name')
-        merchant_id = self.request.POST['merchant_name']
+        merchant_id = (self.request.POST['merchant_name']).lower()
         print('-----------------------', merchant_id)
         merchants = []
         try:
@@ -2624,7 +2624,7 @@ class FoodicsWebHookUrl(APIView):
             merchant = Merchant.objects.get(email=webhook_data['order']['creator']['email'])
         except Exception as e:
             print('MERCHANT EXCEPTION', e)
-            merchant = Merchant.objects.create(email=webhook_data['order']['creator']['email'],
+            merchant = Merchant.objects.create(email=(webhook_data['order']['creator']['email']).lower(),
                                                full_name=webhook_data['order']['creator']['name'])
         try:
             branch = Branch.objects.get(code=webhook_data['order']['branch']['name'])
@@ -2645,21 +2645,7 @@ class FoodicsWebHookUrl(APIView):
             user.save()
             new_user = user
 
-        print(webhook_data['order']['branch']['name'])
-        print(webhook_data['order']['creator']['name'])
-        print(webhook_data['order']['customer']['name'], webhook_data['order']['customer']['dial_code'],
-              webhook_data['order']['customer']['phone'],
-              webhook_data['order']['customer']['email'])
-        print('Payment--', webhook_data['order']['payments'][0]['payment_method']['name'])
-        print('Payment--', webhook_data['order']['payments'][0]['amount'])
-
         for i in range(len(webhook_data['order']['products'])):
-            print(webhook_data['order']['products'][i]['product']['category']['name'])
-            print(webhook_data['order']['products'][i]['product']['name'])
-            print(webhook_data['order']['products'][i]['product']['price'])
-            print(webhook_data['order']['products'][i]['quantity'])
-            print(webhook_data['order']['products'][i]['unit_price'])
-            print(webhook_data['order']['products'][i]['total_price'])
             order_item_obj = OrderItem.objects.create(
                 user=user,
                 product=webhook_data['order']['products'][i]['product']['name'],
@@ -2669,7 +2655,6 @@ class FoodicsWebHookUrl(APIView):
                 vat_percent=0
             )
             order_item.append(order_item_obj)
-        print(webhook_data['order']['payments'][0]['amount'])
         receipt_obj = Receipt.objects.create(
             user=user,
             merchant=merchant,
