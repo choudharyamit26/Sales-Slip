@@ -1794,7 +1794,7 @@ class GetMerchantNameAndCategory(APIView):
                     #                  'category': merchant.category.category_name, 'branches': branches,
                     #                  'status': HTTP_200_OK})
                     merchants.append(
-                        {'id': merchant.id, 'name': merchant.full_name, 'category_id': merchant.category.id,'branches': branches})
+                        {'id': merchant.id, 'name': merchant.full_name,'branches': branches})
             return Response({'data': merchants, 'status': HTTP_200_OK})
         except Exception as e:
             x = {'error': str(e)}
