@@ -1249,15 +1249,7 @@ class GetLatestTransactions(ListAPIView):
                     data.update({'products': product_list})
                 data.update({'total': x.total})
                 receipt_list.append(data)
-                # i += 1
-                # i = 1
-                # j += 1
         else:
-            # print('inside else')
-            # for receipt in receipts[:2:-1]:
-            #     print(receipt.created_at)
-            # i = 1
-            # j = 1
             receipt_list = []
             for x in receipts[::-1]:
                 data = {}
