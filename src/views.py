@@ -1261,7 +1261,7 @@ class GetLatestTransactions(ListAPIView):
                                          'product_vat_percent': order_obj.vat_percent})
                     data.update({'products': product_list})
                 data.update({'total': x.total})
-                receipt_list.append()
+                receipt_list.append(data)
         else:
             receipt_list = []
             for x in receipts[::-1]:
