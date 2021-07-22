@@ -1232,7 +1232,7 @@ class GetLatestTransactions(ListAPIView):
 
     def get(self, request, *args, **kwargs):
         user = self.request.user
-        receipts = Receipt.objects.filter(user=user)
+        receipts = Receipt.objects.filter(user=user).order_by('-id')
         # print(receipts[::-1])
         if receipts.count() > 2:
             # for receipt in receipts[:5:-1]:
