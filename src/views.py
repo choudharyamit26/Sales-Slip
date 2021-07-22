@@ -865,7 +865,7 @@ class GetScannedDataDetail(ListAPIView):
             receipt_object['merchant_id'] = receipt_obj.merchant.id
             receipt_object['receipt_id'] = receipt_obj.id
             receipt_object['merchant_name'] = receipt_obj.merchant.full_name
-            receipt_object['merchant_category'] = receipt_obj.merchant.category.category_name
+            # receipt_object['merchant_category'] = receipt_obj.merchant.category.category_name
             receipt_object['user'] = receipt_obj.user.email
             receipt_object['created_at'] = receipt_obj.created_at
             # receipt_object.update({'merchant_id': receipt_obj.merchant})
@@ -940,7 +940,7 @@ class ReceiptSearchView(ListAPIView):
             data_list = []
             data = {'id': receipt_obj.id, 'merchant': receipt_obj.merchant.email,
                     'merchant_id': receipt_obj.merchant.id, 'merchant_name': receipt_obj.merchant.full_name,
-                    'merchant_category': receipt_obj.merchant.category.category_name,
+                    # 'merchant_category': receipt_obj.merchant.category.category_name,
                     'created_at': receipt_obj.created_at}
             total = 0
             vat = 0
@@ -1009,7 +1009,7 @@ class FilterByCategory(ListAPIView):
                         data['merchant'] = x.merchant.email
                         data['merchant_id'] = x.merchant.id
                         data['merchant_name'] = x.merchant.full_name
-                        data['merchant_category'] = x.merchant.category.category_name
+                        # data['merchant_category'] = x.merchant.category.category_name
                         data['created_at'] = x.created_at
                         for order_obj in x.order.all():
                             # print(i)
@@ -1067,7 +1067,7 @@ class FilterByDate(ListAPIView):
                     data['merchant'] = x.merchant.email
                     data['merchant_id'] = x.merchant.id
                     data['merchant_name'] = x.merchant.full_name
-                    data['merchant_category'] = x.merchant.category.category_name
+                    # data['merchant_category'] = x.merchant.category.category_name
                     data['created_at'] = x.created_at
                     product_list = []
                     for order_obj in x.order.all():
@@ -1233,7 +1233,7 @@ class GetLatestTransactions(ListAPIView):
                 data['receipt_id'] = x.id
                 data['merchant_id'] = x.merchant.id
                 data['merchant_name'] = x.merchant.full_name
-                data['merchant_category'] = x.merchant.category.category_name
+                # data['merchant_category'] = x.merchant.category.category_name
                 data['merchant_email'] = x.merchant.email
                 data['created_at'] = x.created_at
                 product_list = []
@@ -1264,7 +1264,7 @@ class GetLatestTransactions(ListAPIView):
                 data['receipt_id'] = x.id
                 data['merchant_id'] = x.merchant.id
                 data['merchant_name'] = x.merchant.full_name
-                data['merchant_category'] = x.merchant.category.category_name
+                # data['merchant_category'] = x.merchant.category.category_name
                 data['merchant_email'] = x.merchant.email
                 data['created_at'] = x.created_at
                 product_list = []
