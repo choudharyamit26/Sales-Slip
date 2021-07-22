@@ -2674,7 +2674,7 @@ class FoodicsWebHookUrl(APIView):
             print('RECEIPT EXCEPTION', e)
             receipt_id += 1
         item_string = ''
-        item_string += ', Order Id : ' + str(receipt_obj.id)
+        item_string += 'Order Id : ' + str(receipt_obj.id)
         url = pyqrcode.create(item_string, encoding='utf-8')
         url.png(f'media/{receipt_id}.png', scale=6)
         qr = os.path.basename(f'{receipt_id}.png'), File(open(f'media/{receipt_id}.png', 'rb'))
