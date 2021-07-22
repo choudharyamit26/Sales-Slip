@@ -1174,7 +1174,7 @@ class CreateReceiptManually(CreateAPIView):
             else:
                 return Response({'message': "الفرع بهذا المعرف غير موجود", 'status': HTTP_400_BAD_REQUEST})
         else:
-            category_obj = Category.objects.get(id=category)
+            # category_obj = Category.objects.get(id=category)
             print('branch-----------------', branch_obj)
             # final_item = zip(product_name, product_cost, product_quantity)
             # order_id = get_random_string(16)
@@ -1198,6 +1198,20 @@ class CreateReceiptManually(CreateAPIView):
             )
             for item in ordered_items:
                 receipt_obj.order.add(OrderItem.objects.get(id=item))
+            receipt_id = 0
+            try:
+                receipt_obj = Receipt.objects.last()
+                receipt_id = receipt_obj.id + 1
+            except Exception as e:
+                print('RECEIPT EXCEPTION', e)
+                receipt_id += 1
+            item_string = ''
+            item_string += 'Order Id : ' + str(receipt_obj.id)
+            url = pyqrcode.create(item_string, encoding='utf-8')
+            url.png(f'media/{receipt_id}.png', scale=6)
+            qr = os.path.basename(f'{receipt_id}.png'), File(open(f'media/{receipt_id}.png', 'rb'))
+            receipt_obj.qr_code = qr[1]
+            receipt_obj.save(update_fields=['qr_code'])
             scanned_data_obj = ScannedData.objects.create(
                 user=self.request.user,
                 merchant=merchant_obj,
