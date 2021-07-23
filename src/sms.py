@@ -10,7 +10,8 @@ account_sid = 'ACf02ece6f59b345778bdd512e693c8e3e'
 auth_token = '427991ea9201b5e360ab49532d703157'
 client = Client(account_sid, auth_token)
 client.messages.create(
-    body='Second message using twilio for fatortech',
+    body='test message using twilio for fatortech',
     from_='+19412579649',
-    to='+' + str(917678689353)
+    # to='+' + str(966545184720)
+    to='+' + str(966509344498)
 )

@@ -120,6 +120,7 @@ class Receipt(models.Model):
     qr_code = models.ImageField(upload_to='QR')
     order_created_from = models.CharField(default='', max_length=1000)
     created_at = models.DateTimeField(auto_now_add=True)
+    check_number = models.BigIntegerField()
 
     def get_absolute_url(self):
         return reverse("merchant:order-detail", kwargs={'pk': self.pk})
