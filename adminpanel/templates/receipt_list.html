@@ -48,7 +48,7 @@
                                 {% for object in search %}
                                 <tr>
                                     <td>{{forloop.counter}}</td>
-                                    <td>{{object.id}}</td>
+                                    <td>{{object.check_number}}</td>
                                     <td>{{object.merchant.full_name}}</td>
                                     <td>{{object.merchant.category.category_name}}</td>
                                     <td>{{object.merchant.email}}</td>
@@ -97,7 +97,7 @@
                                 {% for object in receipts %}
                                 <tr>
                                     <td>{{forloop.counter}}</td>
-                                    <td>{{object.id}}</td>
+                                    <td>{{object.check_number}}</td>
                                     <td>{{object.merchant.full_name}}</td>
                                     <td>{{object.merchant.category.category_name}}</td>
                                     <td>{{object.merchant.email}}</td>
