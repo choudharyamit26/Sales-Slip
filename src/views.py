@@ -869,6 +869,7 @@ class GetScannedDataDetail(ListAPIView):
             # receipt_object['merchant_category'] = receipt_obj.merchant.category.category_name
             receipt_object['user'] = receipt_obj.user.email
             receipt_object['created_at'] = receipt_obj.created_at
+            receipt_object['check_number'] = receipt_obj.check_number
             # receipt_object.update({'merchant_id': receipt_obj.merchant})
             print(receipt_object)
             print(receipt_obj.merchant)
