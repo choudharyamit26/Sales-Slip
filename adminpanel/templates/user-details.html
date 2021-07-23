@@ -11,7 +11,8 @@
                 </div>
                 {% else %}
                 <div class="DetailsProfile">
-                    <figure><img src="https://snapic-bucket.s3.amazonaws.com/static/default_profile.png" alt="Profile pic"></figure>
+                    <figure><img src="https://snapic-bucket.s3.amazonaws.com/static/default_profile.png"
+                                 alt="Profile pic"></figure>
                 </div>
                 {% endif %}
                 <ul>
@@ -28,7 +29,11 @@
                     </li>
 
                     <li>
+                        {% if object.phone_number in object.email %}
+                        <span>Email id </span>N/A
+                        {% else %}
                         <span>Email id </span>{{object.email}}
+                        {% endif %}
                     </li>
 
                     <li>

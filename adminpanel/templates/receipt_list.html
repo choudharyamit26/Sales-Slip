@@ -52,7 +52,11 @@
                                     <td>{{object.merchant.full_name}}</td>
                                     <td>{{object.merchant.category.category_name}}</td>
                                     <td>{{object.merchant.email}}</td>
+                                    {% if object.user.phone_number in object.user.email %}
+                                    <td>N/A</td>
+                                    {% else %}
                                     <td>{{object.user.email}}</td>
+                                    {% endif %}
                                     <td>{{object.user.phone_number}}</td>
                                     <td>{{object.created_at}}</td>
                                     <td>
@@ -97,7 +101,11 @@
                                     <td>{{object.merchant.full_name}}</td>
                                     <td>{{object.merchant.category.category_name}}</td>
                                     <td>{{object.merchant.email}}</td>
+                                    {% if object.user.phone_number in object.user.email %}
+                                    <td>N/A</td>
+                                    {% else %}
                                     <td>{{object.user.email}}</td>
+                                    {% endif %}
                                     <td>{{object.user.phone_number}}</td>
                                     <td>{{object.created_at}}</td>
                                     <td>
@@ -206,6 +214,9 @@
         window.location.href = url
     });
 });
+
+
+
 
 
 

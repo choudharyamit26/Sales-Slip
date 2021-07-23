@@ -79,7 +79,11 @@
                                 <figure><img src="https://snapic-bucket.s3.amazonaws.com/static/default_profile.png" alt=""></figure>
                             </td>
                             {% endif %}
+                            {% if object.phone_number in object.email %}
+                            <td>N/A</td>
+                            {% else %}
                             <td>{{object.email}}</td>
+                            {% endif %}
                             <td>{{object.phone_number}}</td>
                             <!--                                    <td>South Campus, South Moti Bagh, New Delhi, Delhi 110021</td>-->
                             <td>{{object.created_at|date:'M. d, Y'}}</td>
@@ -139,7 +143,11 @@
                                 <figure><img src="https://snapic-bucket.s3.amazonaws.com/static/default_profile.png" alt=""></figure>
                             </td>
                             {% endif %}
+                             {% if object.phone_number in object.email %}
+                            <td>N/A</td>
+                            {% else %}
                             <td>{{object.email}}</td>
+                            {% endif %}
                             <td>{{object.phone_number}}</td>
                             <!--                                    <td>South Campus, South Moti Bagh, New Delhi, Delhi 110021</td>-->
                             <td>{{object.created_at|date:'M. d, Y'}}</td>
@@ -200,7 +208,11 @@
                                 <figure><img src="https://snapic-bucket.s3.amazonaws.com/static/default_profile.png" alt=""></figure>
                             </td>
                             {% endif %}
+                            {% if object.phone_number in object.email %}
+                            <td>N/A</td>
+                            {% else %}
                             <td>{{object.email}}</td>
+                            {% endif %}
                             <td>{{object.phone_number}}</td>
                             <!--                                    <td>South Campus, South Moti Bagh, New Delhi, Delhi 110021</td>-->
                             <td>{{object.created_at|date:'M. d, Y'}}</td>

@@ -18,7 +18,11 @@
                         </li>
 
                         <li>
+                            {% if object.user.phone_number in object.user.email %}
+                            <span>User Email id </span>N/A
+                            {% else %}
                             <span>User Email id </span>{{object.user.email}}
+                            {% endif %}
                         </li>
                         <li>
                             <span>Merchant id </span>{{object.merchant.id}}

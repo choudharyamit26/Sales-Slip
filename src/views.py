@@ -160,12 +160,17 @@ class LoginAPIView(ObtainAuthToken):
                     settings_obj = Settings.objects.get(user=userObj)
                     settings_obj.language = lang
                     settings_obj.save(update_fields=['language'])
+                    user_email = ''
+                    if userObj.phone_number in userObj.email:
+                        user_email = ''
+                    else:
+                        user_email = userObj.email
                     data = {
                         "token": token.key,
                         "id": user_id,
                         "first_name": userObj.first_name,
                         "last_name": userObj.last_name,
-                        "email": userObj.email,
+                        "email": user_email,
                         "country_code": userObj.country_code,
                         "phone_number": userObj.phone_number
                     }
@@ -187,12 +192,17 @@ class LoginAPIView(ObtainAuthToken):
                     settings_obj.save(update_fields=['language'])
                     print('updated device token ', userObj.device_token)
                     token = token[0]
+                    user_email = ''
+                    if userObj.phone_number in userObj.email:
+                        user_email = ''
+                    else:
+                        user_email = userObj.email
                     data = {
                         "token": token.key,
                         "id": user_id,
                         "first_name": userObj.first_name,
                         "last_name": userObj.last_name,
-                        "email": userObj.email,
+                        "email": user_email,
                         "country_code": userObj.country_code,
                         "phone_number": userObj.phone_number
                     }
@@ -533,22 +543,32 @@ class GetUserDetailApiView(APIView):
             userObj = User.objects.get(id=user)
             if userObj.profile_pic:
                 if userObj.email.isdigit():
+                    user_email = ''
+                    if userObj.phone_number in userObj.email:
+                        user_email = ''
+                    else:
+                        user_email = userObj.email
                     userdetail = {
                         'id': userObj.id,
                         'first_name': userObj.first_name,
                         'last_name': userObj.last_name,
-                        'email': '',
+                        'email': user_email,
                         'country_code': userObj.country_code,
                         'phone_number': userObj.email,
                         'profile_pic': userObj.profile_pic.url,
                     }
                     return Response({"data": userdetail, "status": HTTP_200_OK, "detail": ""})
                 else:
+                    user_email = ''
+                    if userObj.phone_number in userObj.email:
+                        user_email = ''
+                    else:
+                        user_email = userObj.email
                     userdetail = {
                         'id': userObj.id,
                         'first_name': userObj.first_name,
                         'last_name': userObj.last_name,
-                        'email': userObj.email,
+                        'email': user_email,
                         'country_code': userObj.country_code,
                         'phone_number': userObj.phone_number,
                         'profile_pic': userObj.profile_pic.url,
@@ -556,22 +576,32 @@ class GetUserDetailApiView(APIView):
                     return Response({"data": userdetail, "status": HTTP_200_OK, "detail": ""})
             else:
                 if userObj.email.isdigit():
+                    user_email = ''
+                    if userObj.phone_number in userObj.email:
+                        user_email = ''
+                    else:
+                        user_email = userObj.email
                     userdetail = {
                         'id': userObj.id,
                         'first_name': userObj.first_name,
                         'last_name': userObj.last_name,
-                        'email': '',
+                        'email': user_email,
                         'country_code': userObj.country_code,
                         'phone_number': userObj.email,
                         'profile_pic': '',
                     }
                     return Response({"data": userdetail, "status": HTTP_200_OK, "detail": ""})
                 else:
+                    user_email = ''
+                    if userObj.phone_number in userObj.email:
+                        user_email = ''
+                    else:
+                        user_email = userObj.email
                     userdetail = {
                         'id': userObj.id,
                         'first_name': userObj.first_name,
                         'last_name': userObj.last_name,
-                        'email': userObj.email,
+                        'email':user_email,
                         'country_code': userObj.country_code,
                         'phone_number': userObj.phone_number,
                         'profile_pic': '',
