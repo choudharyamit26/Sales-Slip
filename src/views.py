@@ -1298,6 +1298,7 @@ class GetLatestTransactions(ListAPIView):
                 # data['merchant_category'] = x.merchant.category.category_name
                 data['merchant_email'] = x.merchant.email
                 data['created_at'] = x.created_at
+                data['check_number'] = x.check_number
                 product_list = []
                 for order_obj in x.order.all():
                     product_list.append({'product_name': order_obj.product, 'product_price': order_obj.price,
