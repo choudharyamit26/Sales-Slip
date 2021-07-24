@@ -900,6 +900,7 @@ class GetScannedDataDetail(ListAPIView):
             receipt_object['user'] = receipt_obj.user.email
             receipt_object['created_at'] = receipt_obj.created_at
             receipt_object['check_number'] = receipt_obj.check_number
+            receipt_object['branch'] = receipt_obj.branch.code
             # receipt_object.update({'merchant_id': receipt_obj.merchant})
             print(receipt_object)
             print(receipt_obj.merchant)
@@ -907,10 +908,6 @@ class GetScannedDataDetail(ListAPIView):
             total = 0
             product_list = []
             for obj in receipt_obj.order.all():
-                # receipt_object.update({'product_{}'.format(i): obj.product})
-                # receipt_object.update({'product_{}_price'.format(i): obj.price})
-                # receipt_object.update({'product_{}_quantity'.format(i): obj.quantity})
-
                 product_list.append({'product_name': obj.product, 'product_price': obj.price,
                                      'product_quantity': obj.quantity, 'product_vat': obj.vat,
                                      'product_vat_percent': obj.vat_percent})
