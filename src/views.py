@@ -2151,9 +2151,7 @@ class FoodicsWebHookUrl(APIView):
                 auth_token = '427991ea9201b5e360ab49532d703157'
                 client = Client(account_sid, auth_token)
                 client.messages.create(
-                    body=f'Your receipt with receipt id-{receipt_obj.id} has been generated.'
-                         f'Please download the app to view th receipt. '
-                         f'Please login using credentials given in this message. Login Email: {user.email}, Login Password:Test@123',
+                    body='Congratulations! You receipt is now digitalized in your Fatortech app, to access please download from: app.fatortech.net',
                     from_='+19412579649',
                     to='+' + str(str(user.country_code) + str(user.phone_number))
                 )
