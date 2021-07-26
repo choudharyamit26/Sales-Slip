@@ -24,7 +24,7 @@ class MerchantForm(forms.ModelForm):
 
 class MerchantUpdateForm(forms.ModelForm):
     category = forms.ModelChoiceField(queryset=Category.objects.all(),
-                                      widget=forms.TextInput(attrs={'readonly': 'readonly'}))
+                                      widget=forms.TextInput())
 
     class Meta:
         model = Merchant

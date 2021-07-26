@@ -1253,12 +1253,28 @@ class UpdateBanner(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy('adminpanel:banner-list')
 
 
-class UpdateMerchant(LoginRequiredMixin, UpdateView):
+class UpdateMerchant(LoginRequiredMixin, View):
     login_url = 'adminpanel:login'
     model = Merchant
     form_class = MerchantUpdateForm
     template_name = 'update-merchant.html'
     success_url = reverse_lazy('adminpanel:merchant-list')
+
+    def get(self, request, *args, **kwargs):
+        return render(self.request, 'update-merchant.html',
+                      {'object': Merchant.objects.get(id=kwargs['pk']), 'categories': Category.objects.all()})
+
+    def post(self, request, *args, **kwargs):
+        print('FROM POST METHOD ',self.request.POST)
+        merchant_obj = Merchant.objects.get(id=kwargs['pk'])
+        print(merchant_obj)
+        merchant_obj.full_name = self.request.POST['full_name']
+        merchant_obj.category = Category.objects.get(id=self.request.POST['category'])
+        merchant_obj.commercial_id = self.request.POST['commercial_id']
+        merchant_obj.email = self.request.POST['email']
+        merchant_obj.address = self.request.POST['address']
+        merchant_obj.save()
+        return redirect("adminpanel:merchant-list")
     # def get_context_data(self, **kwargs):
     #     context = super().get_context_data(**kwargs)
     #     context['form'] = self.form_class(instance=self.request.user, initial={'email': self.request.user.email})
