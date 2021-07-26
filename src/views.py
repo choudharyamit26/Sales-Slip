@@ -896,7 +896,14 @@ class GetScannedDataDetail(ListAPIView):
             receipt_object['merchant_id'] = receipt_obj.merchant.id
             receipt_object['receipt_id'] = receipt_obj.id
             receipt_object['merchant_name'] = receipt_obj.merchant.full_name
-            # receipt_object['merchant_category'] = receipt_obj.merchant.category.category_name
+            try:
+                receipt_object['merchant_category'] = receipt_obj.merchant.category.category_name
+            except:
+                receipt_object['merchant_category'] = ''
+            try:
+                receipt_object['commercial_id'] = receipt_obj.merchant.category.commercial_id
+            except:
+                receipt_object['commercial_id'] = ''
             receipt_object['user'] = receipt_obj.user.email
             receipt_object['created_at'] = receipt_obj.created_at
             receipt_object['check_number'] = receipt_obj.check_number
