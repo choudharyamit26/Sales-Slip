@@ -901,7 +901,7 @@ class GetScannedDataDetail(ListAPIView):
             except:
                 receipt_object['merchant_category'] = ''
             try:
-                receipt_object['commercial_id'] = receipt_obj.merchant.category.commercial_id
+                receipt_object['commercial_id'] = receipt_obj.merchant.commercial_id
             except:
                 receipt_object['commercial_id'] = ''
             receipt_object['user'] = receipt_obj.user.email
