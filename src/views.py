@@ -2025,7 +2025,8 @@ class SetNewPassword(APIView):
             settings_obj.language = lang
             settings_obj.save(update_fields=['language'])
             token = Token.objects.get_or_create(user=user_obj)
-            return Response({'message': 'Password set successfully', 'token': token[0].key, 'status': HTTP_200_OK})
+            return Response({'message': 'Password set successfully', 'id': user_obj.id, 'token': token[0].key,
+                             'status': HTTP_200_OK})
         except Exception as e:
             return Response({'message': str(e), 'status': HTTP_400_BAD_REQUEST})
 
