@@ -56,6 +56,11 @@ class User(AbstractBaseUser, PermissionsMixin):
         ordering = ('-created_at',)
 
 
+class LoginCount(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    count = models.IntegerField(default=0)
+
+
 class Category(models.Model):
     category_name = models.CharField(default='', max_length=100)
 

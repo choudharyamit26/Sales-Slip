@@ -27,7 +27,7 @@ from twilio.rest import Client
 
 from .fcm_notification import send_another, send_to_one
 from .models import User, Settings, UserNotification, Otp, ScannedData, Merchant, Receipt, Category, OrderItem, FAQ, \
-    TermsAndCondition, ContactUs, PrivacyPolicy, AboutUs, Branch, Banner
+    TermsAndCondition, ContactUs, PrivacyPolicy, AboutUs, Branch, Banner, LoginCount
 from .serializers import UserCreateSerializer, AuthTokenSerializer, ForgetPasswordSerializer, ChangePasswordSerializer, \
     UpdateNotificationSerializer, NotificationSerializer, OtpSerializer, UpdatePhoneSerializer, ScannedDataSerializer, \
     TermsandConditionSerializer, ContactUsSerializer, PrivacyPolicySerializer, LanguageSettingSerializer, \
@@ -160,6 +160,9 @@ class LoginAPIView(ObtainAuthToken):
                     settings_obj = Settings.objects.get(user=userObj)
                     settings_obj.language = lang
                     settings_obj.save(update_fields=['language'])
+                    login_count = LoginCount.objects.get(user=userObj)
+                    login_count.count += 1
+                    login_count.save()
                     user_email = ''
                     if userObj.phone_number in userObj.email:
                         user_email = ''
@@ -2006,6 +2009,40 @@ class GetMerchantDetail(APIView):
             return Response({'message': x['error'], 'status': HTTP_400_BAD_REQUEST})
 
 
+class SetNewPassword(APIView):
+
+    def post(self, request, *args, **kwargs):
+        phone_number = self.request.POST['phone_number']
+        password = self.request.POST['password']
+        device_token = self.request.data['device_token']
+        lang = self.request.data['lang']
+        try:
+            user_obj = User.objects.get(phone_number=phone_number)
+            user_obj.device_token = device_token
+            user_obj.set_password(password)
+            user_obj.save()
+            settings_obj = Settings.objects.get(user=user_obj)
+            settings_obj.language = lang
+            settings_obj.save(update_fields=['language'])
+            token = Token.objects.get_or_create(user=user_obj)
+            return Response({'message': 'Password set successfully', 'token': token[0].key, 'status': HTTP_200_OK})
+        except Exception as e:
+            return Response({'message': str(e), 'status': HTTP_400_BAD_REQUEST})
+
+
+class GetLoginCount(APIView):
+
+    def get(self, request, *args, **kwargs):
+        phone_number = self.request.GET['phone_number']
+        try:
+            user_obj = User.objects.get(phone_number=phone_number)
+            login_count = LoginCount.objects.get(user=user_obj)
+            return Response(
+                {'message': 'Login count fetched successfully', 'count': login_count.count, 'status': HTTP_200_OK})
+        except Exception as e:
+            return Response({'message': str(e), 'status': HTTP_200_OK})
+
+
 class FoodicsAPI(APIView):
 
     def get(self, request, *args, **kwargs):
@@ -2098,6 +2135,7 @@ class FoodicsWebHookUrl(APIView):
                                            phone_number=webhook_data['order']['customer']['phone'])
                 user.set_password('Test@123')
                 user.save()
+                LoginCount.objects.create(user=user, count=0)
                 new_user = user
             elif webhook_data['order']['customer']['email'] is None and webhook_data['order']['customer']['phone']:
                 user = User.objects.create(first_name=webhook_data['order']['customer']['name'],
