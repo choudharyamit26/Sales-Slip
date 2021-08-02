@@ -2034,7 +2034,7 @@ class SetNewPassword(APIView):
                 "country_code": user_obj.country_code,
                 "phone_number": user_obj.phone_number
             }
-            return Response({'message': 'Password set successfully', 'data': data, 'token': token[0].key,
+            return Response({'message': 'Password set successfully', 'data': data,
                              'status': HTTP_200_OK})
         except Exception as e:
             return Response({'message': str(e), 'status': HTTP_400_BAD_REQUEST})
