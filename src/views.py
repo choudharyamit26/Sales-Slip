@@ -2030,7 +2030,7 @@ class SetNewPassword(APIView):
                 "id": user_obj.id,
                 "first_name": user_obj.first_name,
                 "last_name": user_obj.last_name,
-                "email": user_obj,
+                "email": user_obj.email,
                 "country_code": user_obj.country_code,
                 "phone_number": user_obj.phone_number
             }
