@@ -168,6 +168,7 @@ class LoginAPIView(ObtainAuthToken):
                         user_email = ''
                     else:
                         user_email = userObj.email
+
                     data = {
                         "token": token.key,
                         "id": user_id,
@@ -177,6 +178,7 @@ class LoginAPIView(ObtainAuthToken):
                         "country_code": userObj.country_code,
                         "phone_number": userObj.phone_number
                     }
+
                     return Response({"message": "User logged in successfully", "data": data, "status": HTTP_200_OK})
                 else:
                     return Response({"message": "Wrong password", "status": HTTP_400_BAD_REQUEST})
@@ -200,6 +202,9 @@ class LoginAPIView(ObtainAuthToken):
                         user_email = ''
                     else:
                         user_email = userObj.email
+                    login_count = LoginCount.objects.get(user=userObj)
+                    login_count.count += 1
+                    login_count.save()
                     data = {
                         "token": token.key,
                         "id": user_id,
