@@ -2159,6 +2159,7 @@ class FoodicsWebHookUrl(APIView):
                                            phone_number=webhook_data['order']['customer']['phone'])
                 user.set_password('Test@123')
                 user.save()
+                LoginCount.objects.create(user=user, count=0)
                 new_user = user
 
         for i in range(len(webhook_data['order']['products'])):
