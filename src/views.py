@@ -132,6 +132,95 @@ class UserCreateAPIView(CreateAPIView):
             return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
 
 
+# @method_decorator(csrf_exempt, name='dispatch')
+# class LoginAPIView(ObtainAuthToken):
+#     """Create a new token for user"""
+#     serializer_class = AuthTokenSerializer
+#     renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES
+#
+#     def post(self, request, *args, **kwargs):
+#         email = self.request.data['email']
+#         password = self.request.data['password']
+#         device_token = self.request.data['device_token']
+#         lang = self.request.data['lang']
+#         print('login---->>>>', device_token)
+#         try:
+#             if not email.isdigit():
+#                 userObj = User.objects.get(email=email.lower())
+#                 user_id = userObj.id
+#                 check_pass = userObj.check_password(password)
+#                 if check_pass:
+#                     token = Token.objects.get_or_create(user=userObj)
+#                     user_device_token = userObj.device_token
+#                     print('previous token ', user_device_token)
+#                     userObj.device_token = device_token
+#                     userObj.save(update_fields=['device_token'])
+#                     print('updated device token ', userObj.device_token)
+#                     token = token[0]
+#                     settings_obj = Settings.objects.get(user=userObj)
+#                     settings_obj.language = lang
+#                     settings_obj.save(update_fields=['language'])
+#                     login_count = LoginCount.objects.get(user=userObj)
+#                     login_count.count += 1
+#                     login_count.save()
+#                     user_email = ''
+#                     if userObj.phone_number in userObj.email:
+#                         user_email = ''
+#                     else:
+#                         user_email = userObj.email
+#
+#                     data = {
+#                         "token": token.key,
+#                         "id": user_id,
+#                         "first_name": userObj.first_name,
+#                         "last_name": userObj.last_name,
+#                         "email": user_email,
+#                         "country_code": userObj.country_code,
+#                         "phone_number": userObj.phone_number
+#                     }
+#
+#                     return Response({"message": "User logged in successfully", "data": data, "status": HTTP_200_OK})
+#                 else:
+#                     return Response({"message": "Wrong password", "status": HTTP_400_BAD_REQUEST})
+#             else:
+#                 userObj = User.objects.get(phone_number=email)
+#                 user_id = userObj.id
+#                 check_pass = userObj.check_password(password)
+#                 if check_pass:
+#                     token = Token.objects.get_or_create(user=userObj)
+#                     user_device_token = userObj.device_token
+#                     print('previous token ', user_device_token)
+#                     userObj.device_token = device_token
+#                     userObj.save(update_fields=['device_token'])
+#                     settings_obj = Settings.objects.get(user=userObj)
+#                     settings_obj.language = lang
+#                     settings_obj.save(update_fields=['language'])
+#                     print('updated device token ', userObj.device_token)
+#                     token = token[0]
+#                     user_email = ''
+#                     if userObj.phone_number in userObj.email:
+#                         user_email = ''
+#                     else:
+#                         user_email = userObj.email
+#                     login_count = LoginCount.objects.get(user=userObj)
+#                     login_count.count += 1
+#                     login_count.save()
+#                     data = {
+#                         "token": token.key,
+#                         "id": user_id,
+#                         "first_name": userObj.first_name,
+#                         "last_name": userObj.last_name,
+#                         "email": user_email,
+#                         "country_code": userObj.country_code,
+#                         "phone_number": userObj.phone_number
+#                     }
+#                     return Response({"message": "User logged in successfully", "data": data, "status": HTTP_200_OK})
+#                 else:
+#                     return Response({"message": "Wrong password", "status": HTTP_400_BAD_REQUEST})
+#         except Exception as e:
+#             print(e)
+#             return Response({"message": "User does not exists", "status": HTTP_400_BAD_REQUEST})
+
 @method_decorator(csrf_exempt, name='dispatch')
 class LoginAPIView(ObtainAuthToken):
     """Create a new token for user"""
@@ -140,83 +229,40 @@ class LoginAPIView(ObtainAuthToken):
 
     def post(self, request, *args, **kwargs):
         email = self.request.data['email']
-        password = self.request.data['password']
         device_token = self.request.data['device_token']
         lang = self.request.data['lang']
         print('login---->>>>', device_token)
         try:
-            if not email.isdigit():
-                userObj = User.objects.get(email=email.lower())
-                user_id = userObj.id
-                check_pass = userObj.check_password(password)
-                if check_pass:
-                    token = Token.objects.get_or_create(user=userObj)
-                    user_device_token = userObj.device_token
-                    print('previous token ', user_device_token)
-                    userObj.device_token = device_token
-                    userObj.save(update_fields=['device_token'])
-                    print('updated device token ', userObj.device_token)
-                    token = token[0]
-                    settings_obj = Settings.objects.get(user=userObj)
-                    settings_obj.language = lang
-                    settings_obj.save(update_fields=['language'])
-                    login_count = LoginCount.objects.get(user=userObj)
-                    login_count.count += 1
-                    login_count.save()
-                    user_email = ''
-                    if userObj.phone_number in userObj.email:
-                        user_email = ''
-                    else:
-                        user_email = userObj.email
-
-                    data = {
-                        "token": token.key,
-                        "id": user_id,
-                        "first_name": userObj.first_name,
-                        "last_name": userObj.last_name,
-                        "email": user_email,
-                        "country_code": userObj.country_code,
-                        "phone_number": userObj.phone_number
-                    }
-
-                    return Response({"message": "User logged in successfully", "data": data, "status": HTTP_200_OK})
-                else:
-                    return Response({"message": "Wrong password", "status": HTTP_400_BAD_REQUEST})
+            userObj = User.objects.get(phone_number=email)
+            user_id = userObj.id
+            token = Token.objects.get_or_create(user=userObj)
+            user_device_token = userObj.device_token
+            print('previous token ', user_device_token)
+            userObj.device_token = device_token
+            userObj.save(update_fields=['device_token'])
+            settings_obj = Settings.objects.get(user=userObj)
+            settings_obj.language = lang
+            settings_obj.save(update_fields=['language'])
+            print('updated device token ', userObj.device_token)
+            token = token[0]
+            user_email = ''
+            if userObj.phone_number in userObj.email:
+                user_email = ''
             else:
-                userObj = User.objects.get(phone_number=email)
-                user_id = userObj.id
-                check_pass = userObj.check_password(password)
-                if check_pass:
-                    token = Token.objects.get_or_create(user=userObj)
-                    user_device_token = userObj.device_token
-                    print('previous token ', user_device_token)
-                    userObj.device_token = device_token
-                    userObj.save(update_fields=['device_token'])
-                    settings_obj = Settings.objects.get(user=userObj)
-                    settings_obj.language = lang
-                    settings_obj.save(update_fields=['language'])
-                    print('updated device token ', userObj.device_token)
-                    token = token[0]
-                    user_email = ''
-                    if userObj.phone_number in userObj.email:
-                        user_email = ''
-                    else:
-                        user_email = userObj.email
-                    login_count = LoginCount.objects.get(user=userObj)
-                    login_count.count += 1
-                    login_count.save()
-                    data = {
-                        "token": token.key,
-                        "id": user_id,
-                        "first_name": userObj.first_name,
-                        "last_name": userObj.last_name,
-                        "email": user_email,
-                        "country_code": userObj.country_code,
-                        "phone_number": userObj.phone_number
-                    }
-                    return Response({"message": "User logged in successfully", "data": data, "status": HTTP_200_OK})
-                else:
-                    return Response({"message": "Wrong password", "status": HTTP_400_BAD_REQUEST})
+                user_email = userObj.email
+            login_count = LoginCount.objects.get(user=userObj)
+            login_count.count += 1
+            login_count.save()
+            data = {
+                "token": token.key,
+                "id": user_id,
+                "first_name": userObj.first_name,
+                "last_name": userObj.last_name,
+                "email": user_email,
+                "country_code": userObj.country_code,
+                "phone_number": userObj.phone_number
+            }
+            return Response({"message": "User logged in successfully", "data": data, "status": HTTP_200_OK})
         except Exception as e:
             print(e)
             return Response({"message": "User does not exists", "status": HTTP_400_BAD_REQUEST})
