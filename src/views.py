@@ -250,9 +250,9 @@ class LoginAPIView(ObtainAuthToken):
                 user_email = ''
             else:
                 user_email = userObj.email
-            login_count = LoginCount.objects.get(user=userObj)
-            login_count.count += 1
-            login_count.save()
+            # login_count = LoginCount.objects.get(user=userObj)
+            # login_count.count += 1
+            # login_count.save()
             data = {
                 "token": token.key,
                 "id": user_id,
