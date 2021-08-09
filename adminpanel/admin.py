@@ -10,9 +10,10 @@ class UserAdmin(BaseUserAdmin):
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
         (_('Personal Info'),
-         {'fields': ('first_name', 'last_name', 'profile_pic', 'phone_number', 'device_token', 'is_merchant',
-                     'can_manage_dashboard', 'can_manage_merchant', 'can_manage_category', 'can_manage_branch',
-                     'can_manage_receipts')}),
+         {'fields': (
+         'first_name', 'last_name', 'profile_pic', 'country_code', 'phone_number', 'device_token', 'is_merchant',
+         'can_manage_dashboard', 'can_manage_merchant', 'can_manage_category', 'can_manage_branch',
+         'can_manage_receipts')}),
         (_('Permissions'),
          {'fields': ('is_active', 'is_staff', 'is_superuser')}),
         (_('Important Dates'), {'fields': ('last_login',)})
