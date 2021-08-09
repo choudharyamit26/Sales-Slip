@@ -2266,7 +2266,7 @@ class FoodicsWebHookUrl(APIView):
 
                 values = '''{{
                   "userName": "fatortech",
-                  "numbers": {country}{number}',
+                  "numbers": "{country}{number}",
                   "userSender": "fatortech",
                   "apiKey": "2b180dec7a0cb74e02f9ca525aab993e",
                   "msg": "Congratulations! You receipt is now digitalized in your Fatortech app, to access please download from: app.fatortech.net"
