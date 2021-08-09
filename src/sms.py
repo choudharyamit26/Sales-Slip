@@ -17,21 +17,20 @@
 # )
 
 
-
 import requests
-
-values = '''{
-  "userName": "fatortech",
-  "numbers": "",
+country = +91
+number = 7678689353
+values = '''{{
+"userName": "fatortech",
+  "numbers": "{country}{number}",
   "userSender": "fatortech",
   "apiKey": "2b180dec7a0cb74e02f9ca525aab993e",
-  "msg": "FIRST TEST MESSAGE"
-}'''
-
+  "msg": "FOURTH TEST MESSAGE"
+}}'''.format(country=str(country), number=str(number))
 headers = {
-  'Content-Type': 'application/json'
+    'Content-Type': 'application/json'
 }
-
+# values = values.format(country=str(country), number=str(number))
 response = requests.post('https://www.msegat.com/gw/sendsms.php', data=values, headers=headers)
 
 print(response.status_code)
