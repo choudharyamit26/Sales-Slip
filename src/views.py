@@ -2277,7 +2277,7 @@ class FoodicsWebHookUrl(APIView):
                 }
 
                 response = requests.post('https://www.msegat.com/gw/sendsms.php', data=values, headers=headers)
-
+                print(response.json())
         except Exception as e:
             print('TWILIO EXCEPTION ', e)
             pass
